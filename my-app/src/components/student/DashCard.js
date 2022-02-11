@@ -1,0 +1,58 @@
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { Grid } from "@mui/material";
+import { makeStyles } from "@material-ui/core/styles";
+import CountUp from "react-countup";
+
+const useStyles = makeStyles(() => ({
+  cardzCont: {
+    display: "flex",
+    ["@media (max-width:780px)"]: {
+      flexDirection: "column",
+    },
+  },
+  secondCard: {
+    marginLeft: "15px",
+    marginRight: "15px",
+    ["@media (max-width:780px)"]: {
+      marginTop: "25px",
+      marginLeft: "0px",
+      marginRight: "0px",
+    },
+  },
+}));
+
+export default function DashCard({ data }) {
+  const classes = useStyles();
+  return (
+    <Grid conatiner className={classes.cardzCont}>
+      {data.map((item) => {
+        return (
+          <Grid item xs={12} sm={12} md={4} className={classes.secondCard}>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography variant="h3">
+                  <CountUp
+                    start={0}
+                    end={item.num}
+                    duration={1.5}
+                    separator=","
+                  ></CountUp>
+                </Typography>
+                <Typography
+                  sx={{ fontSize: 17, mt: 1.5, mb: 0 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  {item.desc}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        );
+      })}
+    </Grid>
+  );
+}
