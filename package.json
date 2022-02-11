@@ -1,20 +1,46 @@
 {
-  "name": "lib-project",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "This Project deals with library management system for N numbers of library.",
-  "main": "index.js",
+  "description": "backend for the library management system",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www",
+    "server": "nodemon ./bin/www",
+    "format": "prettier --write \"**/*.{js,jsx,json,md, html}\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Binary-Brains/lib-project.git"
+    "url": "git+https://github.com/fireatcode/BACKEND_WEB.git"
   },
-  "keywords": [],
-  "author": "",
+  "author": "FIRE_AT_CODE",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Binary-Brains/lib-project/issues"
+    "url": "https://github.com/fireatcode/BACKEND_WEB/issues"
   },
-  "homepage": "https://github.com/Binary-Brains/lib-project#readme"
+  "homepage": "https://github.com/fireatcode/BACKEND_WEB#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^15.0.0",
+    "express": "^4.17.2",
+    "express-validator": "^6.14.0",
+    "gravatar": "^1.8.2",
+    "helmet": "^5.0.2",
+    "http": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.0",
+    "morgan": "^1.10.0",
+    "nanoid": "^3.2.0",
+    "passport": "^0.5.2",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth": "^2.0.0",
+    "prettier": "^2.5.1",
+    "socket.io": "^4.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
