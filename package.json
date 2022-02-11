@@ -1,0 +1,20 @@
+{
+  "name": "lib-project",
+  "version": "1.0.0",
+  "description": "This Project deals with library management system for N numbers of library.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Binary-Brains/lib-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Binary-Brains/lib-project/issues"
+  },
+  "homepage": "https://github.com/Binary-Brains/lib-project#readme"
+}
