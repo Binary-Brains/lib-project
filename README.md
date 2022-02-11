@@ -1,3 +1,6 @@
-# BACKEND_WEB
+# Library Management System
 
-This is the backend repo
+To run the project 
+1. npm run add
+2. npm run dev
+
