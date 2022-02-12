@@ -1,29 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import AvatarComp from "../../components/student/AvatarComp";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
+// import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
+// import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import image from "../../assests/signInBg.jpg";
-import PhoneNoField from "../../components/admin/PhoneNoField";
+// import PhoneNoField from "../../components/admin/PhoneNoField";
 import GoogleAuth from "../../components/admin/GoogleAuth";
 import { AdminSignup } from "../../actions/admin/auth";
-import MuiPhoneNumber from "material-ui-phone-number";
+// import MuiPhoneNumber from "material-ui-phone-number";
 import { useLocation } from "wouter";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { setAlert } from "../../actions/alert";
-import { GridLoadingOverlay } from "@mui/x-data-grid";
-
+// import { GridLoadingOverlay } from "@mui/x-data-grid";
+import { StateCity } from "../../data/StateCity";
+import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 //import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 //import users from "./../../data/users";
 //import authService from "./../service/authService";
@@ -85,7 +86,9 @@ const useStyles = makeStyles((theme) => ({
 function SignUpAdmin({ title, adminRegister }) {
   const dispatch = useDispatch();
   const [location, setLocation] = useLocation();
-
+  const [country, setCountry] = useState("");
+  const [region, setRegion] = useState("");
+  console.log(location)
   const classes = useStyles();
 
   const [account, setAccount] = React.useState({
@@ -98,6 +101,16 @@ function SignUpAdmin({ title, adminRegister }) {
     admin_password: "",
   });
 
+  const handleChangeCountry = (event) => {
+    setCountry(event.target.value);
+    setAccount({ ...account, [event.target.name]: event.target.value });
+  };
+
+  const handleChangeRegion = (event) => {
+    setRegion(event.target.value);
+    setAccount({ ...account, [event.target.name]: event.target.value });
+  };
+
   const onChange = (e) => {
     setAccount({ ...account, [e.target.name]: e.target.value });
   };
@@ -105,26 +118,27 @@ function SignUpAdmin({ title, adminRegister }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //create a function in the action folder and just call in the component it will save the user and return
-    const data = await dispatch(AdminSignup(account));
+   await dispatch(AdminSignup(account));
 
     //after successful signup user will be receiving a mail with a frontend link
-    //from that link we have to get the id and send it to the backend to verify and then 
+    //from that link we have to get the id and send it to the backend to verify and then
     //http://localhost:3000/api/verify/6204d2a26212677ed8d38808
   };
 
-
-
-  const {loading, adminInfo, isAuthenticated} = adminRegister;
+  const { loading, isAuthenticated } = adminRegister;
 
   if (adminRegister.adminInfo) {
-    if(isAuthenticated)
-      setLocation("/admin/dashboard");
+    if (isAuthenticated) setLocation("/admin/dashboard");
     else {
       setLocation("/admin/signin");
-      dispatch(setAlert(`Hi!,${adminRegister.adminInfo.admin_name} an Email has been sent with a verification link!`,'success'))
+      dispatch(
+        setAlert(
+          `Hi!,${adminRegister.adminInfo.admin_name} an Email has been sent with a verification link!`,
+          "success"
+        )
+      );
     }
   }
-
 
   const [focus, setFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
@@ -133,149 +147,191 @@ function SignUpAdmin({ title, adminRegister }) {
 
   return (
     <>
-   <Grid container component="main" className={classes.root}>
-      <Grid
-        className={classes.size}
-        item
-        xs={12}
-        sm={8}
-        md={5}
-        component={Paper}
-        elevation={1}
-        square
-      >
-        <div className={classes.paper}>
-          <AvatarComp />
-          <Typography component="h1" variant="h5">
-            {title} SignUp
-          </Typography>
-          <form className={classes.form} noValidate>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  autoComplete="fname"
-                  name="admin_name"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  onChange={(e) => onChange(e)}
-                  id="name"
-                  label="Full Name"
-                  autoFocus
-                />
+      <Grid container component="main" className={classes.root}>
+        <Grid
+          className={classes.size}
+          item
+          xs={12}
+          sm={8}
+          md={5}
+          component={Paper}
+          elevation={1}
+          square
+        >
+          <div className={classes.paper}>
+            <AvatarComp />
+            <Typography component="h1" variant="h5">
+              {title} SignUp
+            </Typography>
+            <form className={classes.form} noValidate>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    autoComplete="fname"
+                    name="admin_name"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    onChange={(e) => onChange(e)}
+                    id="name"
+                    label="Full Name"
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    onChange={(e) => onChange(e)}
+                    id="email"
+                    label="Email Address"
+                    name="admin_email"
+                    autoComplete="email"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    type={"number"}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    onChange={(e) => onChange(e)}
+                    id="contact"
+                    label="Contact"
+                    name="admin_contact"
+                    autoComplete="contact"
+                  />
+                </Grid>
+                {/* <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    onChange={(e) => onChange(e)}
+                    id="state"
+                    label="State"
+                    name="admin_state"
+                    autoComplete="state"
+                  />
+                </Grid> */}
+                <Grid item xs={12}>
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel>State</InputLabel>
+                    <Select
+                      required
+                      value={country}
+                      onChange={handleChangeCountry}
+                      name="admin_state"
+                      id="state"
+                      label="State"
+                    >
+                      {StateCity.states.map((item) => (
+                        <MenuItem value={item.state}>{item.state}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                {/* <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    onChange={(e) => onChange(e)}
+                    id="city"
+                    label="City"
+                    name="admin_city"
+                    autoComplete="city"
+                  />
+                </Grid> */}
+                <Grid item xs={12}>
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel>City</InputLabel>
+                    <Select
+                      required
+                      value={region}
+                      onChange={handleChangeRegion}
+                      disabled={!country}
+                      name="admin_city"
+                      id="city"
+                      label="City"
+                    >
+                      {country
+                        ? StateCity.states
+                            .find(({ state }) => state === country)
+                            .districts.map((item) => (
+                              <MenuItem value={item}>{item}</MenuItem>
+                            ))
+                        : []}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    onFocus={onFocus}
+                    onBlur={onBlur}
+                    variant="outlined"
+                    name="admin_dob"
+                    required
+                    fullWidth
+                    onChange={(e) => {
+                      if (e.target.value) setHasValue(true);
+                      else setHasValue(false);
+                      setAccount({
+                        ...account,
+                        [e.target.name]: e.target.value,
+                      });
+                    }}
+                    label="Dob"
+                    type={hasValue || focus ? "date" : "text"}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    onChange={(e) => onChange(e)}
+                    name="admin_password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox value="allowExtraEmails" color="primary" />
+                    }
+                    label="I Accept the Terms and Conditions"
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  onChange={(e) => onChange(e)}
-                  id="email"
-                  label="Email Address"
-                  name="admin_email"
-                  autoComplete="email"
-                />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={(e) => handleSubmit(e)}
+                className={classes.submit}
+                disabled={loading ? true : false}
+              >
+                Sign Up
+              </Button>
+              <Grid container justify="flex-end">
+                <Grid item>
+                  <Link href="/admin/signin" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  type={"number"}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  onChange={(e) => onChange(e)}
-                  id="contact"
-                  label="Contact"
-                  name="admin_contact"
-                  autoComplete="contact"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  onChange={(e) => onChange(e)}
-                  id="state"
-                  label="State"
-                  name="admin_state"
-                  autoComplete="state"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  onChange={(e) => onChange(e)}
-                  id="city"
-                  label="City"
-                  name="admin_city"
-                  autoComplete="city"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  onFocus={onFocus}
-                  onBlur={onBlur}
-                  variant="outlined"
-                  name="admin_dob"
-                  required
-                  fullWidth
-                  onChange={(e) => {
-                    if (e.target.value) setHasValue(true);
-                    else setHasValue(false);
-                    setAccount({ ...account, [e.target.name]: e.target.value });
-                  }}
-                  label="Dob"
-                  type={hasValue || focus ? "date" : "text"}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  onChange={(e) => onChange(e)}
-                  name="admin_password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I Accept the Terms and Conditions"
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={(e) => handleSubmit(e)}
-              className={classes.submit}
-              disabled ={loading? true:  false}
-            >
-              Sign Up
-            </Button>
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Link href="/admin/signin" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
-            <GoogleAuth />
-            <Copyright mt={5} />
-          </form>
-        </div>
+              <GoogleAuth />
+              <Copyright mt={5} />
+            </form>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
     </>
   );
 }

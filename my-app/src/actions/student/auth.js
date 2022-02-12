@@ -1,3 +1,4 @@
+import { envUrl } from "../../utils/envUrl";
 import setAuthToken from "../../utils/setAuthToken";
 import { setAlert } from "../alert";
 
@@ -9,7 +10,7 @@ export const StudentSignup = (details) => async (dispatch) => {
  dispatch({ type: USER_REGISTER_REQUEST});
  //now only sending request to backend take the response data and save accordingly and use everywhere
  try {
-     await axios.post("/api/student/cr_acc", details).then((res) => {
+     await axios.post(`${envUrl}/api/student/cr_acc`, details).then((res) => {
         dispatch({
            type: STUDENT_REGISTRATION,
            payload: res.data
@@ -33,7 +34,7 @@ export const StudentVerify = (id) => async (dispatch) => {
    dispatch({ type: USER_REGISTER_REQUEST});
    //now only sending request to backend take the response data and save accordingly and use everywhere
    try {
-       await axios.get(`/api/student/verify/${id}`).then((res) => {
+       await axios.get(`${envUrl}/api/student/verify/${id}`).then((res) => {
           dispatch({
              type: STUDENT_VERIFICATION,
              payload: res.data
@@ -47,7 +48,7 @@ export const StudentVerify = (id) => async (dispatch) => {
       dispatch({
          type: STUDENT_VERIFICATION_FAIL
       })
-      dispatch(setAlert(error.response.data.message, "error"));
+      dispatch(setAlert(error.response && error.response.data && error.resposne.data.message, "error"));
       return error
   
    }
@@ -57,14 +58,13 @@ export const StudentSignin = (details) => async (dispatch) => {
    dispatch({ type: STUDENT_LOGIN_REQUEST});
    //now only sending request to backend take the response data and save accordingly and use everywhere
    try {
-       await axios.post(`/api/student/login`, details).then((res) => {
+       await axios.post(`${envUrl}/api/student/login`, details).then((res) => {
           dispatch({
              type: STUDENT_LOGIN,
              payload: res.data
           });
           dispatch(setAlert(`Hi ${res.data.data.profile_data.student_name}, Welcome to Library`,'success'))
-          console.log(details.remember_me)
-          if(details.remember_me == "remember") Cookies.set("li_at", res.data.data.token)
+          if(details.remember_me === "remember") Cookies.set("li_at", res.data.data.token)
           return res.data
        })
       //  dispatch({type: USER_REGISTERED, payload: res.data})
@@ -73,7 +73,7 @@ export const StudentSignin = (details) => async (dispatch) => {
       dispatch({
          type: STUDENT_LOGIN_FAIL
       })
-      dispatch(setAlert(error.response.data.message, "error"));
+      dispatch(setAlert(error.response && error.response.data && error.response.data.message, "error"));
       return error
   
    }
@@ -85,15 +85,13 @@ export const StudentLoad = () => async (dispatch) => {
       setAuthToken(Cookies.get('li_at'))
    //now only sending request to backend take the response data and save accordingly and use everywhere
    try {
-       await axios.get(`/api/student/student_profile` ).then((res) => {
+       await axios.get(`${envUrl}/api/student/student_profile` ).then((res) => {
           dispatch({
              type: STUDENT_LOADED,
              payload: res.data
           });
-         //  dispatch(setAlert(`Hi ${res.data.data.student_name}, Welcome to Library`,'success'))
           return res.data
        })
-      //  dispatch({type: USER_REGISTERED, payload: res.data})
    } catch (error) {
       console.log(error.message)
       dispatch({

@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import image from "../../assests/signInBg.jpg";
 import GoogleAuth from "../../components/admin/GoogleAuth";
-import TransitionAlert from "../../components/admin/Alert";
+// import TransitionAlert from "../../components/admin/Alert";
 import { AdminSignin } from "../../actions/admin/auth";
 import { useDispatch } from "react-redux";
 import { useLocation } from "wouter";
@@ -80,7 +80,7 @@ function SignInAdmin({ title, adminRegister }) {
   const dispatch = useDispatch();
   const [location, setLocation] = useLocation();
   const classes = useStyles();
-
+  console.log(location)
   Cookies.remove('li_at')
   //console.log(typeof classes.root);
 
@@ -95,7 +95,7 @@ function SignInAdmin({ title, adminRegister }) {
     dispatch(AdminSignin(account))
   }
 
-  const {loading, adminInfo, isAuthenticated}  = adminRegister;
+  const {loading,  isAuthenticated}  = adminRegister;
 
   if(isAuthenticated) setLocation("/admin/dashboard")
 

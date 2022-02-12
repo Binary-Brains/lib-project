@@ -9,9 +9,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useLocation } from "wouter";
 import { sendRequest } from "../../../actions/student/library";
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
-import DetailsIcon from '@mui/icons-material/Details';
+// import DetailsIcon from '@mui/icons-material/Details';
 import { useDispatch } from "react-redux";
 import { StudentLoad } from "../../../actions/student/auth";
+import Moment from 'react-moment'
 
 const useStyles = makeStyles(() => ({
   learnMoreBtn: {
@@ -23,13 +24,13 @@ export default function AllLibCard({data, studentData}) {
   const dispatch = useDispatch();
   const [location, setLocation] = useLocation()
   const classes = useStyles();
-
+  console.log(location)
   const {library_request} = studentData;
 
   let requestSent = false
   console.log(library_request)
-  library_request.map((lib) => {
-    if(lib.library_id == data._id) {
+  library_request.forEach((lib) => {
+    if(lib.library_id === data._id) {
       requestSent = true
     }
   })
@@ -53,6 +54,12 @@ export default function AllLibCard({data, studentData}) {
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {data && data.library_name}
+        </Typography>
+        <Typography gutterBottom variant="body2" component="div">
+          Contact: {data && data.library_contact}
+        </Typography>
+        <Typography gutterBottom variant="body2" component="div">
+          Created On: <Moment format="DD-MMM-YYYY">{data && data.createdAt}</Moment>
         </Typography>
       </CardContent>
       <CardActions id="libButton">

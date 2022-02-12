@@ -11,7 +11,6 @@ import SignInStudent from "./pages/student/SignIn";
 import SignUpStudent from "./pages/student/SignUp";
 import SignInAdmin from "./pages/admin/SignIn";
 import SignUpAdmin from "./pages/admin/SignUp";
-import AddLibrary from "./pages/admin/addLibrary/AddLibrary";
 import AdminSettingDrawer from "./pages/admin/settingPage/AdminSettingPage";
 import PendingBooks from "./pages/student/dashboardPage/pendingBooks/PendingBooks";
 import ReservedBooks from "./pages/student/dashboardPage/reservedBooks/ReservedBooks";
@@ -20,11 +19,10 @@ import AddedBook from "./pages/admin/dashboardPage/addedBooks/AddedBook";
 import StudentPage from "./pages/admin/studentPage/StudentPage";
 import FinePage from "./pages/admin/studentPage/FinePage";
 import AssignBookPage from "./pages/admin/studentPage/assignNewBook/AssignNewBook";
-import ComplexGrid from "./pages/admin/addBook/AddedBookDisplayComp";
 import TransitionAlert from "./components/student/Alert";
 import Verify from "./pages/student/Verify";
 import PropTypes from "prop-types";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import Cookies from "js-cookie";
 import { StudentLoad } from "./actions/student/auth";
 import { useEffect } from "react";
@@ -44,7 +42,6 @@ if (Cookies.get("cs_at")) {
 }
 
 function App() {
-  const dispatch = useDispatch();
   useEffect(() => {
     Store.dispatch(StudentLoad());
   }, []);
@@ -109,7 +106,7 @@ function App() {
         />
         <AdminRoute
           exact
-          path="/admin/dashboard/student"
+          path="/admin/dashboard/student/:id"
           component={StudentPage}
         />
         <AdminRoute
@@ -124,7 +121,7 @@ function App() {
         />
         <StudentRoute
           exact
-          path="/student/library/learnmore"
+          path="/student/library/learnmore/:id"
           component={LibPage}
         />
         <AdminRoute exact path="/admin/addbook" component={AddBookDrawer} />

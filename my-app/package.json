@@ -22,11 +22,13 @@
     "material-table": "^1.69.3",
     "material-ui-phone-number": "^3.0.0",
     "material-ui-search-bar": "^1.0.0",
+    "moment": "^2.29.1",
     "mui-datatables": "^4.0.0",
     "notistack": "^2.0.3",
     "react": "^17.0.2",
     "react-countup": "^6.1.1",
     "react-dom": "^17.0.2",
+    "react-moment": "^1.1.1",
     "react-notifications": "^1.7.3",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
@@ -34,6 +36,7 @@
     "web-vitals": "^2.1.4",
     "wouter": "^2.8.0-alpha.2"
   },
+  "homepage": "https://localhost:8080/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -11,7 +11,7 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@mui/material/MenuItem";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
@@ -28,9 +28,8 @@ import FeedSharpIcon from "@mui/icons-material/FeedSharp";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import SettingsApplicationsSharpIcon from "@mui/icons-material/SettingsApplicationsSharp";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { STUDENT_LOGOUT } from "../../constants/student/auth";
 import { useDispatch } from "react-redux";
-import StudentPage from "../../pages/admin/studentPage/StudentPage";
+// import StudentPage from "../../pages/admin/studentPage/StudentPage";
 import { StudentLogout } from "../../actions/student/auth";
 import { useLocation } from "wouter";
 
@@ -101,30 +100,30 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const useStyles = makeStyles((theme) => ({
-  form: {
-    width: "60%",
-    margin: "auto",
-    ["@media (max-width:600px)"]: {
-      width: "100%",
-    },
-  },
-  avatar: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   form: {
+//     width: "60%",
+//     margin: "auto",
+//     // ["@media (max-width:600px)"]: {
+//     //   width: "100%",
+//     // },
+//   },
+//   avatar: {
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+// }));
 
 export default function Navbar() {
   const theme = useTheme();
   const dispatch = useDispatch()
-  const classes = useStyles();
+  // const classes = useStyles();
   const [location, setLocation] = useLocation()
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  console.log(location)
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -155,7 +154,8 @@ export default function Navbar() {
 
   //uupdate this to just add a field in the drawer
   const logout = () => {
-    dispatch(StudentLogout())
+    const res = window.confirm("Are you sure?")
+    if(res) dispatch(StudentLogout())
   }
  
   const drawerList = [
@@ -192,23 +192,23 @@ export default function Navbar() {
     // },
   ];
 
-  const NotLoginList = [
-    {
-      name: "Login",
-      icon: <DashboardSharpIcon></DashboardSharpIcon>,
-      url: "/student/signin",
-    },
-    {
-      name: "Signup",
-      icon: <FeedSharpIcon></FeedSharpIcon>,
-      url: "/student/signup",
-    },
-    {
-      name: "About Us",
-      icon: <LocalLibraryIcon></LocalLibraryIcon>,
-      url: "/student/aboutus",
-    },
-  ];
+  // const NotLoginList = [
+  //   {
+  //     name: "Login",
+  //     icon: <DashboardSharpIcon></DashboardSharpIcon>,
+  //     url: "/student/signin",
+  //   },
+  //   {
+  //     name: "Signup",
+  //     icon: <FeedSharpIcon></FeedSharpIcon>,
+  //     url: "/student/signup",
+  //   },
+  //   {
+  //     name: "About Us",
+  //     icon: <LocalLibraryIcon></LocalLibraryIcon>,
+  //     url: "/student/aboutus",
+  //   },
+  // ];
 
 
   const mobileMenuId = "primary-search-account-menu-mobile";

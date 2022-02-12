@@ -78,6 +78,7 @@ const TabsList = styled(TabsListUnstyled)`
 
 export default function UnstyledTabsCustomized({data, studentData}) {
   console.log(data.libraries)
+  const {connectedLibraries} = data
   
   return (
     <TabsUnstyled defaultValue={0}>
@@ -91,9 +92,9 @@ export default function UnstyledTabsCustomized({data, studentData}) {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 4, md: 12 }}
         >
-          {Array.from(Array(6)).map((_, index) => (
+          {connectedLibraries && connectedLibraries.map((e, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-              <ConnLib>xs=2</ConnLib>
+              <ConnLib data={e}></ConnLib>
             </Grid>
           ))}
         </Grid>

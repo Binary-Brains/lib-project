@@ -9,10 +9,10 @@ const VerifyAdmin = ({id, adminRegister}) => {
   //send the verification request to the backend 
   const dispatch = useDispatch();
   const [location, setLocation] = useLocation();
-
+  console.log(location)
   useEffect(() => {
     dispatch(AdminVerify(id))
-  }, [])
+  }, [dispatch, id])
   
   const {loading,adminInfo} = adminRegister
   if(adminInfo) setLocation("/admin/signin")

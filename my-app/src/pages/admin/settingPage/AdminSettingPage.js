@@ -12,9 +12,9 @@ const useStyles = makeStyles(() => ({
   form: {
     width: "60%",
     margin: "auto",
-    ["@media (max-width:600px)"]: {
-      width: "100%",
-    },
+    // ["@media (max-width:600px)"]: {
+    //   width: "100%",
+    // },
   },
   editProf: {
     display: "flex",

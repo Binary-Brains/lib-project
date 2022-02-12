@@ -13,34 +13,34 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     alignItems: "center",
   },
-  libPageHeaders: {
-    ["@media (max-width:900px)"]: {
-      marginTop: "25px",
-    },
-  },
-  goBackBtn: {
-    ["@media (max-width:900px)"]: {
-      display: "none",
-    },
-  },
-  libPageTable: {
-    display: "flex",
-    ["@media (max-width:900px)"]: {
-      alignItems: "center",
-      width: "100%",
-      justifyContent: "center",
-    },
-    ["@media (max-width:600px)"]: {
-      alignItems: "center",
-      width: "100%",
-      justifyContent: "center",
-    },
-    ["@media (max-width:400px)"]: {
-      alignItems: "center",
-      width: "100%",
-      justifyContent: "center",
-    },
-  },
+  // libPageHeaders: {
+  //   ["@media (max-width:900px)"]: {
+  //     marginTop: "25px",
+  //   },
+  // },
+  // goBackBtn: {
+  //   ["@media (max-width:900px)"]: {
+  //     display: "none",
+  //   },
+  // },
+  // libPageTable: {
+  //   display: "flex",
+  //   ["@media (max-width:900px)"]: {
+  //     alignItems: "center",
+  //     width: "100%",
+  //     justifyContent: "center",
+  //   },
+  //   ["@media (max-width:600px)"]: {
+  //     alignItems: "center",
+  //     width: "100%",
+  //     justifyContent: "center",
+  //   },
+  //   ["@media (max-width:400px)"]: {
+  //     alignItems: "center",
+  //     width: "100%",
+  //     justifyContent: "center",
+  //   },
+  // },
 }));
 
 const columns = [

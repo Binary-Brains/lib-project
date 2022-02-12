@@ -11,7 +11,7 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@mui/material/MenuItem";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
@@ -24,7 +24,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import ListItemText from "@mui/material/ListItemText";
 import { Grid, Link } from "@mui/material";
 import DashboardSharpIcon from "@mui/icons-material/DashboardSharp";
-import FeedSharpIcon from "@mui/icons-material/FeedSharp";
+// import FeedSharpIcon from "@mui/icons-material/FeedSharp";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import SettingsApplicationsSharpIcon from "@mui/icons-material/SettingsApplicationsSharp";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -99,24 +99,24 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const useStyles = makeStyles((theme) => ({
-  form: {
-    width: "60%",
-    margin: "auto",
-    ["@media (max-width:600px)"]: {
-      width: "100%",
-    },
-  },
-  avatar: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   form: {
+//     width: "60%",
+//     margin: "auto"
+//     // ["@media (max-width:600px)"]: {
+//     //   width: "100%",
+//     // },
+//   },
+//   avatar: {
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+// }));
 
 export default function Navbar() {
   const theme = useTheme();
-  const classes = useStyles();
+  // const classes = useStyles();
   const dispatch = useDispatch()
   const [location, setLocation] = useLocation();
   const [open, setOpen] = React.useState(false);
@@ -126,11 +126,12 @@ export default function Navbar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  console.log(location)
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
-  const changeThePage = (url) => {};
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -154,7 +155,8 @@ export default function Navbar() {
   };
 
   const logout = () => {
-    dispatch(AdminLogout())
+    const res = window.confirm("Are you sure?")
+    if(res) dispatch(AdminLogout())
   }
   //uupdate this to just add a field in the drawer
 
@@ -184,23 +186,23 @@ export default function Navbar() {
     },
   ];
 
-  const NotLoginList = [
-    {
-      name: "Login",
-      icon: <DashboardSharpIcon></DashboardSharpIcon>,
-      url: "/student/signin",
-    },
-    {
-      name: "Signup",
-      icon: <FeedSharpIcon></FeedSharpIcon>,
-      url: "/student/signup",
-    },
-    {
-      name: "About Us",
-      icon: <LocalLibraryIcon></LocalLibraryIcon>,
-      url: "/student/aboutus",
-    },
-  ];
+  // const NotLoginList = [
+  //   {
+  //     name: "Login",
+  //     icon: <DashboardSharpIcon></DashboardSharpIcon>,
+  //     url: "/student/signin",
+  //   },
+  //   {
+  //     name: "Signup",
+  //     icon: <FeedSharpIcon></FeedSharpIcon>,
+  //     url: "/student/signup",
+  //   },
+  //   {
+  //     name: "About Us",
+  //     icon: <LocalLibraryIcon></LocalLibraryIcon>,
+  //     url: "/student/aboutus",
+  //   },
+  // ];
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (

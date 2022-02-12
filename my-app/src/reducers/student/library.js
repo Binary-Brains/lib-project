@@ -1,4 +1,4 @@
-import { GET_LIBRARIES_FAIL, GET_LIBRARIES_REQUEST, GOT_LIBRARIES, SEND_REQUEST_DONE, SEND_REQUEST_FAILED, SEND_REQUEST_STARTED } from '../../constants/student/library';
+import { GET_CONNECTED_LIBRARY, GET_CONNECTED_LIBRARY_REQUEST, GET_LIBRARIES_FAIL, GET_LIBRARIES_REQUEST, GOT_LIBRARIES, SEND_REQUEST_DONE, SEND_REQUEST_FAILED, SEND_REQUEST_STARTED } from '../../constants/student/library';
 
 let initialState = {
   loading: true,
@@ -11,6 +11,7 @@ export const libraryStudentRegisterReducer = (state = initialState, action) => {
     switch (action.type) {
       case GET_LIBRARIES_REQUEST:
         case SEND_REQUEST_STARTED:
+        case GET_CONNECTED_LIBRARY_REQUEST:
         return {...state, loading: true };
       case GOT_LIBRARIES:
         return {
@@ -33,6 +34,12 @@ export const libraryStudentRegisterReducer = (state = initialState, action) => {
         return {
             ...state,
             loading: false
+        }
+    case GET_CONNECTED_LIBRARY:
+        return {
+            ...state,
+            loading: false,
+            connectedLibraries: action.payload.data
         }
       default:
         return state;

@@ -13,8 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import image from "../../assests/signInBg.jpg";
 import GoogleAuth from "../../components/student/GoogleAuth";
-import TransitionAlert from "../../components/student/Alert";
-import { StudentSignin } from "../../actions/student/auth";
+// import TransitionAlert from "../../components/student/Alert";
+import { StudentLoad, StudentSignin } from "../../actions/student/auth";
 import { useDispatch } from "react-redux";
 import { useLocation } from "wouter";
 import PropTypes from "prop-types";
@@ -80,7 +80,7 @@ function SignInStudent({ title, userRegister }) {
   const dispatch = useDispatch();
   const [location, setLocation] = useLocation();
   const classes = useStyles();
-
+  console.log(location)
   Cookies.remove('cs_at')
   //console.log(typeof classes.root);
 
@@ -90,12 +90,13 @@ function SignInStudent({ title, userRegister }) {
     setAccount({...account, [e.target.name]: e.target.value})
   }
 
-  const handelLogin = (e) => {
+  const handelLogin = async (e) => {
     e.preventDefault()
-    dispatch(StudentSignin(account))
+    await dispatch(StudentSignin(account))
+    await dispatch(StudentLoad())
   }
 
-  const {loading, studentInfo, isAuthenticated}  = userRegister;
+  const {loading, isAuthenticated}  = userRegister;
 
   if(isAuthenticated) setLocation("/student/dashboard")
 

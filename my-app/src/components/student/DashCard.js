@@ -11,18 +11,26 @@ import { useLocation } from "wouter";
 const useStyles = makeStyles(() => ({
   cardzCont: {
     display: "flex",
-    ["@media (max-width:780px)"]: {
-      flexDirection: "column",
+    // ["@media (max-width:780px)"]: {
+    //   flexDirection: "column",
+    // },
+  },
+  individualCard: {
+    backgroundColor: "#E5E4E2",
+    boxShadow: "-3px 6px 5px 0px rgba(176,164,176,1)",
+    transition: "all .3s ease-in-out",
+    "&:hover": {
+      boxShadow: "-3px 18px 20px 0px rgba(99,89,99,1)",
     },
   },
   secondCard: {
     marginLeft: "15px",
     marginRight: "15px",
-    ["@media (max-width:780px)"]: {
-      marginTop: "25px",
-      marginLeft: "0px",
-      marginRight: "0px",
-    },
+    // ["@media (max-width:780px)"]: {
+    //   marginTop: "25px",
+    //   marginLeft: "0px",
+    //   marginRight: "0px",
+    // },
   },
   linkDashCards: {
     "&:hover": {
@@ -31,16 +39,17 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+
 export default function DashCard({ data }) {
   const classes = useStyles();
   const [location, setLocation] = useLocation();
-
+  console.log(location)
   return (
     <Grid conatiner className={classes.cardzCont}>
       {data.map((item) => {
         return (
           <Grid item xs={12} sm={12} md={4} className={classes.secondCard}>
-            <Card variant="outlined">
+            <Card variant="outlined" className={classes.individualCard}>
               <CardContent>
                 <Typography variant="h3">
                   <CountUp

@@ -1,3 +1,4 @@
+import { envUrl } from "../../utils/envUrl";
 import setAuthToken from "../../utils/setAuthToken";
 import { setAlert } from "../alert";
 
@@ -9,7 +10,7 @@ export const AdminSignup = (details) => async (dispatch) => {
  dispatch({ type: USER_REGISTER_REQUEST});
  //now only sending request to backend take the response data and save accordingly and use everywhere
  try {
-     await axios.post("/api/admin/cr_acc", details).then((res) => {
+     await axios.post(`${envUrl}/api/admin/cr_acc`, details).then((res) => {
         dispatch({
            type: ADMIN_REGISTRATION,
            payload: res.data
@@ -33,7 +34,7 @@ export const AdminVerify = (id) => async (dispatch) => {
    dispatch({ type: USER_REGISTER_REQUEST});
    //now only sending request to backend take the response data and save accordingly and use everywhere
    try {
-       await axios.get(`/api/admin/verify/${id}`).then((res) => {
+       await axios.get(`${envUrl}/api/admin/verify/${id}`).then((res) => {
           dispatch({
              type: ADMIN_VERIFICATION,
              payload: res.data
@@ -57,14 +58,12 @@ export const AdminSignin = (details) => async (dispatch) => {
    dispatch({ type: ADMIN_LOGIN_REQUEST});
    //now only sending request to backend take the response data and save accordingly and use everywhere
    try {
-       await axios.post(`/api/admin/login`, details).then((res) => {
+       await axios.post(`${envUrl}/api/admin/login`, details).then((res) => {
           dispatch({
              type: ADMIN_LOGIN,
              payload: res.data
           });
-          dispatch(setAlert(`Hi ${res.data.data.profile_data.admin_name}, Welcome to Library`,'success'))
-          console.log(details.remember_me)
-          if(details.remember_me == "remember") Cookies.set("cs_at", res.data.data.token)
+          if(details.remember_me === "remember") Cookies.set("cs_at", res.data.data.token)
           return res.data
        })
       //  dispatch({type: USER_REGISTERED, payload: res.data})
@@ -73,7 +72,7 @@ export const AdminSignin = (details) => async (dispatch) => {
       dispatch({
          type: ADMIN_LOGIN_FAIL
       })
-      dispatch(setAlert(error.response.data.message, "error"));
+      dispatch(setAlert(error.response && error.response.data && error.response.data.message, "error"));
       return error
   
    }
@@ -85,15 +84,13 @@ export const AdminLoad = () => async (dispatch) => {
       setAuthToken(Cookies.get('cs_at'))
    //now only sending request to backend take the response data and save accordingly and use everywhere
    try {
-       await axios.get(`/api/admin/admin_profile` ).then((res) => {
+       await axios.get(`${envUrl}/api/admin/admin_profile` ).then((res) => {
           dispatch({
              type: ADMIN_LOADED,
              payload: res.data
           });
-         //  dispatch(setAlert(`Hi ${res.data.data.admin_name}, Welcome to Library`,'success'))
           return res.data
        })
-      //  dispatch({type: USER_REGISTERED, payload: res.data})
    } catch (error) {
       console.log(error.message)
       dispatch({

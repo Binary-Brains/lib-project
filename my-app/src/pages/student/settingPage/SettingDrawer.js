@@ -8,16 +8,16 @@ import AvatarComp from "../../../components/student/AvatarComp";
 import Navbar from "../../../components/student/Navbar";
 import { makeStyles } from "@material-ui/core/styles";
 import Form from "../../../components/Form";
-import { connect, useDispatch } from 'react-redux';
-import { useLocation } from 'wouter';
+import { connect } from 'react-redux';
+// import { useLocation } from 'wouter';
 
 const useStyles = makeStyles(() => ({
   form: {
     width: "60%",
     margin: "auto",
-    ["@media (max-width:600px)"]: {
-      width: "100%",
-    },
+    // ["@media (max-width:600px)"]: {
+    //   width: "100%",
+    // },
   },
   editProf: {
     display: "flex",

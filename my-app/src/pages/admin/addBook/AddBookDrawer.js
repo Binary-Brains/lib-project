@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import ComplexGrid from "./AddedBookDisplayComp";
 import { useDispatch } from "react-redux";
 import { useLocation } from "wouter";
-import { loadLibrary, saveBook } from "../../../actions/admin/library";
+import { saveBook } from "../../../actions/admin/library";
 
 const useStyles = makeStyles(() => ({
   btnCont: {
@@ -28,7 +28,7 @@ export default function MiniDrawerDash() {
   const dispatch = useDispatch()
   const [location, setLocation] = useLocation()
   const [books, setBooks] = useState([]);
-
+  console.log(location)
   const addBooks = (obj) => {
     setBooks([...books, obj]);
   };
