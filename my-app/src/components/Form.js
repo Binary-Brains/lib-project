@@ -35,7 +35,7 @@ export default function Form({ data }) {
                     label={item.label}
                     name={item.name}
                     type={item.type}
-                    autoFocus={item.autoFocus}
+                    value={item.value}
                   />
                 );
               })}

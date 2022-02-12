@@ -6,7 +6,7 @@ import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
 import { buttonUnstyledClasses } from "@mui/base/ButtonUnstyled";
 import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
 import { Grid } from "@mui/material";
-import DashboardCard from "../../pages/student/libPage/AllLibCard";
+import AllLibCard from "../../pages/student/libPage/AllLibCard";
 import ConnLib from "../../pages/student/libPage/ConnLib";
 
 const blue = {
@@ -104,7 +104,7 @@ export default function UnstyledTabsCustomized() {
         >
           {Array.from(Array(6)).map((_, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-              <DashboardCard>xs=2</DashboardCard>
+              <AllLibCard>xs=2</AllLibCard>
             </Grid>
           ))}
         </Grid>

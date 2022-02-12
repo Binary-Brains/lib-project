@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types'
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Button, Grid, TextField } from "@mui/material";
@@ -7,6 +8,8 @@ import AvatarComp from "../../../components/student/AvatarComp";
 import Navbar from "../../../components/student/Navbar";
 import { makeStyles } from "@material-ui/core/styles";
 import Form from "../../../components/Form";
+import { connect, useDispatch } from 'react-redux';
+import { useLocation } from 'wouter';
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -23,40 +26,39 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const fieldItems = [
-  {
-    id: "name",
-    label: "Name",
-    name: "name",
-    type: "text",
-    autoFocus: true,
-  },
-  {
-    id: "state",
-    label: "State",
-    name: "state",
-    type: "text",
-  },
-  {
-    id: "city",
-    label: "City",
-    name: "city",
-    type: "text",
-  },
-  {
-    id: "password",
-    label: "Password",
-    name: "password",
-    type: "password",
-  },
-];
 
-export default function SettingDrawer() {
+function SettingDrawer({userRegister}) {
   const classes = useStyles();
   const [focus, setFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
+
+  const {studentInfo} =userRegister;
+  const fieldItems = [
+    {
+      id: "name",
+      label: "Name",
+      name: "name",
+      type: "text",
+      value: studentInfo.student_name,
+      autoFocus: true,
+    },
+    {
+      id: "state",
+      label: "State",
+      name: "state",
+      value: studentInfo.student_state,
+      type: "text",
+    },
+    {
+      id: "city",
+      label: "City",
+      name: "city",
+      value: studentInfo.student_city,
+      type: "text",
+    }
+  ];
   return (
     <Box sx={{ display: "flex" }}>
       <Navbar />
@@ -72,7 +74,7 @@ export default function SettingDrawer() {
         <Grid container>
           <form className={classes.form} noValidate>
             <Grid item xs={12} mt={2}>
-              <PhoneNoField />
+              <PhoneNoField value={studentInfo.student_contact} />
             </Grid>
             <Grid item xs={12} mt={2} mb={2}>
               <TextField
@@ -81,6 +83,7 @@ export default function SettingDrawer() {
                 variant="outlined"
                 required
                 fullWidth
+                value={studentInfo.student_dob}
                 onChange={(e) => {
                   if (e.target.value) setHasValue(true);
                   else setHasValue(false);
@@ -106,3 +109,13 @@ export default function SettingDrawer() {
     </Box>
   );
 }
+
+SettingDrawer.propTypes = {
+  userRegister: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  userRegister: state.userRegister,
+});
+
+export default connect(mapStateToProps)(SettingDrawer);

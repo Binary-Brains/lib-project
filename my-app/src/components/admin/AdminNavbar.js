@@ -12,16 +12,22 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { makeStyles } from "@material-ui/core/styles";
+import MenuItem from "@mui/material/MenuItem";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import Menu from "@mui/material/Menu";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import Badge from "@mui/material/Badge";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import ListItemText from "@mui/material/ListItemText";
 import { Grid, Link } from "@mui/material";
 import DashboardSharpIcon from "@mui/icons-material/DashboardSharp";
 import FeedSharpIcon from "@mui/icons-material/FeedSharp";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
-import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import SettingsApplicationsSharpIcon from "@mui/icons-material/SettingsApplicationsSharp";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const drawerWidth = 240;
 
@@ -109,6 +115,11 @@ export default function Navbar() {
   const theme = useTheme();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -120,6 +131,23 @@ export default function Navbar() {
     setOpen(false);
   };
 
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
   //uupdate this to just add a field in the drawer
 
   const drawerList = [
@@ -128,27 +156,108 @@ export default function Navbar() {
       icon: <DashboardSharpIcon></DashboardSharpIcon>,
       url: "/admin/dashboard",
     },
-    {
-      name: "My Feeds",
-      icon: <FeedSharpIcon></FeedSharpIcon>,
-      url: "/admin/feed",
-    },
+
     {
       name: "Add a New Book",
       icon: <LocalLibraryIcon></LocalLibraryIcon>,
       url: "/admin/addbook",
     },
-    {
-      name: "Available Book",
-      icon: <LibraryBooksIcon></LibraryBooksIcon>,
-      url: "/admin/availabelbook",
-    },
+
     {
       name: "Settings",
       icon: <SettingsApplicationsSharpIcon></SettingsApplicationsSharpIcon>,
-      url: "/student/setting",
+      url: "/admin/setting",
+    },
+    {
+      name: "Logout",
+      icon: <LogoutIcon></LogoutIcon>,
+      url: "/admin/signin",
     },
   ];
+
+  const NotLoginList = [
+    {
+      name: "Login",
+      icon: <DashboardSharpIcon></DashboardSharpIcon>,
+      url: "/student/signin",
+    },
+    {
+      name: "Signup",
+      icon: <FeedSharpIcon></FeedSharpIcon>,
+      url: "/student/signup",
+    },
+    {
+      name: "About Us",
+      icon: <LocalLibraryIcon></LocalLibraryIcon>,
+      url: "/student/aboutus",
+    },
+  ];
+
+  const mobileMenuId = "primary-search-account-menu-mobile";
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
+  );
+
+  const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -178,6 +287,40 @@ export default function Navbar() {
               </Typography>
             </Grid>
           </Grid>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={17} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-haspopup="true"
+              //onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </Box>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -202,6 +345,8 @@ export default function Navbar() {
           ))}
         </List>
       </Drawer>
+      {renderMobileMenu}
+      {renderMenu}
     </Box>
   );
 }

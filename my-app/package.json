@@ -12,19 +12,25 @@
     "@mui/lab": "^5.0.0-alpha.67",
     "@mui/material": "^5.4.0",
     "@mui/styles": "^5.3.0",
+    "@mui/x-data-grid": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.25.0",
     "country-state-city": "^3.0.1",
+    "js-cookie": "^3.0.1",
     "material-table": "^1.69.3",
     "material-ui-phone-number": "^3.0.0",
     "material-ui-search-bar": "^1.0.0",
     "mui-datatables": "^4.0.0",
+    "notistack": "^2.0.3",
     "react": "^17.0.2",
     "react-countup": "^6.1.1",
     "react-dom": "^17.0.2",
+    "react-notifications": "^1.7.3",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
+    "redux-thunk": "^2.4.1",
     "web-vitals": "^2.1.4",
     "wouter": "^2.8.0-alpha.2"
   },
@@ -51,5 +57,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:8080"
 }

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import AvatarComp from "../components/student/AvatarComp";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AvatarComp from "../../components/student/AvatarComp";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -11,9 +12,17 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import image from "../assests/signInBg.jpg";
-import PhoneNoField from "../components/student/PhoneNoField";
-import GoogleAuth from "../components/student/GoogleAuth";
+import image from "../../assests/signInBg.jpg";
+import PhoneNoField from "../../components/student/PhoneNoField";
+import GoogleAuth from "../../components/student/GoogleAuth";
+import { StudentSignup } from "../../actions/student/auth";
+import MuiPhoneNumber from "material-ui-phone-number";
+import { useLocation } from "wouter";
+import Cookies from "js-cookie";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { setAlert } from "../../actions/alert";
+import { GridLoadingOverlay } from "@mui/x-data-grid";
 
 //import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 //import users from "./../../data/users";
@@ -73,46 +82,58 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn({ title }) {
-  //   if (authService.isLoggedIn()) {
-  //     props.history.push("./home");
-  //   }
+function SignUpStudent({ title, userRegister }) {
+  const dispatch = useDispatch();
+  const [location, setLocation] = useLocation();
 
   const classes = useStyles();
 
-  //console.log(typeof classes.root);
+  const [account, setAccount] = React.useState({
+    student_name: "",
+    student_email: "",
+    student_contact: "",
+    student_state: "",
+    student_city: "",
+    student_dob: "",
+    student_password: "",
+  });
 
-  const [account, setAccount] = React.useState({ username: "", password: "" });
-
-  const handelAccount = (property, event) => {
-    const accountCopy = { ...account };
-    accountCopy[property] = event.target.value;
-
-    setAccount(accountCopy);
+  const onChange = (e) => {
+    setAccount({ ...account, [e.target.name]: e.target.value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    //create a function in the action folder and just call in the component it will save the user and return
+    const data = await dispatch(StudentSignup(account));
+
+    //after successful signup user will be receiving a mail with a frontend link
+    //from that link we have to get the id and send it to the backend to verify and then 
+    //http://localhost:3000/api/verify/6204d2a26212677ed8d38808
+  };
+
+
+
+  const {loading, studentInfo, isAuthenticated} = userRegister;
+
+  if (userRegister.studentInfo) {
+    if(isAuthenticated)
+      setLocation("/student/dashboard");
+    else {
+      setLocation("/student/signin");
+      dispatch(setAlert(`Hi!,${userRegister.studentInfo.student_name} an Email has been sent with a verification link!`,'success'))
+    }
+  }
+
 
   const [focus, setFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
 
-  //   const isVarifiedUser = (username, password) => {
-  //     return users.find(
-  //       (user) => user.username === username && user.password === password
-  //     );
-  //   };
-
-  //   const handelLogin = () => {
-  //     if (isVarifiedUser(account.username, account.password)) {
-  //       authService.doLogIn(account.username);
-  //       setAccount({ username: "", password: "" });
-  //       props.history.push("/home");
-  //     }
-  //   };
-
   return (
-    <Grid container component="main" className={classes.root}>
-      {/* <Grid item xs={false} sm={4} md={7} className={classes.image} /> */}
+    <>
+   <Grid container component="main" className={classes.root}>
       <Grid
         className={classes.size}
         item
@@ -130,27 +151,17 @@ export default function SignIn({ title }) {
           </Typography>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   autoComplete="fname"
-                  name="firstName"
+                  name="student_name"
                   variant="outlined"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  onChange={(e) => onChange(e)}
+                  id="name"
+                  label="Full Name"
                   autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -158,23 +169,35 @@ export default function SignIn({ title }) {
                   variant="outlined"
                   required
                   fullWidth
+                  onChange={(e) => onChange(e)}
                   id="email"
                   label="Email Address"
-                  name="email"
+                  name="student_email"
                   autoComplete="email"
                 />
               </Grid>
               <Grid item xs={12}>
-                <PhoneNoField />
+                <TextField
+                  type={"number"}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  onChange={(e) => onChange(e)}
+                  id="contact"
+                  label="Contact"
+                  name="student_contact"
+                  autoComplete="contact"
+                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   required
                   fullWidth
+                  onChange={(e) => onChange(e)}
                   id="state"
                   label="State"
-                  name="state"
+                  name="student_state"
                   autoComplete="state"
                 />
               </Grid>
@@ -183,9 +206,10 @@ export default function SignIn({ title }) {
                   variant="outlined"
                   required
                   fullWidth
+                  onChange={(e) => onChange(e)}
                   id="city"
                   label="City"
-                  name="city"
+                  name="student_city"
                   autoComplete="city"
                 />
               </Grid>
@@ -194,11 +218,13 @@ export default function SignIn({ title }) {
                   onFocus={onFocus}
                   onBlur={onBlur}
                   variant="outlined"
+                  name="student_dob"
                   required
                   fullWidth
                   onChange={(e) => {
                     if (e.target.value) setHasValue(true);
                     else setHasValue(false);
+                    setAccount({ ...account, [e.target.name]: e.target.value });
                   }}
                   label="Dob"
                   type={hasValue || focus ? "date" : "text"}
@@ -209,7 +235,8 @@ export default function SignIn({ title }) {
                   variant="outlined"
                   required
                   fullWidth
-                  name="password"
+                  onChange={(e) => onChange(e)}
+                  name="student_password"
                   label="Password"
                   type="password"
                   id="password"
@@ -230,13 +257,15 @@ export default function SignIn({ title }) {
               fullWidth
               variant="contained"
               color="primary"
+              onClick={(e) => handleSubmit(e)}
               className={classes.submit}
+              disabled ={loading? true:  false}
             >
               Sign Up
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/student/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -247,5 +276,16 @@ export default function SignIn({ title }) {
         </div>
       </Grid>
     </Grid>
+    </>
   );
 }
+
+SignUpStudent.propTypes = {
+  userRegister: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  userRegister: state.userRegister,
+});
+
+export default connect(mapStateToProps)(SignUpStudent);

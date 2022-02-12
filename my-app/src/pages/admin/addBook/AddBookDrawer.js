@@ -1,11 +1,33 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Button, Link } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { Button } from "@mui/material";
 import AdminNavbar from "../../../components/admin/AdminNavbar";
+import AddBookModal from "../../../components/admin/AddBookModal";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import ComplexGrid from "./AddedBookDisplayComp";
+
+const useStyles = makeStyles(() => ({
+  btnCont: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "20px",
+  },
+  addBookBtn: {
+    marginRight: "20px",
+  },
+}));
 
 export default function MiniDrawerDash() {
+  const classes = useStyles();
+  const [books, setBooks] = useState([]);
+
+  const addBooks = (obj) => {
+    setBooks([...books, obj]);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <AdminNavbar />
@@ -16,16 +38,27 @@ export default function MiniDrawerDash() {
           align="center"
           fontSize={25}
         >
-          Please add the list of books
+          {books && books.length > 0 ? (
+            <ComplexGrid data={books} />
+          ) : (
+            "Please add book"
+          )}
         </Typography>
 
-        <Typography variant="body1" color="textPrimary" align="center" mt={2}>
-          <Link href="/admin/addbook/createbook">
-            <Button type="submit" variant="contained" color="primary">
-              <AddIcon /> Add Book
-            </Button>
-          </Link>
-        </Typography>
+        <Grid container className={classes.btnCont}>
+          <Grid item className={classes.addBookBtn}>
+            <AddBookModal addBooks={addBooks} />
+          </Grid>
+          <Grid item>
+            {books && books.length > 0 ? (
+              <Button variant="contained" color="primary">
+                Submit
+              </Button>
+            ) : (
+              <></>
+            )}
+          </Grid>
+        </Grid>
       </Box>
     </Box>
   );

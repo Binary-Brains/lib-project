@@ -1,5 +1,5 @@
 import React from "react";
-import AvatarComp from "../components/student/AvatarComp";
+import AvatarComp from "../../components/admin/AvatarComp";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -11,8 +11,15 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import image from "../assests/signInBg.jpg";
-import GoogleAuth from "../components/student/GoogleAuth";
+import image from "../../assests/signInBg.jpg";
+import GoogleAuth from "../../components/admin/GoogleAuth";
+import TransitionAlert from "../../components/admin/Alert";
+import { AdminSignin } from "../../actions/admin/auth";
+import { useDispatch } from "react-redux";
+import { useLocation } from "wouter";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import Cookies from "js-cookie";
 //import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 //import users from "./../../data/users";
 //import authService from "./../service/authService";
@@ -69,42 +76,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn({ title }) {
-  //   if (authService.isLoggedIn()) {
-  //     props.history.push("./home");
-  //   }
-
+function SignInAdmin({ title, adminRegister }) {
+  const dispatch = useDispatch();
+  const [location, setLocation] = useLocation();
   const classes = useStyles();
 
+  Cookies.remove('li_at')
   //console.log(typeof classes.root);
 
-  const [account, setAccount] = React.useState({ username: "", password: "" });
+  const [account, setAccount] = React.useState({ admin_email: "", admin_password: "", remember_me: false });
 
-  const handelAccount = (property, event) => {
-    const accountCopy = { ...account };
-    accountCopy[property] = event.target.value;
+  const onChange = (e) => {
+    setAccount({...account, [e.target.name]: e.target.value})
+  }
 
-    setAccount(accountCopy);
-  };
+  const handelLogin = (e) => {
+    e.preventDefault()
+    dispatch(AdminSignin(account))
+  }
 
-  //   const isVarifiedUser = (username, password) => {
-  //     return users.find(
-  //       (user) => user.username === username && user.password === password
-  //     );
-  //   };
+  const {loading, adminInfo, isAuthenticated}  = adminRegister;
 
-  //   const handelLogin = () => {
-  //     if (isVarifiedUser(account.username, account.password)) {
-  //       authService.doLogIn(account.username);
-  //       setAccount({ username: "", password: "" });
-  //       props.history.push("/home");
-  //     }
-  //   };
+  if(isAuthenticated) setLocation("/admin/dashboard")
+
 
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      {/* <Grid item xs={false} sm={4} md={7} className={classes.image} /> */}
       <Grid
         className={classes.size}
         item
@@ -122,30 +120,30 @@ export default function SignIn({ title }) {
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
-              onChange={(event) => handelAccount("email", event)}
               variant="outlined"
               margin="normal"
               required
               fullWidth
               id="email"
               label="Email"
-              name="email"
+              name="admin_email"
+              onChange={e => onChange(e)}
               autoFocus
             />
             <TextField
-              onChange={(event) => handelAccount("password", event)}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="admin_password"
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={e => onChange(e)}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" color="primary" name="remember_me"  onChange={e => onChange(e)}/>}
               label="Remember me"
             />
             <Button
@@ -154,13 +152,14 @@ export default function SignIn({ title }) {
               variant="contained"
               color="primary"
               className={classes.submit}
-              //onClick={handelLogin}
+              onClick={e => handelLogin(e)}
+              disabled={loading ? true: false}
             >
               Sign In
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/admin/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -175,3 +174,13 @@ export default function SignIn({ title }) {
     </Grid>
   );
 }
+
+SignInAdmin.propTypes = {
+  adminRegister: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  adminRegister: state.adminRegister,
+});
+
+export default connect(mapStateToProps)(SignInAdmin);

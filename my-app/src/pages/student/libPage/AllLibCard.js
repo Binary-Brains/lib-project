@@ -3,10 +3,18 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { Link, Button } from "@mui/material";
+import { makeStyles } from "@material-ui/core/styles";
 
-export default function MediaCard() {
+const useStyles = makeStyles(() => ({
+  learnMoreBtn: {
+    textDecoration: "none",
+  },
+}));
+
+export default function AllLibCard() {
+  const classes = useStyles();
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -21,7 +29,13 @@ export default function MediaCard() {
         </Typography>
       </CardContent>
       <CardActions id="libButton">
-        <Button size="small">Learn More</Button>
+        <Link
+          href="/student/library/learnmore"
+          className={classes.learnMoreBtn}
+        >
+          <Button size="small">Learn More</Button>
+        </Link>
+
         <Button size="small">Send Request</Button>
       </CardActions>
     </Card>

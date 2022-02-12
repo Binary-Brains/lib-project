@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import { Grid } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import CountUp from "react-countup";
+import Link from "@material-ui/core/Link";
+import { useLocation } from "wouter";
 
 const useStyles = makeStyles(() => ({
   cardzCont: {
@@ -22,10 +24,16 @@ const useStyles = makeStyles(() => ({
       marginRight: "0px",
     },
   },
+  linkDashCards: {
+    "&:hover": {
+      textDecoration: "none",
+    },
+  },
 }));
 
 export default function DashCard({ data }) {
   const classes = useStyles();
+  const [location, setLocation] = useLocation()
   return (
     <Grid conatiner className={classes.cardzCont}>
       {data.map((item) => {
@@ -41,13 +49,15 @@ export default function DashCard({ data }) {
                     separator=","
                   ></CountUp>
                 </Typography>
-                <Typography
-                  sx={{ fontSize: 17, mt: 1.5, mb: 0 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {item.desc}
-                </Typography>
+                <Link onClick={() => setLocation(item.link)} className={classes.linkDashCards}>
+                  <Typography
+                    sx={{ fontSize: 17, mt: 1.5, mb: 0 }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    {item.desc}
+                  </Typography>
+                </Link>
               </CardContent>
             </Card>
           </Grid>
