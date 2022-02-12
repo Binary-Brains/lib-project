@@ -23,6 +23,12 @@ var errors = {
   invalid_tokn: [800, "Access without token is not authorised"],
   invalid_creds: [900, "Invalid Credentials"],
   unauth_access: [402, "Unauthorize Access"],
+  already_requested: [900, "Already requested to this library"],
+  book_not_found: [950, "Requested book was not found"],
+  book_unavailable: [951, "Requested book is not available"],
+  issue_history: [952, "Issue history not found"],
+  not_issued: [954, "Book not issued"],
+  already_returned: [954, "Book already returned"],
 };
 
 module.exports = errors;

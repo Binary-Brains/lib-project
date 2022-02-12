@@ -6,22 +6,23 @@ module.exports = {
     //we can take the err object and trace the error in the console
     console.trace(err);
 
-    res.status(errorCodes[error_index] ? errorCodes[error_index][0] : 500).json({
-    
-      code: errorCodes[error_index] ? errorCodes[error_index][0] : 404,
-      message: errorCodes[error_index]
-        ? errorCodes[error_index][1]
-        : error_index,
-      success: false,
-      time: Date.now()
-    });
+    res
+      .status(errorCodes[error_index] ? errorCodes[error_index][0] : 500)
+      .json({
+        code: errorCodes[error_index] ? errorCodes[error_index][0] : 404,
+        message: errorCodes[error_index]
+          ? errorCodes[error_index][1]
+          : error_index,
+        success: false,
+        time: Date.now(),
+      });
     return;
   },
   sendSuccess: function (res, data) {
     res.status(constants.OK).json({
       success: true,
       data: data,
-      time: Date.now()
+      time: Date.now(),
     });
   },
 };

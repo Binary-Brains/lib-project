@@ -10,6 +10,10 @@ const errors = require("./utility/errors");
 
 require("./db/connect");
 
+const studentRoutes = require("./routes/student");
+const adminRoutes = require("./routes/admin");
+const libraryRoutes = require("./routes/library");
+
 var app = express();
 
 // Middlewares
@@ -45,8 +49,11 @@ app.use(function (req, res, next) {
 app.use(cookieParser());
 app.use(cors());
 
-app.use("/login", (req, res) => sendSuccess(res, "You are logged in successfully"))
-app.use("/register", (req, res) =>  sendError(res, {msg: "Nothing happened"}, "password_length", 300));
-
+app.use("/api/student", studentRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/library", libraryRoutes);
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve('build', 'index.html'));
+});
 
 module.exports = app;
