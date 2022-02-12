@@ -225,7 +225,7 @@ function AdminDashboardDrawer({libraryRegister, adminRegister}) {
   
   const rows = [];
 
-  libraryInfo && libraryInfo.pending_students.map(({student_name, _id, student_email}, index) => {
+  libraryInfo && libraryInfo.pending_students && libraryInfo.pending_students.map(({student_name, _id, student_email}, index) => {
     let temp = {id: index+1, _id, student_name, student_email}
     rows.push(temp)
   })
