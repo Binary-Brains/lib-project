@@ -5,8 +5,12 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "library": "npm run add && npm run dev",
     "start": "node ./bin/www",
     "server": "nodemon ./bin/www",
+    "add": "npm install && npm install --prefix my-app",
+    "client": "npm start --prefix my-app",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "format": "prettier --write \"**/*.{js,jsx,json,md, html}\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && npm install"
   },
@@ -45,6 +49,7 @@
     "socket.io": "^4.4.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "concurrently": "^5.3.0"
   }
 }
