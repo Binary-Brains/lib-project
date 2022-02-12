@@ -29,6 +29,7 @@ var errors = {
   issue_history: [952, "Issue history not found"],
   not_issued: [954, "Book not issued"],
   already_returned: [954, "Book already returned"],
+  already_returned: [960, "No libraries found in your state"],
 };
 
 module.exports = errors;

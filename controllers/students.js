@@ -278,9 +278,23 @@ exports.errorController = (req, res) => {
   return sendError(res, "Google Server Error", "Third party error", 500);
 };
 
+exports.libraryList = (req, res) => {
+  var student = req.profile;
+  var state = student.student_state;
+
+  Library.find({ library_state: state }, "-admin_id -pending_request -accepted_student" ,function(err, libraries) {
+    if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
+    if(libraries.length > 0) {
+      return sendSuccess(res, libraries);
+    } else {
+      return sendError(res, err, "No libraries found in your state", constants.SERVER_ERROR);
+    }
+  });
+}
+
 exports.requestController = (req, res) => {
   var library_id = req.params.lib_id;
-  var student_id = req.body.student_id;
+  var student_id = req.profile._id;
   var library_request = { library_id: library_id, requested_at: Date.now() };
   var pending_request = { student_id: student_id, requested_at: Date.now() };
 
@@ -323,16 +337,19 @@ exports.requestController = (req, res) => {
 
 exports.reserveBook = (req, res) => {
   var book_name = req.body.book_name;
-  var student_id = req.user.id;
-  var query = { book_name: book_name, book_status: 1 };
+  var library_id = req.body.library_id;
+  var student_id = req.profile._id;
+  var query = { book_name: book_name, book_status: 1, library_id: library_id };
+
   Book.findOne(query, function(err, book) {
-    if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
+    if(err) return sendError(res, err, err.message, constants.SERVER_ERROR);
     if(book) {
         Book.updateOne({ _id: book._id }, { book_status: 3 }, function(err, book1) {
-          if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
+          if(err) return sendError(res, err, err.message, constants.SERVER_ERROR);
           var bookHistory = new History({
             book_id: book._id, 
             student_id: student_id, 
+            library_id: library_id,
             booked_at: Date.now()
           });
           bookHistory.save(function(err, result) {
@@ -348,7 +365,27 @@ exports.reserveBook = (req, res) => {
 
 exports.studentData = (req, res) => {
   var studentProfile = req.profile;
-  return sendSuccess(res, studentProfile);
+  return sendSuccess(res, studentProfile)
+  
+}
+
+exports.getConnectedLibraryForStudentController = (req, res) => {
+  var studentProfile = req.profile;
+  Student.aggregate([
+    {$match: {_id: studentProfile._id}},
+    {
+      $lookup: {
+        from: 'libraries',
+        localField: 'librarires.library_id',
+        foreignField: '_id',
+        as: 'result'
+      }
+    }
+  ]).then(response => {
+    return sendSuccess(res, response[0].result);
+  }).catch(err => {
+    return sendError(res, err, err.message, constants.BAD_REQUEST)
+  })
 }
 
 const generateVerifyEmail = async (id, email, name, cb) => {
@@ -372,3 +409,68 @@ const generateVerifyEmail = async (id, email, name, cb) => {
     else cb(null, res);
   });
 };
+
+exports.studentLibraryHistory = (req, res) => {
+  //var library_id = req.body.library_id;
+  var student = req.profile;
+  var library_id = req.body.library_id;
+
+  Library.findById( { _id: library_id }, function(err, library) {
+    if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
+
+    History.aggregate([
+      {
+          '$facet' : {
+              "reserved_books": [{
+                  '$match' : { 
+                  'student_id' : mongoose.Types.ObjectId(student._id),
+                  'library_id' : mongoose.Types.ObjectId(library_id),
+                  'returned_at' : null,
+                  'issued_at' : null,
+                  'booked_at': { $ne: null }
+                  }
+              }, {
+                '$lookup' : {
+                  'from' : 'books',
+                  'localField' : 'book_id',
+                  'foreignField' : '_id',
+                  'as' : 'book_data'
+                }
+              }],
+              
+              "returned_books": [{
+                  '$match' : { 
+                      'student_id' : mongoose.Types.ObjectId(student._id),
+                      'library_id' : mongoose.Types.ObjectId(library_id), 
+                      'returned_at': { $ne: null }
+                  }
+              }],
+
+              "issued_books": [{
+                  '$match' : { 
+                      'student_id' : mongoose.Types.ObjectId(student._id),
+                      'library_id' : mongoose.Types.ObjectId(library_id),
+                      'returned_at' : null,
+                      'issued_at' : { $ne: null }
+                      }
+              }]
+          }
+      }
+    ]).then(response => {
+      //we need to return the available books history
+      Book.aggregate([
+        {$match: {library_id: mongoose.Types.ObjectId(library_id), book_status: 1}}
+      ]).then(bookRes => {
+      console.log(response)
+
+        response[0]["library_data"] = library;
+        response[0]["available_books"] = bookRes;
+        return sendSuccess(res, response)
+      })
+      }).catch((err) => {
+        return sendError(res, err, "server_error", constants.SERVER_ERROR);
+      });
+
+  });
+  
+}

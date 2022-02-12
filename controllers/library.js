@@ -91,28 +91,51 @@ const saveTheBook = (data, library_id) => {
 exports.acceptRequestController = (req, res) => {
     var student_id = req.params.student_id;
     var library_id = req.body.library_id;
+    var accept = req.body.accept;
     var del_pending_request = { student_id: student_id };
     var del_library_request = { library_id: library_id };
     var add_library = { library_id: library_id, added_at: Date.now()  };
     var accepted_student = { student_id: student_id, added_at: Date.now() };
 
-    Library.findByIdAndUpdate(
-        { _id: library_id }, 
-        { $pull: { pending_request: del_pending_request }, $push: { accepted_student: accepted_student } }, 
-        function(err, library) {
-            if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
-            Student.findByIdAndUpdate(
-                { _id: student_id },
-                { $pull: { library_request: del_library_request }, $push: { librarires: add_library } },
-                function(err, account) {
-                    if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
-                    Library.findById({ _id: library_id }, (err, updatedLibData) => {
-                        if (err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
-                        return sendSuccess(res, updatedLibData);
-                      });
-                }
-            );
-        });
+    if(accept == "true") {
+        //accepted request!
+        Library.findByIdAndUpdate(
+            { _id: library_id }, 
+            { $pull: { pending_request: del_pending_request }, $push: { accepted_student: accepted_student } }, 
+            function(err, library) {
+                if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
+                Student.findByIdAndUpdate(
+                    { _id: student_id },
+                    { $pull: { library_request: del_library_request }, $push: { librarires: add_library } },
+                    function(err, account) {
+                        if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
+                        Library.findById({ _id: library_id }, (err, updatedLibData) => {
+                            if (err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
+                            return sendSuccess(res, updatedLibData);
+                          });
+                    }
+                );
+            });
+    } else {
+        //rejected request!
+        Library.findByIdAndUpdate(
+            { _id: library_id }, 
+            { $pull: { pending_request: del_pending_request } }, 
+            function(err, library) {
+                if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
+                Student.findByIdAndUpdate(
+                    { _id: student_id },
+                    { $pull: { library_request: del_library_request } },
+                    function(err, account) {
+                        if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
+                        Library.findById({ _id: library_id }, (err, updatedLibData) => {
+                            if (err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
+                            return sendSuccess(res, updatedLibData);
+                          });
+                    }
+                );
+            });
+    }
   }
 
 exports.getLibrary = async (req, res) => {
@@ -136,6 +159,22 @@ exports.getLibrary = async (req, res) => {
             'foreignField': '_id', 
             'as': 'admin_details'
           }
+        },
+        {
+            $lookup: {
+                from: 'students',
+                localField: 'pending_request.student_id',
+                foreignField: '_id',
+                as: 'pending_students'
+              }
+        },
+        {
+            $lookup: {
+                from: 'students',
+                localField: 'accepted_student.student_id',
+                foreignField: '_id',
+                as: 'registered_students'
+              }
         }
       ]).then(response => {
         return sendSuccess(res, response)
@@ -145,33 +184,39 @@ exports.getLibrary = async (req, res) => {
 }
 
 exports.issueBook = (req, res) => {
-    var book_id = req.params.book_id;
+    var book_id = req.body.book_id;
+    var book_name = req.body.book_name;
     var student_id = req.body.student_id;
+    var library_id = req.body.library_id;
     var history_id = req.body.history_id;
-    var findHistory = { _id: history_id };
     var update_book = { book_status: 2 };
     var update_history = { issued_at: Date.now() };
+    var query = { book_name: book_name, book_status: 1, library_id: library_id };
 
-    Book.findByIdAndUpdate({ _id: book_id }, update_book , function(err, book) {
-        if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
-        if(history_id) {
-            History.findOneAndUpdate(findHistory , update_history , { new: true}, function(err, history) {
-                if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
+    if(history_id) {
+        Book.findByIdAndUpdate({ _id: book_id }, update_book , function(err, book) {
+            if(err) return sendError(res, err, err.message, constants.SERVER_ERROR);
+
+            History.findByIdAndUpdate(history_id , update_history , { new: true}, function(err, history) {
+                if(err) return sendError(res, err, err.message, constants.SERVER_ERROR);
                 return sendSuccess(res, history);
             });
-        } else {
-            console.log("Not Found!!!");
+        });
+    } else {
+        console.log("History not" + book_id);
+        Book.findOneAndUpdate(query, update_book , function(err, book) {
             var history = new History({
-                book_id: book_id, 
-                student_id: student_id, 
+                book_id: book._id, 
+                student_id: student_id,
+                library_id: library_id,
                 issued_at: Date.now()
             });
             history.save(history, function(err, historySave) {
-                if(err) return sendError(res, err, "server_error", constants.SERVER_ERROR);
+                if(err) return sendError(res, err, err.message, constants.SERVER_ERROR);
                 return sendSuccess(res, historySave);
             });
-        }
-    }); 
+        });
+    }
 };
 
 exports.returnBook = (req, res) => {
@@ -264,3 +309,57 @@ exports.issuedBooks = (req, res) => {
         return sendError(res, err, "server_error", constants.SERVER_ERROR);
       });
 }
+
+exports.libraryStudentHistory = async (req, res) => {
+    //var library_id = req.body.library_id;
+    var student_id = req.body.student_id;
+    var library_id = req.profile.library_id;
+
+    Student.findById( { _id: student_id }, function(err, student) {
+        if(err) return sendError(res, err,err.message, constants.SERVER_ERROR);
+    
+        History.aggregate([
+            {
+                '$facet' : {
+                    "reserved_books": [{
+                        '$match' : { 
+                        'student_id' : mongoose.Types.ObjectId(student_id),
+                        'library_id' : mongoose.Types.ObjectId(library_id),
+                        'returned_at' : null,
+                        'issued_at' : null,
+                        'booked_at': { $ne: null }
+                        }
+                    }],
+                    
+                    "returned_books": [{
+                        '$match' : { 
+                            'student_id' : mongoose.Types.ObjectId(student_id),
+                            'library_id' : mongoose.Types.ObjectId(library_id), 
+                            'returned_at': { $ne: null }
+                        }
+                    }],
+      
+                    "issued_books": [{
+                        '$match' : { 
+                            'student_id' : mongoose.Types.ObjectId(student_id),
+                            'library_id' : mongoose.Types.ObjectId(library_id),
+                            'returned_at' : null,
+                            'issued_at' : { $ne: null }
+                            }
+                    }]
+                },
+            },
+        ]).then(response => {
+            Book.aggregate([
+                {$match: {library_id: mongoose.Types.ObjectId(library_id), book_status: 1}}
+              ]).then(bookRes => {
+        
+                response[0]["student_data"] = student;
+                response[0]["available_books"] = bookRes;
+                return sendSuccess(res, response)
+              })
+          }).catch((err) => {
+            return sendError(res, err, err.message, constants.SERVER_ERROR);
+          });
+    });
+  }

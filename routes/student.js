@@ -5,9 +5,12 @@ const {
   loginControlller,
   googleSignupController,
   errorController,
+  libraryList,
   requestController,
   reserveBook,
-  studentData
+  studentData, 
+  studentLibraryHistory,
+  getConnectedLibraryForStudentController
 } = require("../controllers/students");
 const { runValidation } = require("../validators");
 const {
@@ -62,7 +65,10 @@ router.get(
   passport.authenticate("google", {
     scope: [
       "profile",
-      "email"
+      "email",
+      "birthdays",
+      "phoneNumbers",
+      "https://www.googleapis.com/auth/user.birthday.read",
     ],
   })
 );
@@ -100,12 +106,17 @@ router.get(
 
 router.get("/error", errorController);
 
+router.get("/lib_list/", authStudent, libraryList);
+
 //send a connection request to a lib
-router.post("/lib_rqst/:lib_id", requestController);
+router.post("/lib_rqst/:lib_id",authStudent, requestController);
 //create a reservation for a book
 router.post("/reserve_book", authStudent, reserveBook);
 
 router.get("/student_profile", authStudent, studentData);
 
+router.post("/library_history", authStudent, studentLibraryHistory);
+//get connected library details array for the student
+router.get("/getConnectedLibraries", authStudent, getConnectedLibraryForStudentController);
 
 module.exports = router;

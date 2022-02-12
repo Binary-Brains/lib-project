@@ -1,5 +1,5 @@
 let config = {
-  MONGO_URL: process.env.MONOGO_URL || "mongodb://localhost:27017/libraryTestDb",
+  MONGO_URL: process.env.MONOGO_URL || "mongodb+srv://rishu:12345@devconnector.ao3hi.mongodb.net/tambola?authSource=admin&replicaSet=atlas-l8kabl-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true",
   MONGO_PORT: 27017,
   REDIS_PORT: 6379,
   TOKEN_EXPRIES_TIME: "7d",
