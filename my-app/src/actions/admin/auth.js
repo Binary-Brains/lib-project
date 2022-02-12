@@ -90,7 +90,7 @@ export const AdminLoad = () => async (dispatch) => {
              type: ADMIN_LOADED,
              payload: res.data
           });
-          dispatch(setAlert(`Hi ${res.data.data.admin_name}, Welcome to Library`,'success'))
+         //  dispatch(setAlert(`Hi ${res.data.data.admin_name}, Welcome to Library`,'success'))
           return res.data
        })
       //  dispatch({type: USER_REGISTERED, payload: res.data})

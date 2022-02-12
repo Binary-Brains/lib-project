@@ -1,28 +1,16 @@
 import * as React from "react";
+import { useEffect } from "react";
+import PropTypes from 'prop-types'
 import Box from "@mui/material/Box";
 import DashCard from "../../../components/student/DashCard";
 import AdminNavbar from "../../../components/admin/AdminNavbar";
 import DashboardTable from "../../../components/student/Table";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import Link from "@material-ui/core/Link";
+import { connect, useDispatch } from "react-redux";
+import { useLocation } from "wouter";
+import { acceptRequest, loadLibrary } from "../../../actions/admin/library";
 
-const adminDashCards = [
-  {
-    desc: "Pending Requests",
-    num: "40",
-    link: "/admin/dashboard",
-  },
-  {
-    desc: "Registered Students",
-    num: "32",
-    link: "/admin/dashboard/registeredstudents",
-  },
-  {
-    desc: "Added Books",
-    num: "45",
-    link: "/admin/dashboard/addedbooks",
-  },
-];
 
 // const pendingReq = [
 //   {
@@ -125,116 +113,143 @@ const adminDashCards = [
 //   },
 // ];
 
-const columns = [
-  {
-    field: "student_name",
-    headerName: "Student Name",
-    width: 800,
-    headerClassName: "super-app-theme--header",
-  },
-  {
-    field: "accept",
-    headerName: "Accept",
-    width: 200,
-    headerClassName: "super-app-theme--header",
-    renderCell: (cellValues) => {
-      return (
-        <Button
-          variant="contained"
-          color="success"
-          // onClick={(event) => {
-          //   handleClick(event, cellValues);
-          // }}
-        >
-          Accept
-        </Button>
-      );
+
+function AdminDashboardDrawer({libraryRegister, adminRegister}) {
+  const dispatch = useDispatch();
+  const [location, setLocation] = useLocation();
+  //uupdate this to just add a field in the drawer
+  const {libraryInfo} = libraryRegister;
+  const {adminInfo} = adminRegister
+  const {library_id} = adminInfo
+  
+  useEffect(()=> {
+    dispatch(loadLibrary(library_id))
+  }, [])
+
+  const handleClick = async (e, cellValues) => {
+    e.preventDefault();
+    await dispatch(acceptRequest({student_id: cellValues.row._id, library_id, accept: e.target.value}))
+    await dispatch(loadLibrary(library_id))
+  }
+
+  const adminDashCards = [
+    {
+      desc: "Pending Requests",
+      num: libraryInfo && libraryInfo.pending_request && libraryInfo.pending_request.length,
+      link: "/admin/dashboard",
     },
-  },
-  {
-    field: "reject",
-    headerName: "Reject",
-    width: 200,
-    headerClassName: "super-app-theme--header",
-    renderCell: (cellValues) => {
-      return (
-        <Button
-          variant="contained"
-          color="error"
-          // onClick={(event) => {
-          //   handleClick(event, cellValues);
-          // }}
-        >
-          Reject
-        </Button>
-      );
+    {
+      desc: "Registered Students",
+      num: libraryInfo && libraryInfo.accepted_student && libraryInfo.accepted_student.length,
+      link: "/admin/dashboard/registeredstudents",
     },
-  },
-  {
-    field: "view_profile",
-    headerName: "View Profile",
-    width: 200,
-    headerClassName: "super-app-theme--header",
-    renderCell: (cellValues) => {
-      return (
-        <Link href="/admin/dashboard/student">
+    {
+      desc: "Added Books",
+      num: libraryInfo && libraryInfo.books && libraryInfo.books.length,
+      link: "/admin/dashboard/addedbooks",
+    },
+  ];
+
+  const columns = [
+    {
+      field: "student_name",
+      headerName: "Student Name",
+      width: 400,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "student_email",
+      headerName: "Student Email",
+      width: 400,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "accept",
+      headerName: "Accept",
+      width: 200,
+      headerClassName: "super-app-theme--header",
+      renderCell: (cellValues) => {
+        return (
           <Button
             variant="contained"
-            color="info"
-            // onClick={(event) => {
-            //   handleClick(event, cellValues);
-            // }}
+            color="success"
+            value={true}
+            onClick={(event) => {
+              handleClick(event, cellValues);
+            }}
           >
-            View Profile
+            Accept
           </Button>
-        </Link>
-      );
+        );
+      },
     },
-  },
-];
+    {
+      field: "reject",
+      headerName: "Reject",
+      width: 200,
+      headerClassName: "super-app-theme--header",
+      renderCell: (cellValues) => {
+        return (
+          <Button
+            variant="contained"
+            color="error"
+            value={false}
+            onClick={(event) => {
+              handleClick(event, cellValues);
+            }}
+          >
+            Reject
+          </Button>
+        );
+      },
+    },
+    {
+      field: "view_profile",
+      headerName: "View Profile",
+      width: 200,
+      headerClassName: "super-app-theme--header",
+      renderCell: (cellValues) => {
+        return (
+          <Link onClick={() => setLocation("/admin/dashboard/student")}>
+            <Button
+              variant="contained"
+              color="info"
+            >
+              View Profile
+            </Button>
+          </Link>
+        );
+      },
+    },
+  ];
+  
+  const rows = [];
 
-const rows = [
-  {
-    id: 1,
-    student_name: "Arnav Ranjan",
-  },
-  {
-    id: 2,
-    student_name: "Anuj Agrawal",
-  },
-  {
-    id: 3,
-    student_name: "Rishabh Mishra",
-  },
-  {
-    id: 4,
-    student_name: "Siddharth Dubey",
-  },
-];
-
-export default function AdminDashboardDrawer() {
-  // const theme = useTheme();
-  // const [open, setOpen] = React.useState(false);
-
-  // const handleDrawerOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const changeThePage = (url) => {};
-
-  // const handleDrawerClose = () => {
-  //   setOpen(false);
-  // };
-
-  //uupdate this to just add a field in the drawer
+  libraryInfo && libraryInfo.pending_students.map(({student_name, _id, student_email}, index) => {
+    let temp = {id: index+1, _id, student_name, student_email}
+    rows.push(temp)
+  })
 
   return (
     <Box sx={{ display: "flex" }}>
       <AdminNavbar />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }} mt={10}>
+      <Typography variant="h3">Welcome <span>{libraryInfo && libraryInfo.library_name}</span></Typography><br></br>
         <DashCard data={adminDashCards} />
         <DashboardTable rows={rows} columns={columns} />
       </Box>
     </Box>
   );
 }
+
+AdminDashboardDrawer.propTypes = {
+  adminRegister: PropTypes.object.isRequired,
+  libraryRegister: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  adminRegister: state.adminRegister,
+  libraryRegister: state.libraryRegister
+});
+
+export default connect(mapStateToProps)(AdminDashboardDrawer);

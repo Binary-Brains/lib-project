@@ -7,6 +7,9 @@ import AddBookModal from "../../../components/admin/AddBookModal";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import ComplexGrid from "./AddedBookDisplayComp";
+import { useDispatch } from "react-redux";
+import { useLocation } from "wouter";
+import { loadLibrary, saveBook } from "../../../actions/admin/library";
 
 const useStyles = makeStyles(() => ({
   btnCont: {
@@ -22,11 +25,22 @@ const useStyles = makeStyles(() => ({
 
 export default function MiniDrawerDash() {
   const classes = useStyles();
+  const dispatch = useDispatch()
+  const [location, setLocation] = useLocation()
   const [books, setBooks] = useState([]);
 
   const addBooks = (obj) => {
     setBooks([...books, obj]);
   };
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    console.log("Hi I was called")
+    await dispatch(saveBook(books));
+    setLocation("/admin/dashboard")
+  }
+
+
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -51,7 +65,7 @@ export default function MiniDrawerDash() {
           </Grid>
           <Grid item>
             {books && books.length > 0 ? (
-              <Button variant="contained" color="primary">
+              <Button onClick={e => onSubmit(e)} variant="contained" color="primary">
                 Submit
               </Button>
             ) : (

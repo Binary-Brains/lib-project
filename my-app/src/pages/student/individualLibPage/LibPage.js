@@ -43,45 +43,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-// const availableBooks = [
-//   {
-//     "Book Name": "HC VERMA",
-//     "Stock Available": 150,
-//     Action: (
-//       <Button
-//         variant="outlined"
-//         sx={{ backgroundColor: "#4bb543", color: "white" }}
-//       >
-//         Reserve
-//       </Button>
-//     ),
-//   },
-//   {
-//     "Book Name": "RD Sharma",
-//     "Stock Available": 150,
-//     Action: (
-//       <Button
-//         variant="outlined"
-//         sx={{ backgroundColor: "#4bb543", color: "white" }}
-//       >
-//         Reserve
-//       </Button>
-//     ),
-//   },
-//   {
-//     "Book Name": "Guruji",
-//     "Stock Available": 170,
-//     Action: (
-//       <Button
-//         variant="outlined"
-//         sx={{ backgroundColor: "#4bb543", color: "white" }}
-//       >
-//         Reserve
-//       </Button>
-//     ),
-//   },
-// ];
-
 const columns = [
   {
     field: "book_name",
@@ -139,7 +100,7 @@ const rows = [
   },
 ];
 
-export default function LibPage({ data }) {
+export default function LibPage() {
   const classes = useStyles();
   return (
     <>
@@ -162,7 +123,7 @@ export default function LibPage({ data }) {
           </Grid>
           <Grid item xs={12} sm={12} md={4} align="center">
             <Typography component="h1" variant="h5">
-              {data[0]}
+              NIT Patna Central Library
             </Typography>
           </Grid>
           <Grid
@@ -184,12 +145,12 @@ export default function LibPage({ data }) {
         <Grid container mt={10}>
           <Grid item xs={12} sm={12} md={6} align="center">
             <Typography component="h1" variant="h5">
-              Maximum Lending Period: {data[1]} Months
+              Maximum Lending Period: 6 Months
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={6} align="center">
             <Typography component="h1" variant="h5">
-              Connected Students: {data[2]}
+              Connected Students: 300
             </Typography>
           </Grid>
         </Grid>

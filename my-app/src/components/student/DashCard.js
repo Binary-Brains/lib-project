@@ -33,7 +33,8 @@ const useStyles = makeStyles(() => ({
 
 export default function DashCard({ data }) {
   const classes = useStyles();
-  const [location, setLocation] = useLocation()
+  const [location, setLocation] = useLocation();
+
   return (
     <Grid conatiner className={classes.cardzCont}>
       {data.map((item) => {
@@ -49,7 +50,11 @@ export default function DashCard({ data }) {
                     separator=","
                   ></CountUp>
                 </Typography>
-                <Link onClick={() => setLocation(item.link)} className={classes.linkDashCards}>
+                <Link
+                  onClick={() => setLocation(item.link)}
+                  style={{ cursor: "pointer" }}
+                  className={classes.linkDashCards}
+                >
                   <Typography
                     sx={{ fontSize: 17, mt: 1.5, mb: 0 }}
                     color="text.secondary"

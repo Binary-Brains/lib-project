@@ -21,47 +21,47 @@ import StudentPage from "./pages/admin/studentPage/StudentPage";
 import FinePage from "./pages/admin/studentPage/FinePage";
 import AssignBookPage from "./pages/admin/studentPage/assignNewBook/AssignNewBook";
 import ComplexGrid from "./pages/admin/addBook/AddedBookDisplayComp";
-import TransitionAlert from './components/student/Alert'
+import TransitionAlert from "./components/student/Alert";
 import Verify from "./pages/student/Verify";
-import PropTypes from 'prop-types'
-import { connect, useDispatch } from 'react-redux';
+import PropTypes from "prop-types";
+import { connect, useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { StudentLoad } from "./actions/student/auth";
 import { useEffect } from "react";
 import setAuthToken from "./utils/setAuthToken";
-import Store from './Store'
+import Store from "./Store";
 import StudentRoute from "./routing/StudentRoute";
 import VerifyAdmin from "./pages/admin/Verify";
 import { AdminLoad } from "./actions/admin/auth";
 import AdminRoute from "./routing/AdminRoute";
 
-if (Cookies.get('li_at')) {
-  setAuthToken(Cookies.get('li_at'));
+if (Cookies.get("li_at")) {
+  setAuthToken(Cookies.get("li_at"));
 }
 
-if(Cookies.get('cs_at')) {
-  setAuthToken(Cookies.get('cs_at'))
+if (Cookies.get("cs_at")) {
+  setAuthToken(Cookies.get("cs_at"));
 }
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
-    Store.dispatch(StudentLoad())
-  }, [])
+    Store.dispatch(StudentLoad());
+  }, []);
 
   useEffect(() => {
-    Store.dispatch(AdminLoad())
-  }, [])
-  
+    Store.dispatch(AdminLoad());
+  }, []);
+
   return (
     <>
-    <TransitionAlert />
+      <TransitionAlert />
       <Switch>
         <Route exact path="/api/verify/:id">
-        {(params) => <Verify id = {params.id}/>}
+          {(params) => <Verify id={params.id} />}
         </Route>
         <Route exact path="/api/verify/admin/:id">
-        {(params) => <VerifyAdmin id = {params.id}/>}
+          {(params) => <VerifyAdmin id={params.id} />}
         </Route>
         <Route exact path="/admin/signin">
           <SignInAdmin title="Library" />
@@ -69,30 +69,71 @@ function App() {
         <Route exact path="/admin/signup">
           <SignUpAdmin title="Library" />
         </Route>
-        <Route exact path="/admin/signup/addlibrary">
-          <AddLibrary />
-        </Route>
         <Route exact path="/student/signin">
           <SignInStudent title="Student" />
         </Route>
         <Route exact path="/student/signup">
           <SignUpStudent title="Student" />
         </Route>
-        <StudentRoute exact path="/student/dashboard" component={MiniDrawerDash} />
-        <StudentRoute exact path="/student/dashboard/pendingbooks" component={PendingBooks} />
-        <StudentRoute exact path="/student/dashboard/reservedbooks" component={ReservedBooks} />
-        <StudentRoute exact path="/student/feed"  component={FeedsDrawer} />
+        <StudentRoute
+          exact
+          path="/student/dashboard"
+          component={MiniDrawerDash}
+        />
+        <StudentRoute
+          exact
+          path="/student/dashboard/pendingbooks"
+          component={PendingBooks}
+        />
+        <StudentRoute
+          exact
+          path="/student/dashboard/reservedbooks"
+          component={ReservedBooks}
+        />
+        <StudentRoute exact path="/student/feed" component={FeedsDrawer} />
         <StudentRoute exact path="/student/library" component={LibraryDrawer} />
-        <AdminRoute exact path="/admin/dashboard" component={AdminDashboardDrawer} />
-        <AdminRoute exact path="/admin/dashboard/registeredstudents" component={RegisteredPage} />
-        <AdminRoute exact path="/admin/dashboard/addedbooks" component={AddedBook} />
-        <AdminRoute exact path="/admin/dashboard/student" component={StudentPage} />
-        <AdminRoute exact path="/admin/dashboard/student/fine" component={FinePage} />
-        <AdminRoute exact path="/admin/dashboard/student/assignbook" component={AssignBookPage} />
-        <StudentRoute exact path="/student/library/learnmore" component={LibPage} />
+        <AdminRoute
+          exact
+          path="/admin/dashboard"
+          component={AdminDashboardDrawer}
+        />
+        <AdminRoute
+          exact
+          path="/admin/dashboard/registeredstudents"
+          component={RegisteredPage}
+        />
+        <AdminRoute
+          exact
+          path="/admin/dashboard/addedbooks"
+          component={AddedBook}
+        />
+        <AdminRoute
+          exact
+          path="/admin/dashboard/student"
+          component={StudentPage}
+        />
+        <AdminRoute
+          exact
+          path="/admin/dashboard/student/fine"
+          component={FinePage}
+        />
+        <AdminRoute
+          exact
+          path="/admin/dashboard/student/assignbook"
+          component={AssignBookPage}
+        />
+        <StudentRoute
+          exact
+          path="/student/library/learnmore"
+          component={LibPage}
+        />
         <AdminRoute exact path="/admin/addbook" component={AddBookDrawer} />
         <StudentRoute exact path="/student/setting" component={SettingDrawer} />
-        <AdminRoute exact path="/admin/setting" component={AdminSettingDrawer} />
+        <AdminRoute
+          exact
+          path="/admin/setting"
+          component={AdminSettingDrawer}
+        />
       </Switch>
     </>
   );

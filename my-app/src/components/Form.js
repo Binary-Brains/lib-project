@@ -14,9 +14,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Form({ data }) {
+export default function Form({ data, library, setLibrary }) {
   const classes = useStyles();
 
+  const onChange = (e) => {
+    setLibrary({...library, [e.target.name]: e.target.value})
+  }
   return (
     <>
       <Grid container>
@@ -30,6 +33,7 @@ export default function Form({ data }) {
                     margin="normal"
                     required
                     fullWidth
+                    onChange={e => onChange(e)}
                     className={classes.fields}
                     id={item.id}
                     label={item.label}

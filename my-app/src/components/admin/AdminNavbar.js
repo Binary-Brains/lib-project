@@ -28,6 +28,9 @@ import FeedSharpIcon from "@mui/icons-material/FeedSharp";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import SettingsApplicationsSharpIcon from "@mui/icons-material/SettingsApplicationsSharp";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useDispatch } from "react-redux";
+import { AdminLogout } from "../../actions/admin/auth";
+import { useLocation } from "wouter";
 
 const drawerWidth = 240;
 
@@ -114,6 +117,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
   const theme = useTheme();
   const classes = useStyles();
+  const dispatch = useDispatch()
+  const [location, setLocation] = useLocation();
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -148,6 +153,9 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const logout = () => {
+    dispatch(AdminLogout())
+  }
   //uupdate this to just add a field in the drawer
 
   const drawerList = [
@@ -172,6 +180,7 @@ export default function Navbar() {
       name: "Logout",
       icon: <LogoutIcon></LogoutIcon>,
       url: "/admin/signin",
+      onClickFunc: logout
     },
   ];
 
@@ -335,8 +344,8 @@ export default function Navbar() {
         </DrawerHeader>
         <Divider />
         <List>
-          {drawerList.map(({ name, icon, url }, index) => (
-            <Link href={url} underline="none">
+          {drawerList.map(({ name, icon, url, onClickFunc }, index) => (
+            <Link onClick={e => {e.preventDefault(); onClickFunc && onClickFunc(); setLocation(url)}} underline="none">
               <ListItem button key={name}>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={name} />

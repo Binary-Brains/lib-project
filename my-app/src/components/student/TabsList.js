@@ -76,7 +76,9 @@ const TabsList = styled(TabsListUnstyled)`
   align-content: space-between;
 `;
 
-export default function UnstyledTabsCustomized() {
+export default function UnstyledTabsCustomized({data, studentData}) {
+  console.log(data.libraries)
+  
   return (
     <TabsUnstyled defaultValue={0}>
       <TabsList>
@@ -102,13 +104,15 @@ export default function UnstyledTabsCustomized() {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 4, md: 12 }}
         >
-          {Array.from(Array(6)).map((_, index) => (
+          {data && data.libraries ? data.libraries.map((e, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-              <AllLibCard>xs=2</AllLibCard>
+              <AllLibCard data={e} studentData={studentData} ></AllLibCard>
             </Grid>
-          ))}
+          )) : "No Libraries Found!"}
         </Grid>
       </TabPanel>
     </TabsUnstyled>
   );
 }
+
+

@@ -42,7 +42,7 @@ export const adminRegisterReducer = (state = initialState, action) => {
       case ADMIN_REGISTRATION_FAIL:
       case ADMIN_LOADING_FAIL:
       case ADMIN_LOGOUT:
-        Cookies.remove('li_at')
+        Cookies.remove('cs_at')
         return {
           ...state,
           adminInfo: null,
