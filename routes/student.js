@@ -62,10 +62,7 @@ router.get(
   passport.authenticate("google", {
     scope: [
       "profile",
-      "email",
-      "birthdays",
-      "phoneNumbers",
-      "https://www.googleapis.com/auth/user.birthday.read",
+      "email"
     ],
   })
 );
