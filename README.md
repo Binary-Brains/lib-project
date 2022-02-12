@@ -22,9 +22,11 @@ A Library Management System is software that is designed to manage all the funct
 
 ## Screenshots
 
-![App Screenshot](https://drive.google.com/file/d/1-PaHTBVPo7jN2ok54SqpzQg61UmKvbLh/view?usp=sharing)
-![App Screenshot](https://drive.google.com/file/d/1xML-LppLOLwUbC4DxeBHIhnUvyS9V7mc/view?usp=sharing)
-![App Screenshot](https://drive.google.com/file/d/1ERiVhNlpymZxgHZHX-SKVVhQYCZuQb3Y/view?usp=sharing)
+![App Screenshot](https://github.com/Binary-Brains/lib-project/blob/main/screenshots/1.png)
+![App Screenshot](https://github.com/Binary-Brains/lib-project/blob/main/screenshots/2.png)
+![App Screenshot](https://github.com/Binary-Brains/lib-project/blob/main/screenshots/3.png)
+![App Screenshot](https://github.com/Binary-Brains/lib-project/blob/main/screenshots/4.png)
+![App Screenshot](https://github.com/Binary-Brains/lib-project/blob/main/screenshots/5.png)
 
 ## ER Diagram
 
