@@ -28,7 +28,7 @@ A Library Management System is software that is designed to manage all the funct
 
 ## ER Diagram
 
-![ER Diagram](https://drive.google.com/file/d/1DO-pDN0FcMCntDu3PCMlsKcCnncOv9sk/view?usp=sharing)
+![ER Diagram](https://github.com/Binary-Brains/lib-project/blob/main/ER_DIAGRAM.jpg)
 
 
 ## Features
