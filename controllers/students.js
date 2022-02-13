@@ -476,7 +476,7 @@ exports.getConnectedLibraryForStudentController = (req, res) => {
   })
 }
 
-const generateVerifyEmail = async (req, id, email, name, cb) => {
+const generateVerifyEmail = async ( id, email, name, cb) => {
   //we get the id of that user just create url /api/verify/:id and send it to the mail
   var url = `http://localhost:3000/api/verify/${id}`;
   if(process.env.NODE_ENV=="production") url=`http://l-backend.herokuapp.com/api/verify/${id}`

@@ -267,7 +267,7 @@ const generateVerifyEmail = async (id, email, name, cb) => {
   var url = `http://localhost:3000/api/verify/admin/${id}`;
 
   //if in the production the link should be for verify online
-  if(process.env.NODE_ENV=="production") url=`http://l-backend.herokuapp.com/api/verify/${id}`
+  if(process.env.NODE_ENV=="production") url=`http://l-backend.herokuapp.com/api/verify/admin/${id}`
 
   //setting the subject for the mail
   var subject = "Verify Account";
