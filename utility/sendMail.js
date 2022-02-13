@@ -4,8 +4,8 @@ exports.send = (to, subject, html, cb) => {
   var smtpTransport = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-      user: "libraryhacknitp@gmail.com",
-      pass: "Library@123",
+      user: process.env.MAIL,
+      pass: process.env.PWD
     },
   });
 
