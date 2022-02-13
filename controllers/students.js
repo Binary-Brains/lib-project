@@ -121,6 +121,7 @@ exports.verifyAccount = (req, res) => {
 };
 
 exports.loginControlller = (req, res) => {
+  console.log(req)
   var { student_email, student_password } = req.body;
 
   Student.findOne(
@@ -475,9 +476,10 @@ exports.getConnectedLibraryForStudentController = (req, res) => {
   })
 }
 
-const generateVerifyEmail = async (id, email, name, cb) => {
+const generateVerifyEmail = async (req, id, email, name, cb) => {
   //we get the id of that user just create url /api/verify/:id and send it to the mail
   var url = `http://localhost:3000/api/verify/${id}`;
+  if(process.env.NODE_ENV=="production") url=`http://l-backend.herokuapp.com/api/verify/${id}`
   //setting the subject for the mail
   var subject = "Verify Account";
   //preparing the template for the mail

@@ -181,8 +181,9 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
   const reserveBooksRow = [];
 
   //now just fill the rows of the column
-  const { issued_books, reserved_books } =
-    libraryStudentRegister.feeds;
+
+  const  issued_books = libraryStudentRegister && libraryStudentRegister.feeds && libraryStudentRegister.feeds.issued_books;
+  const  reserved_books = libraryStudentRegister && libraryStudentRegister.feeds && libraryStudentRegister.feeds.reserved_books;
 
   //filling issued books table
   issued_books &&
