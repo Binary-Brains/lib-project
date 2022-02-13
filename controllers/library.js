@@ -32,10 +32,10 @@ exports.createLibraryController = (req, res) => {
                     library_address,
                     library_city,
                     library_state,
-                    library_contact,
-                    fine,
-                    lending_period
+                    library_contact
                 })
+                if(fine) library['fine']=fine;
+                if(lending_period) library['lending_period'] = lending_period
                 library.save((err, lib) => {
                     if(err) return sendError(res, err, err.message, 500)
                     else{
@@ -391,7 +391,7 @@ exports.libraryStudentHistory = async (req, res) => {
   }
 
   exports.libraryEditController = (req, res) => {
-    var library_id = req.body.library_id;
+    var library_id = req.profile.library_id;
     var updateLibrary = req.body.library_data;
 
     Library.findByIdAndUpdate( { _id: library_id }, updateLibrary, { new: true}, function(err, updatedLibrary) {

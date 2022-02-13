@@ -39,13 +39,19 @@ const useStyles = makeStyles(() => ({
 
 function SettingDrawer({ userRegister }) {
   const classes = useStyles();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [focus, setFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
-  const [country, setCountry] = useState(userRegister.studentInfo.student_state);
+  const [country, setCountry] = useState(
+    userRegister.studentInfo.student_state
+  );
   const [name, setName] = useState(userRegister.studentInfo.student_name);
-  const [contact, setContact] = useState(userRegister.studentInfo.student_contact);
-  const [dob, setDob] = useState(moment(userRegister.studentInfo.student_dob).format('DD-MM-YYYY'));
+  const [contact, setContact] = useState(
+    userRegister.studentInfo.student_contact
+  );
+  const [dob, setDob] = useState(
+    moment(userRegister.studentInfo.student_dob).format("DD-MM-YYYY")
+  );
   const [region, setRegion] = useState(userRegister.studentInfo.student_city);
 
   const onFocus = () => setFocused(true);
@@ -62,13 +68,12 @@ function SettingDrawer({ userRegister }) {
   };
 
   const handleUpdate = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const res = window.confirm("Are you sure?");
-    if(res) dispatch(updateStudent(details));
-  }
+    if (res) dispatch(updateStudent(details));
+  };
 
-  const [details, setDetails] = useState()
-
+  const [details, setDetails] = useState();
 
   useEffect(() => {
     setDetails({
@@ -76,10 +81,9 @@ function SettingDrawer({ userRegister }) {
       student_contact: contact,
       student_dob: dob,
       student_city: region,
-      student_state: country
-    })
-  }, [name, contact, dob, region,country])
-  
+      student_state: country,
+    });
+  }, [name, contact, dob, region, country]);
 
   //const { studentInfo } = userRegister;
   const fieldItems = [
@@ -90,8 +94,7 @@ function SettingDrawer({ userRegister }) {
       type: "text",
       autoFocus: true,
       value: name,
-      onClickFunc: setName
-
+      onClickFunc: setName,
     },
     {
       id: "contact",
@@ -99,8 +102,8 @@ function SettingDrawer({ userRegister }) {
       name: "admin_contact",
       type: "number",
       value: contact,
-      onClickFunc: setContact
-    }
+      onClickFunc: setContact,
+    },
   ];
   return (
     <Box sx={{ display: "flex" }}>
@@ -164,7 +167,7 @@ function SettingDrawer({ userRegister }) {
                 value={dob}
                 fullWidth
                 onChange={(e) => {
-                  setDob(e.target.value)
+                  setDob(e.target.value);
                   if (e.target.value) setHasValue(true);
                   else setHasValue(false);
                 }}

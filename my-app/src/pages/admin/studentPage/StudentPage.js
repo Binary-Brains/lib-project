@@ -23,6 +23,7 @@ import {
   returnBook,
 } from "../../../actions/admin/library";
 import moment from "moment";
+import CircularIndeterminate from "../../../components/Loader";
 
 const useStyles = makeStyles(() => ({
   individualCard: {
@@ -110,7 +111,11 @@ const TabsList = styled(TabsListUnstyled)`
 
 const finePageRows = [];
 
-function StudentPage({ id, adminRegister, libraryRegister: { studentInfo } }) {
+function StudentPage({
+  id,
+  adminRegister,
+  libraryRegister: { libraryInfo, studentInfo, loading },
+}) {
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -217,7 +222,7 @@ function StudentPage({ id, adminRegister, libraryRegister: { studentInfo } }) {
   //filling the issued books table
   issued_books &&
     issued_books.map(({ book_data, _id, issued_at }, index) => {
-      var due_date = moment(issued_at).add(1, "M").format("DD-MM-YYYY");
+      var due_date = moment(issued_at).add(libraryInfo && libraryInfo.lending_period, 'days').format("DD-MM-YYYY");
       let temp = {
         id: index + 1,
         due_date,
@@ -231,73 +236,80 @@ function StudentPage({ id, adminRegister, libraryRegister: { studentInfo } }) {
   return (
     <Box sx={{ display: "flex" }}>
       <AdminNavbar />
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }} mt={10}>
-        <Grid item mb={2}>
-          <Typography component="h1" variant="h5" align="center">
-            <b>{`${student_data && student_data.student_name}'s`}</b> Profile
-          </Typography>
-        </Grid>
+      {!loading ? (
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }} mt={10}>
+          <Grid item mb={2}>
+            <Typography component="h1" variant="h5" align="center">
+              <b>{`${student_data && student_data.student_name}'s`}</b> Profile
+            </Typography>
+          </Grid>
 
-        {/* <DashCard data={studentDashCards} /> */}
-        <TabsUnstyled defaultValue={0}>
-          <TabsList
-            sx={{
-              backgroundColor: "inherit",
-              // eslint-disable-next-line
-              ["@media (max-width:800px)"]: {
-                flexDirection: "column",
-              },
-            }}
-          >
-            {studentDashCards.map((item) => {
-              return (
-                <Tab
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "#ffffff",
-                    },
-                  }}
-                >
-                  <Grid item xs={12} sm={12} md={12}>
-                    <Card
-                      variant="outlined"
-                      sx={{ backgroundColor: "#E5E4E2" }}
-                      className={classes.individualCard}
-                    >
-                      <CardContent>
-                        <Typography variant="h3">
-                          <CountUp
-                            start={0}
-                            end={item.num}
-                            duration={1.5}
-                            separator=","
-                          ></CountUp>
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: 17, mt: 1.5, mb: 0 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {item.desc}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                </Tab>
-              );
-            })}
-          </TabsList>
-          <TabPanel value={0}>
-            <DashboardTable rows={rows} columns={columns} />
-          </TabPanel>
-          <TabPanel value={1}>
-            <DashboardTable rows={finePageRows} columns={finePageColumns} />
-          </TabPanel>
-          <TabPanel value={2}>
-            <AssignNewBook reservedBooks={reserved_books} />
-          </TabPanel>
-        </TabsUnstyled>
-      </Box>
+          {/* <DashCard data={studentDashCards} /> */}
+          <TabsUnstyled defaultValue={0}>
+            <TabsList
+              sx={{
+                backgroundColor: "inherit",
+                // eslint-disable-next-line
+                ["@media (max-width:800px)"]: {
+                  flexDirection: "column",
+                },
+              }}
+            >
+              {studentDashCards.map((item) => {
+                return (
+                  <Tab
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#ffffff",
+                      },
+                    }}
+                  >
+                    <Grid item xs={12} sm={12} md={12}>
+                      <Card
+                        variant="outlined"
+                        sx={{ backgroundColor: "#E5E4E2" }}
+                        className={classes.individualCard}
+                      >
+                        <CardContent>
+                          <Typography variant="h3">
+                            <CountUp
+                              start={0}
+                              end={item.num}
+                              duration={1.5}
+                              separator=","
+                            ></CountUp>
+                          </Typography>
+                          <Typography
+                            sx={{ fontSize: 17, mt: 1.5, mb: 0 }}
+                            color="text.secondary"
+                            gutterBottom
+                          >
+                            {item.desc}
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  </Tab>
+                );
+              })}
+            </TabsList>
+            <TabPanel value={0}>
+              <DashboardTable rows={rows} columns={columns} />
+            </TabPanel>
+            <TabPanel value={1}>
+              <DashboardTable rows={finePageRows} columns={finePageColumns} />
+            </TabPanel>
+            <TabPanel value={2}>
+              <AssignNewBook reservedBooks={reserved_books} />
+            </TabPanel>
+          </TabsUnstyled>
+        </Box>
+      ) : (
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }} mt={10}>
+          {" "}
+          <CircularIndeterminate />
+        </Box>
+      )}
     </Box>
   );
 }

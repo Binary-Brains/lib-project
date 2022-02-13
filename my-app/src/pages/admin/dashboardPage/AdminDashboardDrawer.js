@@ -112,7 +112,7 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
   const [location, setLocation] = useLocation();
   console.log(location);
   //uupdate this to just add a field in the drawer
-  const { libraryInfo } = libraryRegister;
+  const { libraryInfo, books } = libraryRegister;
   const { adminInfo } = adminRegister;
   const { library_id } = adminInfo;
 
@@ -241,6 +241,12 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
       headerClassName: "super-app-theme--header",
     },
     {
+      field: "book_stock_total",
+      headerName: "Total Stock",
+      width: 200,
+      headerClassName: "super-app-theme--header",
+    },
+    {
       field: "book_stock",
       headerName: "Stock Available",
       width: 200,
@@ -307,6 +313,7 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
 
   //filling the pending students table
   libraryInfo &&
+    libraryInfo.pending_students &&
     libraryInfo.pending_students.map(
       ({ student_name, _id, student_email }, index) => {
         let temp = { id: index + 1, _id, student_name, student_email };
@@ -317,6 +324,7 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
 
   //filling the regsitered students table
   libraryInfo &&
+    libraryInfo.registered_students &&
     libraryInfo.registered_students.map(
       ({ student_name, _id, student_email }, index) => {
         let temp = { id: index + 1, _id, student_name, student_email };
@@ -325,19 +333,32 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
       }
     );
 
-  let stockCounter = {},
-    i = 0;
+  let stockCounter = {}
+  let availableStockCounter = {};
+  let reservedStockCounter = {};
+  let issuedStockCounter = {};
+  let i = 0;
   //showing the stocks availble in the library
   libraryInfo &&
-    libraryInfo.books.map(({ book_name, _id }, index) => {
+    libraryInfo.books &&
+    libraryInfo.books.map(({ book_name, book_status, _id }, index) => {
+      if (book_status === 1)
+        availableStockCounter[book_name] = (Number(availableStockCounter[book_name]) || 0) + 1;
+      if (book_status === 2)
+        issuedStockCounter[book_name] =
+          (Number(issuedStockCounter[book_name]) || 0) + 1;
+      if (book_status === 3)
+        reservedStockCounter[book_name] =
+          (Number(reservedStockCounter[book_name]) || 0) + 1;
       stockCounter[book_name] = (Number(stockCounter[book_name]) || 0) + 1;
       return 0;
     });
 
   for (const key in stockCounter) {
-    let temp = { id: i++, book_name: key, book_stock: stockCounter[key] };
+    let temp = { id: i++, book_name: key, book_stock: availableStockCounter[key], book_stock_total: stockCounter[key]  };
     addedBookRows.push(temp);
   }
+  console.log(Object.values(stockCounter));
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -346,6 +367,15 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
         <Typography variant="h3" className={classes.adminDashTitle}>
           Welcome&nbsp;<span>{libraryInfo && libraryInfo.library_name}</span>
         </Typography>
+        <br></br>
+        <Typography variant="h6" >
+          Issued:&nbsp;
+          <span>{books && books.filter((b) => b.book_status == 2).length}</span>{" "}
+          Reserved:&nbsp;
+          <span>{books && books.filter((b) => b.book_status == 3).length}</span>{" "}
+         Available:&nbsp;
+          <span>{books && books.filter((b) => b.book_status == 1).length}</span>{" "}
+          </Typography>
         <br></br>
         <TabsUnstyled defaultValue={0}>
           <TabsList

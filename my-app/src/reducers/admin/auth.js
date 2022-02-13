@@ -58,8 +58,8 @@ export const adminRegisterReducer = (state = initialState, action) => {
     case ADMIN_UPDATE_FAIL:
       return {
         ...state,
-        loading: false
-      }
+        loading: false,
+      };
     case ADMIN_LOGIN_FAIL:
     case ADMIN_VERIFICATION_FAIL:
     case ADMIN_REGISTRATION_FAIL:

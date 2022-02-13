@@ -14,7 +14,10 @@ export default function ConnLib({ data }) {
   const [location, setLocation] = useLocation();
   console.log(location);
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      sx={{ maxWidth: 345 }}
+      onClick={() => setLocation(`/student/library/learnmore/${data._id}`)}
+    >
       <CardMedia
         component="img"
         height="140"

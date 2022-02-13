@@ -264,8 +264,18 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <Link
+        onClick={() => setLocation("/admin/dashboard")}
+        sx={{ textDecoration: "none" }}
+      >
+        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      </Link>
+      <Link
+        onClick={() => setLocation("/admin/setting")}
+        sx={{ textDecoration: "none" }}
+      >
+        <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
+      </Link>
     </Menu>
   );
 
@@ -304,7 +314,7 @@ export default function Navbar() {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={4} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -313,7 +323,7 @@ export default function Navbar() {
               edge="end"
               aria-label="account of current user"
               aria-haspopup="true"
-              //onClick={handleProfileMenuOpen}
+              onClick={handleProfileMenuOpen}
               color="inherit"
             >
               <AccountCircle />

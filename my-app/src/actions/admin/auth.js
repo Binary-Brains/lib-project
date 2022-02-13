@@ -133,25 +133,26 @@ export const AdminLogout = () => async (dispatch) => {
   dispatch({ type: ADMIN_LOGOUT });
 };
 
-
 //update the admin profile
 export const updateAdmin = (details) => async (dispatch) => {
-  dispatch({type: ADMIN_UPDATE_REQUEST})
+  dispatch({ type: ADMIN_UPDATE_REQUEST });
   try {
-    await axios.post(`${envUrl}/api/admin/edit_admin`, {admin_data: details}).then(res => {
-      dispatch({
-        type: ADMIN_UPDATED,
-        payload: res.data
-      })
-      dispatch(setAlert("Admin Updated", 'success'));
-      return res.data
-    })
+    await axios
+      .post(`${envUrl}/api/admin/edit_admin`, { admin_data: details })
+      .then((res) => {
+        dispatch({
+          type: ADMIN_UPDATED,
+          payload: res.data,
+        });
+        dispatch(setAlert("Admin Updated", "success"));
+        return res.data;
+      });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
     dispatch({
-      type: ADMIN_UPDATE_FAIL
-    })
-    dispatch(setAlert(error.response && error.response.data.message, 'error'))
-    return error
+      type: ADMIN_UPDATE_FAIL,
+    });
+    dispatch(setAlert(error.response && error.response.data.message, "error"));
+    return error;
   }
-}
+};

@@ -186,12 +186,13 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
   //filling issued books table
   issued_books &&
     issued_books.map(({ book_data, library_data, issued_at }, index) => {
-      const due_date = moment(issued_at).add(1, "M").format("DD-MM-YYYY");
+      const due_date = moment(issued_at).add(library_data && library_data[0] && library_data[0].lending_period,'days').format('DD-MM-YYYY');
       const today_date = moment(Date.now()).format("DD-MM-YYYY");
       let temp = {
         id: index + 1,
         book_name: book_data[0].book_name,
-        library_name: library_data && library_data[0] && library_data[0].library_name,
+        library_name:
+          library_data && library_data[0] && library_data[0].library_name,
         due_date,
       };
       if (today_date > due_date) {
@@ -210,7 +211,8 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
       let temp = {
         id: index + 1,
         book_name: book_data[0].book_name,
-        library_name: library_data && library_data[0] && library_data[0].library_name,
+        library_name:
+          library_data && library_data[0] && library_data[0].library_name,
         reserve_date,
       };
       reserveBooksRow.push(temp);
@@ -221,7 +223,7 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
   const dashCards = [
     {
       desc: "Issued Books",
-      num: issued_books && issued_books.length,
+      num: rows.length,
       link: "/student/dashboard",
     },
     {

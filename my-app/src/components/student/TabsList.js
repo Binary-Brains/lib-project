@@ -5,9 +5,10 @@ import TabsListUnstyled from "@mui/base/TabsListUnstyled";
 import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
 import { buttonUnstyledClasses } from "@mui/base/ButtonUnstyled";
 import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
-import { Grid } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
 import AllLibCard from "../../pages/student/libPage/AllLibCard";
 import ConnLib from "../../pages/student/libPage/ConnLib";
+import { Sad } from "../Sad";
 
 const blue = {
   50: "#F0F7FF",
@@ -106,13 +107,17 @@ export default function UnstyledTabsCustomized({ data, studentData }) {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 4, md: 12 }}
         >
-          {data && data.libraries
-            ? data.libraries.map((e, index) => (
-                <Grid item xs={12} sm={6} md={4} key={index}>
-                  <AllLibCard data={e} studentData={studentData}></AllLibCard>
-                </Grid>
-              ))
-            : "No Libraries Found!"}
+          {data && data.libraries ? (
+            data.libraries.map((e, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <AllLibCard data={e} studentData={studentData}></AllLibCard>
+              </Grid>
+            ))
+          ) : (
+            <Grid item xs={12} sm={6} md={4} align>
+              <Sad />
+            </Grid>
+          )}
         </Grid>
       </TabPanel>
     </TabsUnstyled>

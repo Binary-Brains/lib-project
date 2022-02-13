@@ -69,7 +69,7 @@ function SaveProfile() {
       label: "Contact No",
       name: "admin_contact",
       type: "number",
-      value: "8840576544"
+      value: "8840576544",
     },
   ];
   return (

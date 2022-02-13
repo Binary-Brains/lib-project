@@ -55,13 +55,17 @@ function FeedsDrawer({ libraryStudentRegister }) {
     libraryStudentRegister.feeds &&
     libraryStudentRegister.feeds.returned_books &&
     libraryStudentRegister.feeds.returned_books.map(
-      ({ book_data, library_id, library_data, issued_at, returned_at }, index) => {
+      (
+        { book_data, library_id, library_data, issued_at, returned_at },
+        index
+      ) => {
         const issued_date = moment(issued_at).format("DD-MM-YYYY");
         const returned_date = moment(returned_at).format("DD-MM-YYYY");
         let temp = {
           id: index + 1,
           book_name: book_data[0].book_name,
-          library_name: library_data && library_data[0] && library_data[0].library_name,
+          library_name:
+            library_data && library_data[0] && library_data[0].library_name,
           issued_date,
           returned_date,
         };

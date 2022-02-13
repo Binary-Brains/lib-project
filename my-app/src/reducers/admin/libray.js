@@ -20,6 +20,9 @@ import {
   RETURNED_BOOK,
   RETURN_BOOK_FAIL,
   RETURN_BOOK_REQUEST,
+  UPADTE_LIBRARY_REQUEST,
+  UPDATED_LIBRARY,
+  UPDATE_LIBRARY_FAIL,
 } from "../../constants/admin/library";
 import {
   BOOK_FEED_FAIL,
@@ -45,6 +48,7 @@ export const libraryRegisterReducer = (state = initialState, action) => {
     case ISSUE_BOOK_START:
     case LOAD_STUDENT_REQUEST:
     case RETURN_BOOK_REQUEST:
+    case UPADTE_LIBRARY_REQUEST:
       return { ...state, loading: true };
     case LIBRARY_CREATED:
     case LIBRARY_LOADED:
@@ -52,9 +56,15 @@ export const libraryRegisterReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         libraryInfo: action.payload.data[0],
+        books: action.payload.data[0].books,
+      };
+    case UPDATED_LIBRARY:
+      return {
+        ...state,
+        loading: false,
+        libraryInfo: action.payload.data,
       };
     case LIBRARY_CREATION_FAILED:
-    case ADD_BOOKS_FAILED:
     case LOAD_LIBRARY_FAILED:
       return {
         ...state,
@@ -74,6 +84,8 @@ export const libraryRegisterReducer = (state = initialState, action) => {
     case ACCEPET_REJECT_FAIL:
     case LOAD_STUDENT_FAIL:
     case RETURN_BOOK_FAIL:
+    case UPDATE_LIBRARY_FAIL:
+    case ADD_BOOKS_FAILED:
       return {
         ...state,
         loading: false,

@@ -153,7 +153,7 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            Library Management System
+            Library Desk
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />

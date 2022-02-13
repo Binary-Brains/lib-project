@@ -86,7 +86,23 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
       reserveList.push(book.book_data[0].book_name);
     });
 
-  console.log(reserveList);
+  //checks for the connected or a pending request user for this library
+  console.log(userRegister.studentInfo.librarires);
+  var connected = false;
+  userRegister &&
+    userRegister.studentInfo &&
+    userRegister.studentInfo.librarires &&
+    userRegister.studentInfo.librarires.map((lib) => {
+      if (lib.library_id == id) connected = true;
+    });
+
+  var pendingRequest = false;
+  userRegister &&
+    userRegister.studentInfo &&
+    userRegister.studentInfo.library_request &&
+    userRegister.studentInfo.library_request.map((lib) => {
+      if (lib.library_id == id) pendingRequest = true;
+    });
 
   const columns = [
     {
@@ -108,37 +124,35 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
       width: 150,
       headerClassName: "super-app-theme--header",
       renderCell: (cellValues) => {
-        const checkBook = reserveList.find(
-          (ele) => ele === cellValues.row.book_name
-        );
-        if (!checkBook) {
-          return (
-            <Button
-              variant="contained"
-              color="success"
-              onClick={(event) => {
-                handleClick(event, cellValues);
-              }}
-            >
-              Reserve
-            </Button>
+        if (connected && !pendingRequest) {
+          const checkBook = reserveList.find(
+            (ele) => ele === cellValues.row.book_name
           );
+          if (!checkBook) {
+            return (
+              <Button
+                variant="contained"
+                color="success"
+                onClick={(event) => {
+                  handleClick(event, cellValues);
+                }}
+              >
+                Reserve
+              </Button>
+            );
+          } else {
+            return <Typography align="center">Reserved</Typography>;
+          }
         } else {
-          return <Typography align="center">Reserved</Typography>;
+          return (
+            <Typography align="center">You should be connected</Typography>
+          );
         }
       },
     },
   ];
 
   const rows = [];
-
-  var connected = false;
-  userRegister &&
-    userRegister.studentInfo &&
-    userRegister.studentInfo.librarires &&
-    userRegister.studentInfo.librarires.map((lib) => {
-      if (lib._id == id) connected = true;
-    });
 
   let stockCounter = {},
     i = 0;
@@ -190,10 +204,12 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
               className={classes.libPageHeaders}
             >
               {/* we have to add a condition that if the user is already connected then don't show this button */}
-              {!connected ? (
+              {connected ? (
                 <Button variant="contained" color="success">
                   Connected
                 </Button>
+              ) : pendingRequest ? (
+                "Pending"
               ) : (
                 <Button variant="contained" color="primary">
                   Send Request &nbsp;
@@ -207,7 +223,7 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
           <Grid container mt={10}>
             <Grid item xs={12} sm={12} md={6} align="center">
               <Typography component="h1" variant="h5">
-                Maximum Lending Period: 45 Days
+                Maximum Lending Period: {library_data && library_data.lending_period }
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12} md={6} align="center">

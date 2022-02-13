@@ -19,6 +19,9 @@ import {
   RETURNED_BOOK,
   RETURN_BOOK_FAIL,
   RETURN_BOOK_REQUEST,
+  UPADTE_LIBRARY_REQUEST,
+  UPDATED_LIBRARY,
+  UPDATE_LIBRARY_FAIL,
 } from "../../constants/admin/library";
 import axios from "axios";
 import { setAlert } from "../alert";
@@ -203,6 +206,31 @@ export const returnBook = (details) => async (dispatch) => {
     console.log(error.message);
     dispatch({
       type: RETURN_BOOK_FAIL,
+    });
+    dispatch(setAlert(error.response.data.message, "error"));
+    return error;
+  }
+};
+
+//edit library profile
+export const updateLibrary = (details) => async (dispatch) => {
+  dispatch({ type: UPADTE_LIBRARY_REQUEST });
+  try {
+    await axios
+      .post(`${envUrl}/api/library/edit_library`, { library_data: details })
+      .then((res) => {
+        dispatch({
+          type: UPDATED_LIBRARY,
+          payload: res.data,
+        });
+        dispatch(setAlert("Library Updated", "success"));
+        return res.data;
+      });
+  } catch (error) {
+    console.log(error.message);
+    dispatch({
+      type: UPDATE_LIBRARY_FAIL,
+      payload: error.response,
     });
     dispatch(setAlert(error.response.data.message, "error"));
     return error;

@@ -146,22 +146,24 @@ export const StudentLogout = () => async (dispatch) => {
 
 //update the student profile
 export const updateStudent = (details) => async (dispatch) => {
-  dispatch({type: STUDENT_UPDATE_REQUEST})
+  dispatch({ type: STUDENT_UPDATE_REQUEST });
   try {
-    await axios.post(`${envUrl}/api/student/edit_student`, {student_data: details}).then(res => {
-      dispatch({
-        type: STUDENT_UPDATED,
-        payload: res.data
-      })
-      dispatch(setAlert("Student Updated", 'success'));
-      return res.data
-    })
+    await axios
+      .post(`${envUrl}/api/student/edit_student`, { student_data: details })
+      .then((res) => {
+        dispatch({
+          type: STUDENT_UPDATED,
+          payload: res.data,
+        });
+        dispatch(setAlert("Student Updated", "success"));
+        return res.data;
+      });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
     dispatch({
-      type: STUDENT_UPDATE_FAIL
-    })
-    dispatch(setAlert(error.response && error.response.data.message, 'error'))
-    return error
+      type: STUDENT_UPDATE_FAIL,
+    });
+    dispatch(setAlert(error.response && error.response.data.message, "error"));
+    return error;
   }
-}
+};

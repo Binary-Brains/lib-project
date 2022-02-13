@@ -13,6 +13,7 @@ import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import { useDispatch } from "react-redux";
 import { StudentLoad } from "../../../actions/student/auth";
 import Moment from "react-moment";
+import StreamIcon from "@mui/icons-material/Stream";
 
 const useStyles = makeStyles(() => ({
   learnMoreBtn: {
@@ -25,13 +26,19 @@ export default function AllLibCard({ data, studentData }) {
   const [location, setLocation] = useLocation();
   const classes = useStyles();
   console.log(location);
-  const { library_request } = studentData;
+  const { library_request, librarires } = studentData;
 
   let requestSent = false;
-  console.log(library_request);
   library_request.forEach((lib) => {
     if (lib.library_id === data._id) {
       requestSent = true;
+    }
+  });
+
+  let connected = false;
+  librarires.forEach((lib) => {
+    if (lib.library_id === data._id) {
+      connected = true;
     }
   });
 
@@ -44,7 +51,10 @@ export default function AllLibCard({ data, studentData }) {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      sx={{ maxWidth: 345 }}
+      onClick={() => setLocation(`/student/library/learnmore/${data._id}`)}
+    >
       <CardMedia
         component="img"
         height="140"
@@ -77,6 +87,8 @@ export default function AllLibCard({ data, studentData }) {
 
         {requestSent ? (
           <LibraryAddCheckIcon />
+        ) : connected ? (
+          <StreamIcon />
         ) : (
           <Button size="small" onClick={(e) => onClickHandler(e)}>
             Send Request
