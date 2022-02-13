@@ -183,7 +183,7 @@ function SignInAdmin({ title, adminRegister }) {
               </Grid>
               <Grid item xs={12} sm={12} md={6}>
                 <Link
-                  href="/admin/signup"
+                  href="/student/signin"
                   variant="body2"
                   className={classes.studentNotAccount}
                 >
