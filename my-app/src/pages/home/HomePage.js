@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AboutUs from "../../components/home/AboutUs/AboutUs";
-import Carousel from "../../components/home/Carousel/Carousel";
+// import Carousel from "../../components/home/Carousel/Carousel";
 import Features from "../../components/home/Features/Features";
 import Footer from "../../components/home/Footer/Footer";
 import HomeNav from "../../components/home/HomeNav/HomeNav";

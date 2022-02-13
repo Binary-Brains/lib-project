@@ -1,6 +1,6 @@
-import { Button, Typography, Grid, Link } from "@mui/material";
+import { Button, Typography, Grid } from "@mui/material";
 import React, { useEffect } from "react";
-import PrimarySearchAppBar from "../../../components/student/TopNavOnly";
+// import PrimarySearchAppBar from "../../../components/student/TopNavOnly";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import IosShareIcon from "@mui/icons-material/IosShare";
@@ -58,10 +58,7 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
   const { libraryInfo } = libraryStudentRegister;
   const {
     library_data,
-    available_books,
-    issued_books,
     reserved_books,
-    returned_books,
   } = libraryInfo;
 
   useEffect(() => {
@@ -84,6 +81,7 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
   reserved_books &&
     reserved_books.map((book) => {
       reserveList.push(book.book_data[0].book_name);
+      return 0;
     });
 
   //checks for the connected or a pending request user for this library
@@ -93,7 +91,8 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
     userRegister.studentInfo &&
     userRegister.studentInfo.librarires &&
     userRegister.studentInfo.librarires.map((lib) => {
-      if (lib.library_id == id) connected = true;
+      if (lib.library_id === id) connected = true;
+      return 0;
     });
 
   var pendingRequest = false;
@@ -101,7 +100,8 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
     userRegister.studentInfo &&
     userRegister.studentInfo.library_request &&
     userRegister.studentInfo.library_request.map((lib) => {
-      if (lib.library_id == id) pendingRequest = true;
+      if (lib.library_id === id) pendingRequest = true;
+      return 0;
     });
 
   const columns = [

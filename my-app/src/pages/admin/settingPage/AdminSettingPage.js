@@ -2,11 +2,11 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Navbar from "../../../components/admin/AdminNavbar";
 import AdminProfTab from "../../../components/admin/AdminProfTab";
-import { connect, useDispatch } from "react-redux";
-import { useLocation } from "wouter";
+import { connect } from "react-redux";
+// import { useLocation } from "wouter";
 import PropTypes from "prop-types";
-import moment from "moment";
-import { updateAdmin } from "../../../actions/admin/auth";
+// import moment from "moment";
+// import { updateAdmin } from "../../../actions/admin/auth";
 
 function AdminSettingDrawer({ adminRegister, libraryRegister }) {
   console.log(adminRegister);

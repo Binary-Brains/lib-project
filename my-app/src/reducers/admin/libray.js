@@ -24,11 +24,6 @@ import {
   UPDATED_LIBRARY,
   UPDATE_LIBRARY_FAIL,
 } from "../../constants/admin/library";
-import {
-  BOOK_FEED_FAIL,
-  BOOK_FEED_LOADED,
-  BOOK_FEED_REQUEST,
-} from "../../constants/student/library";
 
 let initialState = {
   loading: true,

@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import DashCard from "../../../components/student/DashCard";
 import AdminNavbar from "../../../components/admin/AdminNavbar";
 import DashboardTable from "../../../components/student/Table";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 
 const fineCards = [
   {

@@ -9,7 +9,6 @@ import {
   Column2,
   TextWrapper,
   TopLine,
-  Heading,
   ImgWrap,
   Img,
 } from "./FeatureComp";

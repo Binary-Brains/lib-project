@@ -370,11 +370,11 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
         <br></br>
         <Typography variant="h6" >
           Issued:&nbsp;
-          <span>{books && books.filter((b) => b.book_status == 2).length}</span>{" "}
+          <span>{books && books.filter((b) => b.book_status === 2).length}</span>{" "}
           Reserved:&nbsp;
-          <span>{books && books.filter((b) => b.book_status == 3).length}</span>{" "}
+          <span>{books && books.filter((b) => b.book_status === 3).length}</span>{" "}
          Available:&nbsp;
-          <span>{books && books.filter((b) => b.book_status == 1).length}</span>{" "}
+          <span>{books && books.filter((b) => b.book_status === 1).length}</span>{" "}
           </Typography>
         <br></br>
         <TabsUnstyled defaultValue={0}>

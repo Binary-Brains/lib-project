@@ -5,7 +5,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -35,8 +34,9 @@ function LibEditProfile({ libraryRegister }) {
   const dispatch = useDispatch();
 
   const classes = useStyles();
-  const [focus, setFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
+  // const [focus, setFocused] = useState(false);
+  // console.log(focus)
+  // const [hasValue, setHasValue] = useState(false);
   const [country, setCountry] = useState(
     libraryRegister.libraryInfo && libraryRegister.libraryInfo.library_state
   );
@@ -55,8 +55,8 @@ function LibEditProfile({ libraryRegister }) {
   const [fine, setFine] = useState(
     libraryRegister.libraryInfo && libraryRegister.libraryInfo.fine
   );
-  const onFocus = () => setFocused(true);
-  const onBlur = () => setFocused(false);
+  // const onFocus = () => setFocused(true);
+  // const onBlur = () => setFocused(false);
 
   const fieldItems = [
     {
@@ -162,7 +162,7 @@ function LibEditProfile({ libraryRegister }) {
                 required
                 value={region}
                 onChange={handleChangeRegion}
-                disabled={!country}
+                // disabled={!country}
                 disabled={true}
                 name="library_city"
                 id="city"

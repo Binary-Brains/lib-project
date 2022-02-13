@@ -5,7 +5,7 @@ import TabsListUnstyled from "@mui/base/TabsListUnstyled";
 import TabPanelUnstyled from "@mui/base/TabPanelUnstyled";
 import { buttonUnstyledClasses } from "@mui/base/ButtonUnstyled";
 import TabUnstyled, { tabUnstyledClasses } from "@mui/base/TabUnstyled";
-import { CircularProgress, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import AllLibCard from "../../pages/student/libPage/AllLibCard";
 import ConnLib from "../../pages/student/libPage/ConnLib";
 import { Sad } from "../Sad";

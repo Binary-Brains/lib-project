@@ -11,7 +11,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import PhoneNoField from "../../../components/student/PhoneNoField";
+// import PhoneNoField from "../../../components/student/PhoneNoField";
 import AvatarComp from "../../../components/student/AvatarComp";
 import Navbar from "../../../components/student/Navbar";
 import { makeStyles } from "@material-ui/core/styles";

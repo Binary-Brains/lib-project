@@ -4,7 +4,7 @@ import DashboardTable from "../../../components/student/Table";
 import Navbar from "../../../components/student/Navbar";
 import { loadFeed } from "../../../actions/student/library";
 import { connect, useDispatch } from "react-redux";
-import { useLocation } from "wouter";
+// import { useLocation } from "wouter";
 import PropTypes from "prop-types";
 import moment from "moment";
 
@@ -70,6 +70,7 @@ function FeedsDrawer({ libraryStudentRegister }) {
           returned_date,
         };
         rows.push(temp);
+        return 0;
       }
     );
   return (

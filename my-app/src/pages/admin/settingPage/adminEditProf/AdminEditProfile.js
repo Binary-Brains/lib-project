@@ -32,27 +32,27 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const fieldItems = [
-  {
-    id: "admin_name",
-    label: "Admin Name",
-    name: "name",
-    type: "text",
-    autoFocus: true,
-  },
-  {
-    id: "admin_contact",
-    label: "Admin Contact No",
-    name: "admin_contact",
-    type: "number",
-  },
-  {
-    id: "admin_password",
-    label: "Password",
-    name: "password",
-    type: "password",
-  },
-];
+// const fieldItems = [
+//   {
+//     id: "admin_name",
+//     label: "Admin Name",
+//     name: "name",
+//     type: "text",
+//     autoFocus: true,
+//   },
+//   {
+//     id: "admin_contact",
+//     label: "Admin Contact No",
+//     name: "admin_contact",
+//     type: "number",
+//   },
+//   {
+//     id: "admin_password",
+//     label: "Password",
+//     name: "password",
+//     type: "password",
+//   },
+// ];
 
 function AdminEditProfile({ adminRegister }) {
   const classes = useStyles();

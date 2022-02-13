@@ -1,14 +1,8 @@
 import React from "react";
 import SadLogo from "../assests/sad.png";
 import {
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Grid,
-  ImageList,
+  Grid
 } from "@mui/material";
-import { Typography } from "@material-ui/core";
 
 export const Sad = () => {
   return (

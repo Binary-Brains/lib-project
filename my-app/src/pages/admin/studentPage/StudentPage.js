@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
-import DashCard from "../../../components/student/DashCard";
+// import DashCard from "../../../components/student/DashCard";
 import AdminNavbar from "../../../components/admin/AdminNavbar";
 import DashboardTable from "../../../components/student/Table";
 import { Button, Grid, Typography } from "@mui/material";
@@ -16,7 +16,7 @@ import CardContent from "@mui/material/CardContent";
 import CountUp from "react-countup";
 import AssignNewBook from "./assignNewBook/AssignNewBook";
 import { connect, useDispatch } from "react-redux";
-import { useLocation } from "wouter";
+// import { useLocation } from "wouter";
 import PropTypes from "prop-types";
 import {
   getStudentDashboardDetails,

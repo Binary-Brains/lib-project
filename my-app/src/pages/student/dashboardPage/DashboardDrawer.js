@@ -180,7 +180,7 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
   const reserveBooksRow = [];
 
   //now just fill the rows of the column
-  const { issued_books, returned_books, reserved_books } =
+  const { issued_books, reserved_books } =
     libraryStudentRegister.feeds;
 
   //filling issued books table
@@ -216,6 +216,7 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
         reserve_date,
       };
       reserveBooksRow.push(temp);
+      return 0;
     });
 
   //check the issued date of each issued book and then if its 1 month passed then its should be added
