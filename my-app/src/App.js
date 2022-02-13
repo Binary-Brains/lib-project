@@ -34,6 +34,7 @@ import { AdminLoad } from "./actions/admin/auth";
 import AdminRoute from "./routing/AdminRoute";
 import HomePage from "./pages/home/HomePage";
 import GoogleProfilePage from "./pages/student/googleProfilePage.js/GoogleProfilePage";
+import ErrorPage from "./components/ErrorPage";
 
 if (Cookies.get("li_at")) {
   setAuthToken(Cookies.get("li_at"));
@@ -139,6 +140,9 @@ function App() {
           path="/admin/setting"
           component={AdminSettingDrawer}
         />
+        <Route>
+          <ErrorPage />
+        </Route>
       </Switch>
     </>
   );

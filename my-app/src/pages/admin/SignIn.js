@@ -74,6 +74,14 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  studentNotAccount: {
+    justifyContent: "flex-end",
+
+    ["@media (max-width:650px)"]: {
+      marginLeft: "0px",
+      marginTop: "10px",
+    },
+  },
 }));
 
 function SignInAdmin({ title, adminRegister }) {
@@ -168,9 +176,18 @@ function SignInAdmin({ title, adminRegister }) {
               Sign In
             </Button>
             <Grid container>
-              <Grid item>
+              <Grid item xs={12} sm={12} md={6}>
                 <Link href="/admin/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <Link
+                  href="/admin/signup"
+                  variant="body2"
+                  className={classes.studentNotAccount}
+                >
+                  {"Are you a Student? Sign in as Student"}
                 </Link>
               </Grid>
             </Grid>
