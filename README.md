@@ -15,8 +15,8 @@ A Library Management System is software that is designed to manage all the funct
 ![App Screenshot](https://github.com/Binary-Brains/lib-project/blob/main/screenshots/2.png)
 ![App Screenshot](https://github.com/Binary-Brains/lib-project/blob/main/screenshots/3.png)
 ![App Screenshot](https://github.com/Binary-Brains/lib-project/blob/main/screenshots/4.png)
-![App Screenshot](https://github.com/Binary-Brains/lib-project/blob/main/screenshots/5.png)
-![App Screenshot](https://github.com/Binary-Brains/lib-project/blob/main/screenshots/6.png)
+![App Screenshot](https://github.com/Binary-Brains/lib-project/blob/main/screenshots/5.jpeg)
+![App Screenshot](https://github.com/Binary-Brains/lib-project/blob/main/screenshots/6.jpeg)
 
 
 
@@ -29,6 +29,15 @@ A Library Management System is software that is designed to manage all the funct
 - Fine Management
 - Membership Management
 
+# Demo Login details:
+
+## For Student:
+  email: rishabhborn2win@gmail.com 
+  password: Rishu@123
+
+## For Admin:
+  email: rishabhborn2win@gmail.com 
+  password: Rishu@123
 
 
 ## Tech Stack Used
