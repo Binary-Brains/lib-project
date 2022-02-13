@@ -22,6 +22,8 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(express.static('./my-app/build'));
+
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -56,10 +58,10 @@ app.use("/api/library", libraryRoutes);
 app.use("/api", (req, res) => {
   return sendSuccess(res, "Welcome to Library Backend")
 })
-if(process.env.NODE_ENV=="production"){
+// if(process.env.NODE_ENV=="production"){
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "my-app", "build", "index.html"));
   });
-}
+// }
 
 module.exports = app;
