@@ -80,26 +80,29 @@ function SignInStudent({ title, userRegister }) {
   const dispatch = useDispatch();
   const [location, setLocation] = useLocation();
   const classes = useStyles();
-  console.log(location)
-  Cookies.remove('cs_at')
+  console.log(location);
+  Cookies.remove("cs_at");
   //console.log(typeof classes.root);
 
-  const [account, setAccount] = React.useState({ student_email: "", student_password: "", remember_me: false });
+  const [account, setAccount] = React.useState({
+    student_email: "",
+    student_password: "",
+    remember_me: false,
+  });
 
   const onChange = (e) => {
-    setAccount({...account, [e.target.name]: e.target.value})
-  }
+    setAccount({ ...account, [e.target.name]: e.target.value });
+  };
 
   const handelLogin = async (e) => {
-    e.preventDefault()
-    await dispatch(StudentSignin(account))
-    await dispatch(StudentLoad())
-  }
+    e.preventDefault();
+    await dispatch(StudentSignin(account));
+    await dispatch(StudentLoad());
+  };
 
-  const {loading, isAuthenticated}  = userRegister;
+  const { loading, isAuthenticated } = userRegister;
 
-  if(isAuthenticated) setLocation("/student/dashboard")
-
+  if (isAuthenticated) setLocation("/student/dashboard");
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -128,7 +131,7 @@ function SignInStudent({ title, userRegister }) {
               id="email"
               label="Email"
               name="student_email"
-              onChange={e => onChange(e)}
+              onChange={(e) => onChange(e)}
               autoFocus
             />
             <TextField
@@ -141,10 +144,17 @@ function SignInStudent({ title, userRegister }) {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={e => onChange(e)}
+              onChange={(e) => onChange(e)}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" name="remember_me"  onChange={e => onChange(e)}/>}
+              control={
+                <Checkbox
+                  value="remember"
+                  color="primary"
+                  name="remember_me"
+                  onChange={(e) => onChange(e)}
+                />
+              }
               label="Remember me"
             />
             <Button
@@ -153,8 +163,8 @@ function SignInStudent({ title, userRegister }) {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={e => handelLogin(e)}
-              disabled={loading ? true: false}
+              onClick={(e) => handelLogin(e)}
+              disabled={loading ? true : false}
             >
               Sign In
             </Button>

@@ -369,6 +369,93 @@ exports.studentData = (req, res) => {
   
 }
 
+exports.studentData = (req, res) => {
+  var studentProfile = req.profile;
+  return sendSuccess(res, studentProfile)
+  
+}
+
+exports.studentBookFeed = (req, res) => {
+  var student_id = req.profile._id;
+
+  History.aggregate([
+    {
+        '$facet' : {
+            "reserved_books": [{
+                '$match' : { 
+                'student_id' : mongoose.Types.ObjectId(student_id),
+                'returned_at' : null,
+                'issued_at' : null,
+                'booked_at': { $ne: null }
+                }
+            }, {
+              '$lookup' : {
+                'from' : 'books',
+                'localField' : 'book_id',
+                'foreignField' : '_id',
+                'as' : 'book_data'
+              }
+            }, {
+              '$lookup' : {
+                'from' : 'libraries',
+                'localField' : 'library_id',
+                'foreignField' : '_id',
+                'as' : 'library_data'
+              }
+            }],
+            
+            "returned_books": [{
+                '$match' : { 
+                    'student_id' : mongoose.Types.ObjectId(student_id),
+                    'returned_at': { $ne: null }
+                }
+            }, {
+              '$lookup' : {
+                'from' : 'books',
+                'localField' : 'book_id',
+                'foreignField' : '_id',
+                'as' : 'book_data'
+              }
+            }, {
+              '$lookup' : {
+                'from' : 'libraries',
+                'localField' : 'library_id',
+                'foreignField' : '_id',
+                'as' : 'library_data'
+              }
+            }],
+
+            "issued_books": [{
+                '$match' : { 
+                    'student_id' : mongoose.Types.ObjectId(student_id),
+                    'returned_at' : null,
+                    'issued_at' : { $ne: null }
+                    }
+            }, {
+              '$lookup' : {
+                'from' : 'books',
+                'localField' : 'book_id',
+                'foreignField' : '_id',
+                'as' : 'book_data'
+              }
+            }, {
+              '$lookup' : {
+                'from' : 'libraries',
+                'localField' : 'library_id',
+                'foreignField' : '_id',
+                'as' : 'library_data'
+              }
+            }]
+        }
+    }
+  ]).then(response => {
+      return sendSuccess(res, response);
+    }).catch((err) => {
+      return sendError(res, err, "server_error", constants.SERVER_ERROR);
+    });
+  
+}
+
 exports.getConnectedLibraryForStudentController = (req, res) => {
   var studentProfile = req.profile;
   Student.aggregate([
@@ -473,4 +560,14 @@ exports.studentLibraryHistory = (req, res) => {
 
   });
   
+}
+
+exports.editStudentController = (req, res) => {
+  var student_id = req.profile._id;
+  var updateStudent = req.body.student_data;
+
+  Student.findByIdAndUpdate( { _id: student_id }, updateStudent, { new: true}, function(err, updatedStudent) {
+    if(err) return sendError(res, err, err.message, constants.BAD_REQUEST);
+    return sendSuccess(res, updatedStudent);
+  });
 }

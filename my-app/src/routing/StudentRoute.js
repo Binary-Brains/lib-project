@@ -8,13 +8,13 @@ import Cookies from "js-cookie";
 const StudentRoute = ({
   component: Component,
   path,
-  userRegister: { isAuthenticated, loading, token},
+  userRegister: { isAuthenticated, loading, token },
   ...rest
 }) => {
-  setAuthToken(Cookies.get('li_at') || token )
+  setAuthToken(Cookies.get("li_at") || token);
   return (
     <Route exact path={path}>
-        {(props) =>
+      {(props) =>
         !isAuthenticated && !loading ? (
           <Redirect to="/student/signin" />
         ) : (
@@ -22,9 +22,8 @@ const StudentRoute = ({
         )
       }
     </Route>
-  )};   
-
-    
+  );
+};
 
 StudentRoute.propTypes = {
   userRegister: PropTypes.object.isRequired,

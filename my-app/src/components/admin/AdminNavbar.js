@@ -117,7 +117,7 @@ const Drawer = styled(MuiDrawer, {
 export default function Navbar() {
   const theme = useTheme();
   // const classes = useStyles();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [location, setLocation] = useLocation();
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -126,12 +126,11 @@ export default function Navbar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  console.log(location)
+  console.log(location);
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -155,9 +154,9 @@ export default function Navbar() {
   };
 
   const logout = () => {
-    const res = window.confirm("Are you sure?")
-    if(res) dispatch(AdminLogout())
-  }
+    const res = window.confirm("Are you sure?");
+    if (res) dispatch(AdminLogout());
+  };
   //uupdate this to just add a field in the drawer
 
   const drawerList = [
@@ -182,7 +181,7 @@ export default function Navbar() {
       name: "Logout",
       icon: <LogoutIcon></LogoutIcon>,
       url: "/admin/signin",
-      onClickFunc: logout
+      onClickFunc: logout,
     },
   ];
 
@@ -293,8 +292,8 @@ export default function Navbar() {
             columns={{ xs: 4, sm: 4, md: 12 }}
           >
             <Grid item xs={0} sm={0} md={10}>
-              <Typography variant="h6" noWrap component="div">
-                Library Management System
+              <Typography variant="h5" noWrap component="div">
+                <b>Library Desk</b>
               </Typography>
             </Grid>
           </Grid>
@@ -347,7 +346,14 @@ export default function Navbar() {
         <Divider />
         <List>
           {drawerList.map(({ name, icon, url, onClickFunc }, index) => (
-            <Link onClick={e => {e.preventDefault(); onClickFunc && onClickFunc(); setLocation(url)}} underline="none">
+            <Link
+              onClick={(e) => {
+                e.preventDefault();
+                onClickFunc && onClickFunc();
+                setLocation(url);
+              }}
+              underline="none"
+            >
               <ListItem button key={name}>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={name} />

@@ -1,14 +1,25 @@
-import React, { useState } from "react";
-import PropTypes from 'prop-types'
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Button, Grid, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import PhoneNoField from "../../../components/student/PhoneNoField";
 import AvatarComp from "../../../components/student/AvatarComp";
 import Navbar from "../../../components/student/Navbar";
 import { makeStyles } from "@material-ui/core/styles";
-import Form from "../../../components/Form";
-import { connect } from 'react-redux';
+import { connect, useDispatch } from "react-redux";
+import StudentSettingForm from "./StudentSettingForm";
+import { StateCity } from "../../../data/StateCity";
+import moment from "moment";
+import { updateStudent } from "../../../actions/student/auth";
 // import { useLocation } from 'wouter';
 
 const useStyles = makeStyles(() => ({
@@ -26,37 +37,69 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-
-function SettingDrawer({userRegister}) {
+function SettingDrawer({ userRegister }) {
   const classes = useStyles();
+  const dispatch = useDispatch()
   const [focus, setFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
+  const [country, setCountry] = useState(userRegister.studentInfo.student_state);
+  const [name, setName] = useState(userRegister.studentInfo.student_name);
+  const [contact, setContact] = useState(userRegister.studentInfo.student_contact);
+  const [dob, setDob] = useState(moment(userRegister.studentInfo.student_dob).format('DD-MM-YYYY'));
+  const [region, setRegion] = useState(userRegister.studentInfo.student_city);
+
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
 
-  const {studentInfo} =userRegister;
+  const handleChangeCountry = (event) => {
+    setCountry(event.target.value);
+    //setAccount({ ...account, [event.target.name]: event.target.value });
+  };
+
+  const handleChangeRegion = (event) => {
+    setRegion(event.target.value);
+    //setAccount({ ...account, [event.target.name]: event.target.value });
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault()
+    const res = window.confirm("Are you sure?");
+    if(res) dispatch(updateStudent(details));
+  }
+
+  const [details, setDetails] = useState()
+
+
+  useEffect(() => {
+    setDetails({
+      student_name: name,
+      student_contact: contact,
+      student_dob: dob,
+      student_city: region,
+      student_state: country
+    })
+  }, [name, contact, dob, region,country])
+  
+
+  //const { studentInfo } = userRegister;
   const fieldItems = [
     {
       id: "name",
       label: "Name",
       name: "name",
       type: "text",
-      value: studentInfo.student_name,
       autoFocus: true,
+      value: name,
+      onClickFunc: setName
+
     },
     {
-      id: "state",
-      label: "State",
-      name: "state",
-      value: studentInfo.student_state,
-      type: "text",
-    },
-    {
-      id: "city",
-      label: "City",
-      name: "city",
-      value: studentInfo.student_city,
-      type: "text",
+      id: "contact",
+      label: "Contact No",
+      name: "admin_contact",
+      type: "number",
+      value: contact,
+      onClickFunc: setContact
     }
   ];
   return (
@@ -70,11 +113,47 @@ function SettingDrawer({userRegister}) {
         <Typography component="h1" variant="h5" className={classes.editProf}>
           Edit Profile
         </Typography>
-        <Form data={fieldItems} />
+        <StudentSettingForm data={fieldItems} />
         <Grid container>
           <form className={classes.form} noValidate>
             <Grid item xs={12} mt={2}>
-              <PhoneNoField value={studentInfo.student_contact} />
+              <FormControl fullWidth variant="outlined">
+                <InputLabel>State</InputLabel>
+                <Select
+                  required
+                  value={country}
+                  onChange={handleChangeCountry}
+                  name="admin_state"
+                  id="state"
+                  label="State"
+                >
+                  {StateCity.states.map((item) => (
+                    <MenuItem value={item.state}>{item.state}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} mt={2}>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel>City</InputLabel>
+                <Select
+                  required
+                  value={region}
+                  onChange={handleChangeRegion}
+                  disabled={!country}
+                  name="admin_city"
+                  id="city"
+                  label="City"
+                >
+                  {country
+                    ? StateCity.states
+                        .find(({ state }) => state === country)
+                        .districts.map((item) => (
+                          <MenuItem value={item}>{item}</MenuItem>
+                        ))
+                    : []}
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12} mt={2} mb={2}>
               <TextField
@@ -82,9 +161,10 @@ function SettingDrawer({userRegister}) {
                 onBlur={onBlur}
                 variant="outlined"
                 required
+                value={dob}
                 fullWidth
-                value={studentInfo.student_dob}
                 onChange={(e) => {
+                  setDob(e.target.value)
                   if (e.target.value) setHasValue(true);
                   else setHasValue(false);
                 }}
@@ -99,7 +179,7 @@ function SettingDrawer({userRegister}) {
               color="primary"
               mt={2}
               className={classes.fields}
-              //onClick={handelLogin}
+              onClick={(e) => handleUpdate(e)}
             >
               Update Profile
             </Button>

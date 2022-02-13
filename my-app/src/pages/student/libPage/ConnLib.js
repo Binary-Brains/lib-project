@@ -5,14 +5,14 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 // import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Moment from 'react-moment'
+import Moment from "react-moment";
 import { CardActions } from "@material-ui/core";
 import { Button } from "@mui/material";
 import { useLocation } from "wouter";
 
-export default function ConnLib({data}) {
-  const [location, setLocation] = useLocation()
-  console.log(location)
+export default function ConnLib({ data }) {
+  const [location, setLocation] = useLocation();
+  console.log(location);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -29,11 +29,17 @@ export default function ConnLib({data}) {
           Contact: {data && data.library_contact}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Created On: <Moment format="DD-MMM-YYYY">{data && data.createdAt}</Moment>
+          Created On:{" "}
+          <Moment format="DD-MMM-YYYY">{data && data.createdAt}</Moment>
         </Typography>
       </CardContent>
       <CardActions id="libButton">
-          <Button size="small" onClick={() => setLocation(`/student/library/learnmore/${data._id}`)}>Learn More</Button>
+        <Button
+          size="small"
+          onClick={() => setLocation(`/student/library/learnmore/${data._id}`)}
+        >
+          Learn More
+        </Button>
       </CardActions>
     </Card>
   );

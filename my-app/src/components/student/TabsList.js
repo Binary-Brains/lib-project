@@ -76,10 +76,10 @@ const TabsList = styled(TabsListUnstyled)`
   align-content: space-between;
 `;
 
-export default function UnstyledTabsCustomized({data, studentData}) {
-  console.log(data.libraries)
-  const {connectedLibraries} = data
-  
+export default function UnstyledTabsCustomized({ data, studentData }) {
+  console.log(data.libraries);
+  const { connectedLibraries } = data;
+
   return (
     <TabsUnstyled defaultValue={0}>
       <TabsList>
@@ -92,11 +92,12 @@ export default function UnstyledTabsCustomized({data, studentData}) {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 4, md: 12 }}
         >
-          {connectedLibraries && connectedLibraries.map((e, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <ConnLib data={e}></ConnLib>
-            </Grid>
-          ))}
+          {connectedLibraries &&
+            connectedLibraries.map((e, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <ConnLib data={e}></ConnLib>
+              </Grid>
+            ))}
         </Grid>
       </TabPanel>
       <TabPanel value={1}>
@@ -105,15 +106,15 @@ export default function UnstyledTabsCustomized({data, studentData}) {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 4, md: 12 }}
         >
-          {data && data.libraries ? data.libraries.map((e, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <AllLibCard data={e} studentData={studentData} ></AllLibCard>
-            </Grid>
-          )) : "No Libraries Found!"}
+          {data && data.libraries
+            ? data.libraries.map((e, index) => (
+                <Grid item xs={12} sm={6} md={4} key={index}>
+                  <AllLibCard data={e} studentData={studentData}></AllLibCard>
+                </Grid>
+              ))
+            : "No Libraries Found!"}
         </Grid>
       </TabPanel>
     </TabsUnstyled>
   );
 }
-
-

@@ -4,6 +4,7 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import AddBookForm from "./forms/AddBookForm";
+import { Grid } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -33,21 +34,24 @@ export default function AddBookModal({ addBooks }) {
 
   return (
     <div>
-      <Button onClick={handleOpen} variant="contained" color="primary">
-        <AddIcon />
-        Add Book
-      </Button>
-
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <Box sx={{ ...style, width: 800 }}>
-          <AddBookForm addBooks={addBooks} closeModal={closeModal} />
-        </Box>
-      </Modal>
+      <Grid container>
+        <Grid item>
+          <Button onClick={handleOpen} variant="contained" color="primary">
+            <AddIcon />
+            Add Book
+          </Button>
+        </Grid>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="parent-modal-title"
+          aria-describedby="parent-modal-description"
+        >
+          <Box sx={{ ...style, width: 800 }}>
+            <AddBookForm addBooks={addBooks} closeModal={closeModal} />
+          </Box>
+        </Modal>
+      </Grid>
     </div>
   );
 }

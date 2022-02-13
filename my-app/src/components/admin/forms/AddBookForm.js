@@ -14,6 +14,11 @@ const useStyles = makeStyles(() => ({
   fields: {
     marginTop: "20px",
   },
+  addBook: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 }));
 
 const data = [
@@ -69,9 +74,11 @@ export default function AddBookForm({ addBooks, closeModal }) {
     <>
       <form className={classes.form} noValidate>
         <Grid container>
-          <Typography component="h1" variant="h5" className={classes.addBook}>
-            Add Book
-          </Typography>
+          <Grid item xs={12}>
+            <Typography component="h1" variant="h5" className={classes.addBook}>
+              Add Book
+            </Typography>
+          </Grid>
           <Grid item xs={12}>
             {data.map((item) => {
               return (
@@ -91,7 +98,7 @@ export default function AddBookForm({ addBooks, closeModal }) {
               );
             })}
           </Grid>
-          <Grid item>
+          <Grid item xs={12} className={classes.addBook}>
             <Button variant="contained" color="primary" onClick={handleAddBook}>
               Add Book
             </Button>

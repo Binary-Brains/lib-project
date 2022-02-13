@@ -4,6 +4,7 @@ const {
   verifyAccount,
   loginControlller,
   adminData,
+  editAdminController,
   googleSignupController,
 } = require("../controllers/admin");
 const { sendSuccess } = require("../utility/helper");
@@ -93,5 +94,7 @@ router.get(
 );
 
 router.get("/admin_profile", authAdmin, adminData);
+
+router.post("/edit_admin", authAdmin, editAdminController);
 
 module.exports = router;

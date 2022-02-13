@@ -286,3 +286,12 @@ const generateVerifyEmail = async (id, email, name, cb) => {
 
 //getAdmin profile
 //edit admin, library, book, student. edit book stock
+exports.editAdminController = (req, res) => {
+  var admin_id = req.profile._id;
+  var updateAdmin = req.body.admin_data;
+
+  Admin.findByIdAndUpdate( { _id: admin_id }, updateAdmin, { new: true}, function(err, updatedAdmin) {
+    if(err) return sendError(res, err, err.message, constants.BAD_REQUEST);
+    return sendSuccess(res, updatedAdmin);
+  });
+}

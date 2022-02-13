@@ -10,7 +10,9 @@ const {
   reserveBook,
   studentData, 
   studentLibraryHistory,
-  getConnectedLibraryForStudentController
+  studentBookFeed,
+  getConnectedLibraryForStudentController,
+  editStudentController
 } = require("../controllers/students");
 const { runValidation } = require("../validators");
 const {
@@ -115,8 +117,12 @@ router.post("/reserve_book", authStudent, reserveBook);
 
 router.get("/student_profile", authStudent, studentData);
 
+router.get("/book_feed", authStudent, studentBookFeed);
+
 router.post("/library_history", authStudent, studentLibraryHistory);
 //get connected library details array for the student
 router.get("/getConnectedLibraries", authStudent, getConnectedLibraryForStudentController);
+
+router.post("/edit_student", authStudent, editStudentController);
 
 module.exports = router;

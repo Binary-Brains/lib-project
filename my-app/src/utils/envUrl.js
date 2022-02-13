@@ -1,1 +1,1 @@
-export const envUrl = "http://localhost:8080"
+export const envUrl = "http://localhost:8080";

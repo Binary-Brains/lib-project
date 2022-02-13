@@ -1,5 +1,5 @@
 const express = require("express");
-const { createLibraryController, addBookController, getLibrary, acceptRequestController, issueBook, returnBook, availableBooks, issuedBooks, libraryStudentHistory } = require("../controllers/library");
+const { createLibraryController, addBookController, getLibrary, acceptRequestController, issueBook, returnBook, availableBooks, issuedBooks, libraryStudentHistory, libraryEditController } = require("../controllers/library");
 const { authAdmin, authStudent } = require("../utility/auth/auth_token");
 const { sendError, sendSuccess } = require('../utility/helper');
 const { runValidation } = require("../validators");
@@ -36,6 +36,7 @@ router.post("/student_history", authAdmin, libraryStudentHistory);
 //edit books
 //stock update
 //edit library..
+router.post("/edit_library", authAdmin, libraryEditController);
 
 //fine in phase 2
 

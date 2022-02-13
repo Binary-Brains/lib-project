@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Box from "@material-ui/core/Box";
 import Form from "../../../components/Form";
 import PrimarySearchAppBar from "../../../components/student/TopNavOnly";
@@ -64,14 +64,14 @@ const addLibFieldItems = [
 
 export default function AddLibrary() {
   const classes = useStyles();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [library, setLibrary] = useState();
 
   const handelSubmit = (e) => {
     e.preventDefault();
-    dispatch(createLibrary(library))
-  }
+    dispatch(createLibrary(library));
+  };
 
   return (
     <>
@@ -88,7 +88,11 @@ export default function AddLibrary() {
           <Typography component="h1" variant="h5" className={classes.addBook}>
             Add Library
           </Typography>
-          <Form data={addLibFieldItems} setLibrary={setLibrary} library={library}/>
+          <Form
+            data={addLibFieldItems}
+            setLibrary={setLibrary}
+            library={library}
+          />
           <form className={classes.form} noValidate>
             <Grid item>
               <Link href="/admin/dashboard">
@@ -97,7 +101,7 @@ export default function AddLibrary() {
                   variant="contained"
                   color="primary"
                   className={classes.submit}
-                  onClick={e => handelSubmit(e)}
+                  onClick={(e) => handelSubmit(e)}
                 >
                   Add Library
                 </Button>

@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 function SignUpStudent({ title, userRegister }) {
   const dispatch = useDispatch();
   const [location, setLocation] = useLocation();
-  console.log(location)
+  console.log(location);
   const classes = useStyles();
   const [country, setCountry] = useState("");
   const [region, setRegion] = useState("");
@@ -119,7 +119,7 @@ function SignUpStudent({ title, userRegister }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //create a function in the action folder and just call in the component it will save the user and return
-     await dispatch(StudentSignup(account));
+    await dispatch(StudentSignup(account));
 
     //after successful signup user will be receiving a mail with a frontend link
     //from that link we have to get the id and send it to the backend to verify and then

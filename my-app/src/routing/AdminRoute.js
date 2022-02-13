@@ -9,22 +9,23 @@ import Cookies from "js-cookie";
 const AdminRoute = ({
   component: Component,
   path,
-  adminRegister: { isAuthenticated, loading, token,adminInfo},
+  adminRegister: { isAuthenticated, loading, token, adminInfo },
 }) => {
-  setAuthToken(Cookies.get('cs_at') || token)
+  setAuthToken(Cookies.get("cs_at") || token);
   return (
     <Route exact path={path}>
-        {(props) =>
+      {(props) =>
         !isAuthenticated && !loading ? (
           <Redirect to="/admin/signin" />
-        ) : (adminInfo.library_id) ? (
+        ) : adminInfo.library_id ? (
           <Component {...props} />
-        ) : <AddLibrary />
+        ) : (
+          <AddLibrary />
+        )
       }
     </Route>
-  )};   
-
-    
+  );
+};
 
 AdminRoute.propTypes = {
   adminRegister: PropTypes.object.isRequired,

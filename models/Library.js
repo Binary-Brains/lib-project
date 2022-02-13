@@ -12,6 +12,8 @@ var LibrarySchema = new Schema(
     library_contact: { type: String, required: true, unique: true },
     status: { type: String, default: "active" }, // for reports -> inactive/active
     avatar: { type: String },
+    fine: { type: String }, //per book per day
+    lending_period: { type: String },
     library_review: [
       {
         student_id: { type: ObjectId },

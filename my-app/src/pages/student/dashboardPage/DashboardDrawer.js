@@ -14,8 +14,10 @@ import { styled } from "@mui/system";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CountUp from "react-countup";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
+import { loadFeed } from "../../../actions/student/library";
+import moment from "moment";
 
 const useStyles = makeStyles(() => ({
   individualCard: {
@@ -106,26 +108,13 @@ const TabsList = styled(TabsListUnstyled)`
   align-content: space-between;
 `;
 
-function MiniDrawerDash({ userRegister }) {
+function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const dashCards = [
-    {
-      desc: "Issued Books",
-      num: "40",
-      link: "/student/dashboard",
-    },
-    {
-      desc: "Pending Books",
-      num: "32",
-      link: "/student/dashboard/pendingbooks",
-    },
-    {
-      desc: "Reserved Books",
-      num: "45",
-      link: "/student/dashboard/reservedbooks",
-    },
-  ];
+  React.useEffect(() => {
+    dispatch(loadFeed());
+  }, [dispatch, userRegister]);
 
   const columns = [
     {
@@ -148,32 +137,7 @@ function MiniDrawerDash({ userRegister }) {
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      book_name: "HC Verma",
-      library_name: "NIT Patna",
-      due_date: "15-07-2021",
-    },
-    {
-      id: 2,
-      book_name: "HC Verma",
-      library_name: "NIT Patna",
-      due_date: "15-07-2022",
-    },
-    {
-      id: 3,
-      book_name: "RD Sharma",
-      library_name: "NIT Raipur",
-      due_date: "15-07-2022",
-    },
-    {
-      id: 4,
-      book_name: "RD Sharma",
-      library_name: "NIT Raipur",
-      due_date: "15-07-2022",
-    },
-  ];
+  const rows = [];
 
   const pendingBooksColumn = [
     {
@@ -190,34 +154,19 @@ function MiniDrawerDash({ userRegister }) {
     },
   ];
 
-  const pendingBooksRow = [
-    {
-      id: 1,
-      book_name: "HC Verma",
-      due_date: "15-07-2021",
-    },
-    {
-      id: 2,
-      book_name: "HC Verma",
-      due_date: "15-07-2022",
-    },
-    {
-      id: 3,
-      book_name: "RD Sharma",
-      due_date: "15-07-2022",
-    },
-    {
-      id: 4,
-      book_name: "RD Sharma",
-      due_date: "15-07-2022",
-    },
-  ];
+  const pendingBooksRow = [];
 
   const reserveBooksColumn = [
     {
       field: "book_name",
       headerName: "Book Name",
-      width: 700,
+      width: 400,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "library_name",
+      headerName: "Library Name",
+      width: 300,
       headerClassName: "super-app-theme--header",
     },
     {
@@ -228,26 +177,63 @@ function MiniDrawerDash({ userRegister }) {
     },
   ];
 
-  const reserveBooksRow = [
+  const reserveBooksRow = [];
+
+  //now just fill the rows of the column
+  const { issued_books, returned_books, reserved_books } =
+    libraryStudentRegister.feeds;
+
+  //filling issued books table
+  issued_books &&
+    issued_books.map(({ book_data, library_data, issued_at }, index) => {
+      const due_date = moment(issued_at).add(1, "M").format("DD-MM-YYYY");
+      const today_date = moment(Date.now()).format("DD-MM-YYYY");
+      let temp = {
+        id: index + 1,
+        book_name: book_data[0].book_name,
+        library_name: library_data && library_data[0] && library_data[0].library_name,
+        due_date,
+      };
+      if (today_date > due_date) {
+        pendingBooksRow.push(temp);
+        return 0;
+      } else {
+        rows.push(temp);
+        return 0;
+      }
+    });
+
+  //filling reserved books table
+  reserved_books &&
+    reserved_books.map(({ book_data, library_data, booked_at }, index) => {
+      const reserve_date = moment(booked_at).format("DD-MM-YYYY");
+      let temp = {
+        id: index + 1,
+        book_name: book_data[0].book_name,
+        library_name: library_data && library_data[0] && library_data[0].library_name,
+        reserve_date,
+      };
+      reserveBooksRow.push(temp);
+    });
+
+  //check the issued date of each issued book and then if its 1 month passed then its should be added
+
+  const dashCards = [
     {
-      id: 1,
-      book_name: "HC Verma",
-      reserve_date: "15-07-2021",
+      desc: "Issued Books",
+      num: issued_books && issued_books.length,
+      link: "/student/dashboard",
     },
     {
-      id: 2,
-      book_name: "HC Verma",
-      reserve_date: "15-07-2022",
+      desc: "Pending Books",
+      //in future we have to take the issued date for each book and calaculate if its has passed the due date and then show the counter
+      num: pendingBooksRow.length,
+      link: "/student/dashboard/pendingbooks",
     },
     {
-      id: 3,
-      book_name: "RD Sharma",
-      reserve_date: "15-07-2022",
-    },
-    {
-      id: 4,
-      book_name: "RD Sharma",
-      reserve_date: "15-07-2022",
+      desc: "Reserved Books",
+      num: reserved_books && reserved_books.length,
+      link: "/student/dashboard/reservedbooks",
     },
   ];
 
@@ -268,7 +254,7 @@ function MiniDrawerDash({ userRegister }) {
             <TabsList
               sx={{
                 backgroundColor: "inherit",
-                // eslint-disable-next-line 
+                // eslint-disable-next-line
                 ["@media (max-width:800px)"]: {
                   flexDirection: "column",
                 },

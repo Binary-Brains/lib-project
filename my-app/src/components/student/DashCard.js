@@ -39,11 +39,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-
 export default function DashCard({ data }) {
   const classes = useStyles();
   const [location, setLocation] = useLocation();
-  console.log(location)
+  console.log(location);
   return (
     <Grid conatiner className={classes.cardzCont}>
       {data.map((item) => {

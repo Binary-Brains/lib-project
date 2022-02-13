@@ -25,22 +25,20 @@ const useStyles = makeStyles(() => ({
 
 export default function MiniDrawerDash() {
   const classes = useStyles();
-  const dispatch = useDispatch()
-  const [location, setLocation] = useLocation()
+  const dispatch = useDispatch();
+  const [location, setLocation] = useLocation();
   const [books, setBooks] = useState([]);
-  console.log(location)
+  console.log(location);
   const addBooks = (obj) => {
     setBooks([...books, obj]);
   };
 
   const onSubmit = async (e) => {
-    e.preventDefault()
-    console.log("Hi I was called")
+    e.preventDefault();
+    console.log("Hi I was called");
     await dispatch(saveBook(books));
-    setLocation("/admin/dashboard")
-  }
-
-
+    setLocation("/admin/dashboard");
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -65,7 +63,11 @@ export default function MiniDrawerDash() {
           </Grid>
           <Grid item>
             {books && books.length > 0 ? (
-              <Button onClick={e => onSubmit(e)} variant="contained" color="primary">
+              <Button
+                onClick={(e) => onSubmit(e)}
+                variant="contained"
+                color="primary"
+              >
                 Submit
               </Button>
             ) : (

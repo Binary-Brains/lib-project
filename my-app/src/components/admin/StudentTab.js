@@ -79,7 +79,7 @@ const TabsList = styled(TabsListUnstyled)`
   align-content: space-between;
 `;
 
-export default function StudentTab() {
+export default function StudentTab({ reservedBooks }) {
   return (
     <Box mt={5}>
       <TabsUnstyled defaultValue={0}>
@@ -88,7 +88,7 @@ export default function StudentTab() {
           <Tab>Assign New Book</Tab>
         </TabsList>
         <TabPanel value={0}>
-          <ReservedBooks />
+          <ReservedBooks reservedBooks={reservedBooks} />
         </TabPanel>
         <TabPanel value={1}>
           <AssignNewBookForm />

@@ -79,16 +79,16 @@ const rows = [
   },
 ];
 
-export default function FinePage({ title }) {
+export default function FinePage() {
   return (
     <Box sx={{ display: "flex" }}>
       <AdminNavbar />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }} mt={10}>
-        <Grid item mb={2}>
-          <Typography component="h1" variant="h5" align="center">
+        {/* <Grid item mb={2}>
+         <Typography component="h1" variant="h5" align="center">
             {title} Profile
           </Typography>
-        </Grid>
+        </Grid> */}
         <DashCard data={fineCards} />
         <DashboardTable rows={rows} columns={columns} />
       </Box>

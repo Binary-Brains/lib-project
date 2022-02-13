@@ -18,7 +18,7 @@ import RegisteredPage from "./pages/admin/dashboardPage/registeredPage/Registere
 import AddedBook from "./pages/admin/dashboardPage/addedBooks/AddedBook";
 import StudentPage from "./pages/admin/studentPage/StudentPage";
 import FinePage from "./pages/admin/studentPage/FinePage";
-import AssignBookPage from "./pages/admin/studentPage/assignNewBook/AssignNewBook";
+import AssignNewBook from "./pages/admin/studentPage/assignNewBook/AssignNewBook";
 import TransitionAlert from "./components/student/Alert";
 import Verify from "./pages/student/Verify";
 import PropTypes from "prop-types";
@@ -32,6 +32,8 @@ import StudentRoute from "./routing/StudentRoute";
 import VerifyAdmin from "./pages/admin/Verify";
 import { AdminLoad } from "./actions/admin/auth";
 import AdminRoute from "./routing/AdminRoute";
+import HomePage from "./pages/home/HomePage";
+import GoogleProfilePage from "./pages/student/googleProfilePage.js/GoogleProfilePage";
 
 if (Cookies.get("li_at")) {
   setAuthToken(Cookies.get("li_at"));
@@ -54,6 +56,9 @@ function App() {
     <>
       <TransitionAlert />
       <Switch>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
         <Route exact path="/api/verify/:id">
           {(params) => <Verify id={params.id} />}
         </Route>
@@ -71,6 +76,9 @@ function App() {
         </Route>
         <Route exact path="/student/signup">
           <SignUpStudent title="Student" />
+        </Route>
+        <Route exact path="/student/profile/google">
+          <GoogleProfilePage />
         </Route>
         <StudentRoute
           exact
@@ -117,7 +125,7 @@ function App() {
         <AdminRoute
           exact
           path="/admin/dashboard/student/assignbook"
-          component={AssignBookPage}
+          component={AssignNewBook}
         />
         <StudentRoute
           exact

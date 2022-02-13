@@ -23,26 +23,11 @@ const assignNewBookCards = [
   },
 ];
 
-export default function AssignNewBook({ title }) {
+export default function AssignNewBook({ reservedBooks }) {
   return (
     <>
-      <PrimarySearchAppBar />
-
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Grid item mb={2}>
-          <Link href="/admin/dashboard">
-            <Button variant="contained">
-              <ArrowBackIcon />
-              Dashboard
-            </Button>
-          </Link>
-          <Typography component="h1" variant="h5" align="center">
-            {title} Profile
-          </Typography>
-        </Grid>
-        <DashCard data={assignNewBookCards} />
-        <StudentTab />
-      </Box>
+      {/* <PrimarySearchAppBar /> */}
+      <StudentTab reservedBooks={reservedBooks} />
     </>
   );
 }

@@ -117,13 +117,13 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Navbar() {
   const theme = useTheme();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // const classes = useStyles();
-  const [location, setLocation] = useLocation()
+  const [location, setLocation] = useLocation();
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  console.log(location)
+  console.log(location);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -154,10 +154,10 @@ export default function Navbar() {
 
   //uupdate this to just add a field in the drawer
   const logout = () => {
-    const res = window.confirm("Are you sure?")
-    if(res) dispatch(StudentLogout())
-  }
- 
+    const res = window.confirm("Are you sure?");
+    if (res) dispatch(StudentLogout());
+  };
+
   const drawerList = [
     {
       name: "Dashboard",
@@ -183,7 +183,7 @@ export default function Navbar() {
       name: "Logout",
       icon: <LogoutIcon></LogoutIcon>,
       url: "/student/signin",
-      onClickFunc: logout
+      onClickFunc: logout,
     },
     // {
     //   name: "About Us",
@@ -209,7 +209,6 @@ export default function Navbar() {
   //     url: "/student/aboutus",
   //   },
   // ];
-
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -300,8 +299,8 @@ export default function Navbar() {
             columns={{ xs: 4, sm: 4, md: 12 }}
           >
             <Grid item xs={0} sm={0} md={10}>
-              <Typography variant="h6" noWrap component="div">
-                Library Management System
+              <Typography variant="h5" noWrap component="div">
+                <b>Library Desk</b>
               </Typography>
             </Grid>
           </Grid>
@@ -354,7 +353,14 @@ export default function Navbar() {
         <Divider />
         <List>
           {drawerList.map(({ name, icon, url, onClickFunc }, index) => (
-            <Link onClick={e => {e.preventDefault();setLocation(url);onClickFunc && onClickFunc();}} underline="none">
+            <Link
+              onClick={(e) => {
+                e.preventDefault();
+                setLocation(url);
+                onClickFunc && onClickFunc();
+              }}
+              underline="none"
+            >
               <ListItem button key={name}>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={name} />

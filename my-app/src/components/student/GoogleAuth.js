@@ -24,14 +24,19 @@ export default function GoogleAuth() {
           <p>or</p>
         </Grid>
       </Grid>
-      <Grid container justify="center" alignItems="center">
+      <Grid
+        href="http://localhost:8080/api/student/cr_acc/google"
+        container
+        justify="center"
+        alignItems="center"
+      >
         <Grid item>
           <Link href="#" variant="body2">
             <GoogleIcon className={classes.gIcon} />
           </Link>
         </Grid>
         <Grid item>
-          <Link href="#" variant="body2">
+          <Link variant="body2">
             <p className={classes.gIcon}>oogle</p>
           </Link>
         </Grid>

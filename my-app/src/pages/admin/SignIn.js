@@ -80,25 +80,28 @@ function SignInAdmin({ title, adminRegister }) {
   const dispatch = useDispatch();
   const [location, setLocation] = useLocation();
   const classes = useStyles();
-  console.log(location)
-  Cookies.remove('li_at')
+  console.log(location);
+  Cookies.remove("li_at");
   //console.log(typeof classes.root);
 
-  const [account, setAccount] = React.useState({ admin_email: "", admin_password: "", remember_me: false });
+  const [account, setAccount] = React.useState({
+    admin_email: "",
+    admin_password: "",
+    remember_me: false,
+  });
 
   const onChange = (e) => {
-    setAccount({...account, [e.target.name]: e.target.value})
-  }
+    setAccount({ ...account, [e.target.name]: e.target.value });
+  };
 
   const handelLogin = (e) => {
-    e.preventDefault()
-    dispatch(AdminSignin(account))
-  }
+    e.preventDefault();
+    dispatch(AdminSignin(account));
+  };
 
-  const {loading,  isAuthenticated}  = adminRegister;
+  const { loading, isAuthenticated } = adminRegister;
 
-  if(isAuthenticated) setLocation("/admin/dashboard")
-
+  if (isAuthenticated) setLocation("/admin/dashboard");
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -127,7 +130,7 @@ function SignInAdmin({ title, adminRegister }) {
               id="email"
               label="Email"
               name="admin_email"
-              onChange={e => onChange(e)}
+              onChange={(e) => onChange(e)}
               autoFocus
             />
             <TextField
@@ -140,10 +143,17 @@ function SignInAdmin({ title, adminRegister }) {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={e => onChange(e)}
+              onChange={(e) => onChange(e)}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" name="remember_me"  onChange={e => onChange(e)}/>}
+              control={
+                <Checkbox
+                  value="remember"
+                  color="primary"
+                  name="remember_me"
+                  onChange={(e) => onChange(e)}
+                />
+              }
               label="Remember me"
             />
             <Button
@@ -152,8 +162,8 @@ function SignInAdmin({ title, adminRegister }) {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={e => handelLogin(e)}
-              disabled={loading ? true: false}
+              onClick={(e) => handelLogin(e)}
+              disabled={loading ? true : false}
             >
               Sign In
             </Button>

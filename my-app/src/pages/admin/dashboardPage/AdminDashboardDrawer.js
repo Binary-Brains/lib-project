@@ -351,7 +351,7 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
           <TabsList
             sx={{
               backgroundColor: "inherit",
-              // eslint-disable-next-line 
+              // eslint-disable-next-line
               ["@media (max-width:800px)"]: {
                 flexDirection: "column",
               },

@@ -88,7 +88,7 @@ function SignUpAdmin({ title, adminRegister }) {
   const [location, setLocation] = useLocation();
   const [country, setCountry] = useState("");
   const [region, setRegion] = useState("");
-  console.log(location)
+  console.log(location);
   const classes = useStyles();
 
   const [account, setAccount] = React.useState({
@@ -118,7 +118,7 @@ function SignUpAdmin({ title, adminRegister }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //create a function in the action folder and just call in the component it will save the user and return
-   await dispatch(AdminSignup(account));
+    await dispatch(AdminSignup(account));
 
     //after successful signup user will be receiving a mail with a frontend link
     //from that link we have to get the id and send it to the backend to verify and then

@@ -19,7 +19,7 @@ const History = mongoose.model("History")
 
 exports.createLibraryController = (req, res) => {
     var admin_id = req.user.id;
-    var {library_name, library_address, library_city, library_state, library_contact } = req.body;
+    var {library_name, library_address, library_city, library_state, library_contact, fine, lending_period } = req.body;
     try {
         //add a validation that if the admin has already a library can't create one
         Admin.findById(admin_id, (err, admin) => {
@@ -32,7 +32,9 @@ exports.createLibraryController = (req, res) => {
                     library_address,
                     library_city,
                     library_state,
-                    library_contact
+                    library_contact,
+                    fine,
+                    lending_period
                 })
                 library.save((err, lib) => {
                     if(err) return sendError(res, err, err.message, 500)
@@ -206,7 +208,7 @@ exports.issueBook = (req, res) => {
         console.log("History not" + book_id);
         Book.findOneAndUpdate(query, update_book , function(err, book) {
             var history = new History({
-                book_id: book._id, 
+                book_id: book && book._id, 
                 student_id: student_id,
                 library_id: library_id,
                 issued_at: Date.now()
@@ -329,6 +331,14 @@ exports.libraryStudentHistory = async (req, res) => {
                         'issued_at' : null,
                         'booked_at': { $ne: null }
                         }
+                    }, 
+                    {
+                        '$lookup' : {
+                          'from' : 'books',
+                          'localField' : 'book_id',
+                          'foreignField' : '_id',
+                          'as' : 'book_data'
+                        }
                     }],
                     
                     "returned_books": [{
@@ -336,6 +346,14 @@ exports.libraryStudentHistory = async (req, res) => {
                             'student_id' : mongoose.Types.ObjectId(student_id),
                             'library_id' : mongoose.Types.ObjectId(library_id), 
                             'returned_at': { $ne: null }
+                        }
+                    }, 
+                    {
+                        '$lookup' : {
+                          'from' : 'books',
+                          'localField' : 'book_id',
+                          'foreignField' : '_id',
+                          'as' : 'book_data'
                         }
                     }],
       
@@ -346,6 +364,14 @@ exports.libraryStudentHistory = async (req, res) => {
                             'returned_at' : null,
                             'issued_at' : { $ne: null }
                             }
+                    }, 
+                    {
+                        '$lookup' : {
+                          'from' : 'books',
+                          'localField' : 'book_id',
+                          'foreignField' : '_id',
+                          'as' : 'book_data'
+                        }
                     }]
                 },
             },
@@ -363,3 +389,13 @@ exports.libraryStudentHistory = async (req, res) => {
           });
     });
   }
+
+  exports.libraryEditController = (req, res) => {
+    var library_id = req.body.library_id;
+    var updateLibrary = req.body.library_data;
+
+    Library.findByIdAndUpdate( { _id: library_id }, updateLibrary, { new: true}, function(err, updatedLibrary) {
+        if(err) return sendError(res, err, err.message, constants.BAD_REQUEST);
+        return sendSuccess(res, updatedLibrary);
+    });
+  };
