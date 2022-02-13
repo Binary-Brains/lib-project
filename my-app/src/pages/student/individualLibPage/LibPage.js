@@ -34,7 +34,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
-    width: "80%",
+    width: "100%",
     ["@media (max-width:900px)"]: {
       alignItems: "center",
       width: "75%",
@@ -260,7 +260,7 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
                 alignItems: "center",
               }}
             >
-              <Grid conatiner md={12} className={classes.libPageTable}>
+              <Grid conatiner md={9} className={classes.libPageTable}>
                 <Grid item xs={12} sm={12} md={12}>
                   <DashboardTable rows={rows} columns={columns} />
                 </Grid>
