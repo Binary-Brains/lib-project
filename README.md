@@ -64,7 +64,7 @@ Start the server
 
 ## Presentation
 
-https://drive.google.com/file/d/1ERiVhNlpymZxgHZHX-SKVVhQYCZuQb3Y/view?usp=sharing
+https://docs.google.com/presentation/d/1HIuTz1yywXIbi12yeNmCSDlPmk3oW0k2/edit?usp=sharing&ouid=112973035743552064028&rtpof=true&sd=true
 
 ## Pitching video
 
