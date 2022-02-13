@@ -44,16 +44,16 @@ function SettingDrawer({ userRegister }) {
   const [focus, setFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
   const [country, setCountry] = useState(
-    userRegister.studentInfo.student_state
+    userRegister && userRegister.studentInfo && userRegister.studentInfo.student_state
   );
-  const [name, setName] = useState(userRegister.studentInfo.student_name);
+  const [name, setName] = useState( userRegister && userRegister.studentInfo && userRegister.studentInfo.student_name);
   const [contact, setContact] = useState(
-    userRegister.studentInfo.student_contact
+    userRegister && userRegister.studentInfo && userRegister.studentInfo.student_contact
   );
   const [dob, setDob] = useState(
-    moment(userRegister.studentInfo.student_dob).format("DD-MM-YYYY")
+    moment( userRegister && userRegister.studentInfo && userRegister.studentInfo.student_dob).format("DD-MM-YYYY")
   );
-  const [region, setRegion] = useState(userRegister.studentInfo.student_city);
+  const [region, setRegion] = useState( userRegister && userRegister.studentInfo && userRegister.studentInfo.student_region);
 
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
