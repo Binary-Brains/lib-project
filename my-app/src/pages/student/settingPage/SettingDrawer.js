@@ -20,6 +20,7 @@ import StudentSettingForm from "./StudentSettingForm";
 import { StateCity } from "../../../data/StateCity";
 import moment from "moment";
 import { updateStudent } from "../../../actions/student/auth";
+import CircularIndeterminate from "../../../components/Loader";
 // import { useLocation } from 'wouter';
 
 const useStyles = makeStyles(() => ({
@@ -116,7 +117,7 @@ function SettingDrawer({ userRegister }) {
         <Typography component="h1" variant="h5" className={classes.editProf}>
           Edit Profile
         </Typography>
-        <StudentSettingForm data={fieldItems} />
+        {userRegister && userRegister.loading ? <CircularIndeterminate /> : <><StudentSettingForm data={fieldItems} />
         <Grid container>
           <form className={classes.form} noValidate>
             <Grid item xs={12} mt={2}>
@@ -187,7 +188,7 @@ function SettingDrawer({ userRegister }) {
               Update Profile
             </Button>
           </form>
-        </Grid>
+        </Grid></>}
       </Box>
     </Box>
   );

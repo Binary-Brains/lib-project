@@ -29,7 +29,7 @@ export const userRegisterReducer = (state = initialState, action) => {
     case STUDENT_LOGIN_REQUEST:
     case STUDENT_LOADING:
     case STUDENT_UPDATE_REQUEST:
-      return { ...state, loading: true };
+      return { ...state, loading: true, studentInfo: null };
     case STUDENT_VERIFICATION:
     case STUDENT_REGISTRATION:
     case STUDENT_UPDATED:

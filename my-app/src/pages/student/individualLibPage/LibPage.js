@@ -11,6 +11,7 @@ import { connect, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { useLocation } from "wouter";
 import Navbar from "../../../components/student/Navbar";
+import CircularIndeterminate from "../../../components/Loader";
 
 const useStyles = makeStyles(() => ({
   libPageCont: {
@@ -55,7 +56,7 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
   const [location, setLocation] = useLocation();
   console.log(location);
 
-  const { libraryInfo } = libraryStudentRegister;
+  const { libraryInfo, loading } = libraryStudentRegister;
   const {
     library_data,
     reserved_books,
@@ -172,7 +173,7 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
     <>
       <Box mt={8}>
         <Navbar />
-        <Box sx={{ display: "flex" }}>
+        {loading? <CircularIndeterminate /> : (<><Box sx={{ display: "flex" }}>
           <Grid container className={classes.libPageCont} mt={7}>
             <Grid
               item
@@ -244,7 +245,7 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
           <Grid conatiner md={12} className={classes.libPageTable}>
             <DashboardTable rows={rows} columns={columns} />
           </Grid>
-        </Box>
+        </Box></>)}
       </Box>
     </>
   );

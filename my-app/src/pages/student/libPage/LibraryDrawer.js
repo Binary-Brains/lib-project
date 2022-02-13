@@ -9,6 +9,7 @@ import {
   getConnectedLibraries,
   loadLibraries,
 } from "../../../actions/student/library";
+import CircularIndeterminate from "../../../components/Loader";
 // import setAuthToken from "../../../utils/setAuthToken";
 
 function LibraryDrawer({ libraryStudentRegister, userRegister }) {
@@ -23,10 +24,10 @@ function LibraryDrawer({ libraryStudentRegister, userRegister }) {
     <Box sx={{ display: "flex" }} mt={8}>
       <Navbar />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <UnstyledTabsCustomized
+       {libraryStudentRegister && libraryStudentRegister.loading? <CircularIndeterminate /> : (<UnstyledTabsCustomized
           data={libraryStudentRegister}
           studentData={userRegister.studentInfo}
-        />
+        />)}
       </Box>
     </Box>
   );

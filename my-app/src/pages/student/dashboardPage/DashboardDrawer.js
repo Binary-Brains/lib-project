@@ -18,6 +18,7 @@ import { connect, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { loadFeed } from "../../../actions/student/library";
 import moment from "moment";
+import CircularIndeterminate from "../../../components/Loader";
 
 const useStyles = makeStyles(() => ({
   individualCard: {
@@ -180,8 +181,9 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
   const reserveBooksRow = [];
 
   //now just fill the rows of the column
-  const { issued_books, reserved_books } =
-    libraryStudentRegister.feeds;
+
+  const  issued_books = libraryStudentRegister && libraryStudentRegister.feeds && libraryStudentRegister.feeds.issued_books;
+  const  reserved_books = libraryStudentRegister && libraryStudentRegister.feeds && libraryStudentRegister.feeds.reserved_books;
 
   //filling issued books table
   issued_books &&
@@ -253,7 +255,7 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
           <br></br>
 
           {/* <DashCard data={dashCards} /> */}
-          <TabsUnstyled defaultValue={0}>
+          {libraryStudentRegister && libraryStudentRegister.loading ? <CircularIndeterminate/> : <TabsUnstyled defaultValue={0}>
             <TabsList
               sx={{
                 backgroundColor: "inherit",
@@ -316,7 +318,7 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
                 columns={reserveBooksColumn}
               />
             </TabPanel>
-          </TabsUnstyled>
+          </TabsUnstyled>}
         </Box>
       </Box>
     </>

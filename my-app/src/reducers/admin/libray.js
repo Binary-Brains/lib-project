@@ -39,12 +39,16 @@ export const libraryRegisterReducer = (state = initialState, action) => {
     case CREATE_LIBRARY_REQUEST:
     case ADD_BOOKS_REQUEST:
     case LOAD_LIIBRARY_REQUEST:
-    case ACCEPT_REJECT_REQUEST:
-    case ISSUE_BOOK_START:
-    case LOAD_STUDENT_REQUEST:
-    case RETURN_BOOK_REQUEST:
     case UPADTE_LIBRARY_REQUEST:
-      return { ...state, loading: true };
+      return { ...state, loading: true, libraryInfo: null };
+    case LOAD_STUDENT_REQUEST:
+    case ISSUE_BOOK_START:
+    case RETURN_BOOK_REQUEST:
+    case ACCEPT_REJECT_REQUEST:
+      return {
+        ...state,
+        loading: true
+      }
     case LIBRARY_CREATED:
     case LIBRARY_LOADED:
       return {

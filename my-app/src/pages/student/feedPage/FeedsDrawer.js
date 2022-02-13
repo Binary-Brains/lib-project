@@ -7,6 +7,7 @@ import { connect, useDispatch } from "react-redux";
 // import { useLocation } from "wouter";
 import PropTypes from "prop-types";
 import moment from "moment";
+import CircularIndeterminate from "../../../components/Loader";
 
 const columns = [
   {
@@ -78,7 +79,7 @@ function FeedsDrawer({ libraryStudentRegister }) {
       <Box sx={{ display: "flex" }} mt={8}>
         <Navbar />
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <DashboardTable rows={rows} columns={columns} />
+          {libraryStudentRegister && libraryStudentRegister.loading ? <CircularIndeterminate /> :<DashboardTable rows={rows} columns={columns} />}
         </Box>
       </Box>
     </>

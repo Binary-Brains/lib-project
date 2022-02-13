@@ -29,12 +29,16 @@ let initialState = {
 export const libraryStudentRegisterReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_LIBRARIES_REQUEST:
-    case SEND_REQUEST_STARTED:
     case GET_CONNECTED_LIBRARY_REQUEST:
     case LOAD_LIBRARY_REQUEST:
     case RESERVE_BOOK_REQUEST:
     case BOOK_FEED_REQUEST:
-      return { ...state, loading: true };
+      return { ...state, loading: true, libraries: null, feeds: null, connectedLibraries: null };
+    case SEND_REQUEST_STARTED:
+      return {
+        ...state,
+        loading: true
+      }
     case LIBRARY_LOADED:
       return {
         ...state,
@@ -73,6 +77,7 @@ export const libraryStudentRegisterReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        feeds: null
       };
     case GET_CONNECTED_LIBRARY:
       return {

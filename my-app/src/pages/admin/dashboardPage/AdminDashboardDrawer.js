@@ -21,6 +21,7 @@ import { styled } from "@mui/system";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CountUp from "react-countup";
+import CircularIndeterminate from "../../../components/Loader";
 
 const useStyles = makeStyles(() => ({
   individualCard: {
@@ -363,7 +364,7 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
   return (
     <Box sx={{ display: "flex" }}>
       <AdminNavbar />
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }} mt={10}>
+      {libraryRegister && libraryRegister.loading ? <CircularIndeterminate/> : (<Box component="main" sx={{ flexGrow: 1, p: 3 }} mt={10}>
         <Typography variant="h3" className={classes.adminDashTitle}>
           Welcome&nbsp;<span>{libraryInfo && libraryInfo.library_name}</span>
         </Typography>
@@ -438,7 +439,7 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
             <DashboardTable rows={addedBookRows} columns={addedBookColumns} />
           </TabPanel>
         </TabsUnstyled>
-      </Box>
+      </Box>)}
     </Box>
   );
 }
