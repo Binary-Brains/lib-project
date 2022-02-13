@@ -18,6 +18,7 @@ import { connect, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { loadFeed } from "../../../actions/student/library";
 import moment from "moment";
+import CircularIndeterminate from "../../../components/Loader";
 
 const useStyles = makeStyles(() => ({
   individualCard: {
@@ -253,7 +254,7 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
           <br></br>
 
           {/* <DashCard data={dashCards} /> */}
-          <TabsUnstyled defaultValue={0}>
+          {libraryStudentRegister && libraryStudentRegister.loading ? <CircularIndeterminate/> : <TabsUnstyled defaultValue={0}>
             <TabsList
               sx={{
                 backgroundColor: "inherit",
@@ -316,7 +317,7 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
                 columns={reserveBooksColumn}
               />
             </TabPanel>
-          </TabsUnstyled>
+          </TabsUnstyled>}
         </Box>
       </Box>
     </>

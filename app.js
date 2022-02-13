@@ -55,9 +55,6 @@ app.use(cors());
 app.use("/api/student", studentRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/library", libraryRoutes);
-app.use("/api", (req, res) => {
-  return sendSuccess(res, "Welcome to Library Backend")
-})
 // if(process.env.NODE_ENV=="production"){
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "my-app", "build", "index.html"));

@@ -30,7 +30,7 @@ export const adminRegisterReducer = (state = initialState, action) => {
     case ADMIN_LOGIN_REQUEST:
     case ADMIN_LOADING:
     case ADMIN_UPDATE_REQUEST:
-      return { ...state, loading: true };
+      return { ...state, loading: true, adminInfo: null };
     case ADMIN_VERIFICATION:
     case ADMIN_REGISTRATION:
       return {

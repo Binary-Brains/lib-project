@@ -174,6 +174,7 @@ function StudentPage({
           <Button
             variant="contained"
             color="success"
+            disabled={loading}
             onClick={(event) => {
               handleClickReturn(event, cellValues);
             }}

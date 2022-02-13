@@ -44,7 +44,7 @@ export const libraryRegisterReducer = (state = initialState, action) => {
     case LOAD_STUDENT_REQUEST:
     case RETURN_BOOK_REQUEST:
     case UPADTE_LIBRARY_REQUEST:
-      return { ...state, loading: true };
+      return { ...state, loading: true, libraryInfo: null };
     case LIBRARY_CREATED:
     case LIBRARY_LOADED:
       return {
