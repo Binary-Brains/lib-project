@@ -12,8 +12,8 @@
 }
 .homeSidebarMenu {
   display: grid;
-  grid-template-columns: lfr;
-  grid-template-rows: repeat(6, 80px);
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(6, 70px);
   text-align: center;
 }
 .homeSidebarLink {
@@ -58,6 +58,12 @@
 }
 @media screen and (max-width: 480px) {
   .homeSidebarMenu {
+    grid-template-rows: repeat(6, 60px);
+  }
+}
+@media screen and (max-width: 400px) {
+  .homeSidebarMenu {
+    margin-right: 85px;
     grid-template-rows: repeat(6, 60px);
   }
 }
