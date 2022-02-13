@@ -68,7 +68,7 @@ https://docs.google.com/presentation/d/1HIuTz1yywXIbi12yeNmCSDlPmk3oW0k2/edit?us
 
 ## Pitching video
 
-https://drive.google.com/file/d/1ERiVhNlpymZxgHZHX-SKVVhQYCZuQb3Y/view?usp=sharing
+https://drive.google.com/file/d/1xdpvriSgKk2qETeKnQyjhmEm1VUCTO4X/view
 
 ## Hosted on Heroku server. Check it here : 
 
