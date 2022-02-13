@@ -28,10 +28,10 @@ function HomeSidebar({ isNavOpen, toggle }) {
           </ul>
 
           <div className="homeSidebarBtnWrapper">
-            <Link href="/student/signin">
+            <Link href="/student/signin" sx={{ textDecoration: "none" }}>
               <div className="homeSidebarBtnWrapperLink">Login as Student</div>
             </Link>
-            <Link href="/admin/signin">
+            <Link href="/admin/signin" sx={{ textDecoration: "none" }}>
               <div className="homeSidebarBtnWrapperLink">Login as Library</div>
             </Link>
           </div>

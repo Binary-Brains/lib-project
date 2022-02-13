@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
 export const AboutContainer = styled.div`
+  margin-top: 730px;
   color: #fff;
   background: ${({ lightBg }) => (lightBg ? "#f9f9f9" : "#010606")};
 
   @media screen and (max-width: 768px) {
+    margin-top: 900px;
     padding: 100px 0;
   }
 `;

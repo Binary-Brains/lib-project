@@ -19,34 +19,50 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     alignItems: "center",
   },
-  // libPageHeaders: {
-  //   ["@media (max-width:900px)"]: {
-  //     marginTop: "25px",
-  //   },
-  // },
-  // goBackBtn: {
-  //   ["@media (max-width:900px)"]: {
-  //     display: "none",
-  //   },
-  // },
-  // libPageTable: {
-  //   display: "flex",
-  //   ["@media (max-width:900px)"]: {
-  //     alignItems: "center",
-  //     width: "100%",
-  //     justifyContent: "center",
-  //   },
-  //   ["@media (max-width:600px)"]: {
-  //     alignItems: "center",
-  //     width: "100%",
-  //     justifyContent: "center",
-  //   },
-  //   ["@media (max-width:400px)"]: {
-  //     alignItems: "center",
-  //     width: "100%",
-  //     justifyContent: "center",
-  //   },
-  // },
+  libPageHeading: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    ["@media (max-width:400px)"]: {
+      marginLeft: "50px",
+      alignItems: "center",
+      width: "100%",
+      justifyContent: "center",
+    },
+  },
+  libPageTable: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: "80%",
+    ["@media (max-width:900px)"]: {
+      alignItems: "center",
+      width: "75%",
+      justifyContent: "center",
+    },
+    ["@media (max-width:600px)"]: {
+      marginLeft: "50px",
+      alignItems: "center",
+      width: "75%",
+      justifyContent: "center",
+    },
+    ["@media (max-width:500px)"]: {
+      alignItems: "center",
+      width: "75%",
+      justifyContent: "center",
+    },
+    ["@media (max-width:480px)"]: {
+      marginLeft: "80px",
+      alignItems: "center",
+      width: "80%",
+      justifyContent: "flex-end",
+    },
+    ["@media (max-width:400px)"]: {
+      alignItems: "center",
+      width: "85%",
+      justifyContent: "center",
+    },
+  },
 }));
 
 function LibPage({ id, libraryStudentRegister, userRegister }) {
@@ -57,10 +73,7 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
   console.log(location);
 
   const { libraryInfo, loading } = libraryStudentRegister;
-  const {
-    library_data,
-    reserved_books,
-  } = libraryInfo;
+  const { library_data, reserved_books } = libraryInfo;
 
   useEffect(() => {
     dispatch(getLibraryData({ library_id: id }));
@@ -173,79 +186,88 @@ function LibPage({ id, libraryStudentRegister, userRegister }) {
     <>
       <Box mt={8}>
         <Navbar />
-        {loading? <CircularIndeterminate /> : (<><Box sx={{ display: "flex" }}>
-          <Grid container className={classes.libPageCont} mt={7}>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={4}
-              align="center"
-              className={classes.goBackBtn}
+        {loading ? (
+          <CircularIndeterminate />
+        ) : (
+          <>
+            <Box sx={{ display: "flex" }}>
+              <Grid container className={classes.libPageCont} mt={7}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={4}
+                  align="center"
+                  className={classes.goBackBtn}
+                >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setLocation("/student/library")}
+                  >
+                    <ArrowBackIcon /> &nbsp; Go Back
+                  </Button>
+                </Grid>
+                <Grid item xs={12} sm={12} md={4} align="center">
+                  <Typography component="h1" variant="h5">
+                    {library_data && library_data.library_name}
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={4}
+                  align="center"
+                  className={classes.libPageHeaders}
+                >
+                  {/* we have to add a condition that if the user is already connected then don't show this button */}
+                  {connected ? (
+                    <Button variant="contained" disabled color="success">
+                      Connected
+                    </Button>
+                  ) : pendingRequest ? (
+                    "Pending"
+                  ) : (
+                    <Button variant="contained" color="primary">
+                      Send Request &nbsp;
+                      <IosShareIcon />
+                    </Button>
+                  )}
+                </Grid>
+              </Grid>
+            </Box>
+            <Box sx={{ display: "flex" }}>
+              <Grid container mt={10} className={classes.libPageHeading}>
+                <Grid item xs={12} sm={12} md={6} align="center">
+                  <Typography component="h1" variant="h5">
+                    Maximum Lending Period:{" "}
+                    {library_data && library_data.lending_period}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} align="center">
+                  <Typography component="h1" variant="h5">
+                    Connected Students:{" "}
+                    {library_data && library_data.accepted_student.length}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setLocation("/student/library")}
-              >
-                <ArrowBackIcon /> &nbsp; Go Back
-              </Button>
-            </Grid>
-            <Grid item xs={12} sm={12} md={4} align="center">
-              <Typography component="h1" variant="h5">
-                {library_data && library_data.library_name}
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={4}
-              align="center"
-              className={classes.libPageHeaders}
-            >
-              {/* we have to add a condition that if the user is already connected then don't show this button */}
-              {connected ? (
-                <Button variant="contained" color="success">
-                  Connected
-                </Button>
-              ) : pendingRequest ? (
-                "Pending"
-              ) : (
-                <Button variant="contained" color="primary">
-                  Send Request &nbsp;
-                  <IosShareIcon />
-                </Button>
-              )}
-            </Grid>
-          </Grid>
-        </Box>
-        <Box sx={{ display: "flex" }}>
-          <Grid container mt={10}>
-            <Grid item xs={12} sm={12} md={6} align="center">
-              <Typography component="h1" variant="h5">
-                Maximum Lending Period: {library_data && library_data.lending_period }
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={12} md={6} align="center">
-              <Typography component="h1" variant="h5">
-                Connected Students:{" "}
-                {library_data && library_data.accepted_student.length}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Grid conatiner md={12} className={classes.libPageTable}>
-            <DashboardTable rows={rows} columns={columns} />
-          </Grid>
-        </Box></>)}
+              <Grid conatiner md={12} className={classes.libPageTable}>
+                <Grid item xs={12} sm={12} md={12}>
+                  <DashboardTable rows={rows} columns={columns} />
+                </Grid>
+              </Grid>
+            </Box>
+          </>
+        )}
       </Box>
     </>
   );

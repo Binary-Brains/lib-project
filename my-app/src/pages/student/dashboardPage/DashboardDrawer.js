@@ -39,6 +39,9 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     alignItems: "center",
     textDecoration: "underline",
+    ["@media (max-width:650px)"]: {
+      flexDirection: "column",
+    },
   },
 }));
 
@@ -182,13 +185,24 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
 
   //now just fill the rows of the column
 
-  const  issued_books = libraryStudentRegister && libraryStudentRegister.feeds && libraryStudentRegister.feeds.issued_books;
-  const  reserved_books = libraryStudentRegister && libraryStudentRegister.feeds && libraryStudentRegister.feeds.reserved_books;
+  const issued_books =
+    libraryStudentRegister &&
+    libraryStudentRegister.feeds &&
+    libraryStudentRegister.feeds.issued_books;
+  const reserved_books =
+    libraryStudentRegister &&
+    libraryStudentRegister.feeds &&
+    libraryStudentRegister.feeds.reserved_books;
 
   //filling issued books table
   issued_books &&
     issued_books.map(({ book_data, library_data, issued_at }, index) => {
-      const due_date = moment(issued_at).add(library_data && library_data[0] && library_data[0].lending_period,'days').format('DD-MM-YYYY');
+      const due_date = moment(issued_at)
+        .add(
+          library_data && library_data[0] && library_data[0].lending_period,
+          "days"
+        )
+        .format("DD-MM-YYYY");
       const today_date = moment(Date.now()).format("DD-MM-YYYY");
       let temp = {
         id: index + 1,
@@ -255,70 +269,74 @@ function MiniDrawerDash({ userRegister, libraryStudentRegister }) {
           <br></br>
 
           {/* <DashCard data={dashCards} /> */}
-          {libraryStudentRegister && libraryStudentRegister.loading ? <CircularIndeterminate/> : <TabsUnstyled defaultValue={0}>
-            <TabsList
-              sx={{
-                backgroundColor: "inherit",
-                // eslint-disable-next-line
-                ["@media (max-width:800px)"]: {
-                  flexDirection: "column",
-                },
-              }}
-            >
-              {dashCards.map((item) => {
-                return (
-                  <Tab
-                    sx={{
-                      "&:hover": {
-                        backgroundColor: "#ffffff",
-                      },
-                    }}
-                  >
-                    <Grid item xs={12} sm={12} md={12}>
-                      <Card
-                        variant="outlined"
-                        sx={{ backgroundColor: "#E5E4E2" }}
-                        className={classes.individualCard}
-                      >
-                        <CardContent>
-                          <Typography variant="h3">
-                            <CountUp
-                              start={0}
-                              end={item.num}
-                              duration={1.5}
-                              separator=","
-                            ></CountUp>
-                          </Typography>
-                          <Typography
-                            sx={{ fontSize: 17, mt: 1.5, mb: 0 }}
-                            color="text.secondary"
-                            gutterBottom
-                          >
-                            {item.desc}
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  </Tab>
-                );
-              })}
-            </TabsList>
-            <TabPanel value={0}>
-              <DashboardTable rows={rows} columns={columns} />
-            </TabPanel>
-            <TabPanel value={1}>
-              <DashboardTable
-                rows={pendingBooksRow}
-                columns={pendingBooksColumn}
-              />
-            </TabPanel>
-            <TabPanel value={2}>
-              <DashboardTable
-                rows={reserveBooksRow}
-                columns={reserveBooksColumn}
-              />
-            </TabPanel>
-          </TabsUnstyled>}
+          {libraryStudentRegister && libraryStudentRegister.loading ? (
+            <CircularIndeterminate />
+          ) : (
+            <TabsUnstyled defaultValue={0}>
+              <TabsList
+                sx={{
+                  backgroundColor: "inherit",
+                  // eslint-disable-next-line
+                  ["@media (max-width:800px)"]: {
+                    flexDirection: "column",
+                  },
+                }}
+              >
+                {dashCards.map((item) => {
+                  return (
+                    <Tab
+                      sx={{
+                        "&:hover": {
+                          backgroundColor: "#ffffff",
+                        },
+                      }}
+                    >
+                      <Grid item xs={12} sm={12} md={12}>
+                        <Card
+                          variant="outlined"
+                          sx={{ backgroundColor: "#E5E4E2" }}
+                          className={classes.individualCard}
+                        >
+                          <CardContent>
+                            <Typography variant="h3">
+                              <CountUp
+                                start={0}
+                                end={item.num}
+                                duration={1.5}
+                                separator=","
+                              ></CountUp>
+                            </Typography>
+                            <Typography
+                              sx={{ fontSize: 17, mt: 1.5, mb: 0 }}
+                              color="text.secondary"
+                              gutterBottom
+                            >
+                              {item.desc}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Grid>
+                    </Tab>
+                  );
+                })}
+              </TabsList>
+              <TabPanel value={0}>
+                <DashboardTable rows={rows} columns={columns} />
+              </TabPanel>
+              <TabPanel value={1}>
+                <DashboardTable
+                  rows={pendingBooksRow}
+                  columns={pendingBooksColumn}
+                />
+              </TabPanel>
+              <TabPanel value={2}>
+                <DashboardTable
+                  rows={reserveBooksRow}
+                  columns={reserveBooksColumn}
+                />
+              </TabPanel>
+            </TabsUnstyled>
+          )}
         </Box>
       </Box>
     </>

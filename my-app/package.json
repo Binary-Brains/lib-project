@@ -18,6 +18,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.25.0",
     "country-state-city": "^3.0.1",
+    "emotion": "^11.0.0",
     "js-cookie": "^3.0.1",
     "material-table": "^1.69.3",
     "material-ui-phone-number": "^3.0.0",

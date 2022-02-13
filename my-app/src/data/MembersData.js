@@ -1,0 +1,38 @@
+export const MemberData = [
+  {
+    id: 1,
+    title: "Anuj Agrawal",
+    position: "Team Leader & Designer",
+    img: require("../assests/anuj.jpg"),
+    instagram: "https://www.instagram.com/__anuj__aa__/",
+    linkedin: "https://www.linkedin.com/in/anuj-agrawal-0067761a0/",
+    github: "https://github.com/ANUJAGRAWAL2000",
+  },
+  {
+    id: 2,
+    title: "Arnav Ranjan",
+    position: "Front-end Developer",
+    img: require("../assests/arnav.jpg"),
+    instagram: "https://www.instagram.com/arnavr15/",
+    linkedin: "https://www.linkedin.com/in/arnav-ranjan/",
+    github: "https://github.com/arnav1507",
+  },
+  {
+    id: 3,
+    title: "Rishabh Mishra",
+    position: "Architecture Designing & Intergration",
+    img: require("../assests/rishabh.jpg"),
+    instagram: "https://www.instagram.com/rishabhh.mishraa/",
+    linkedin: "https://www.linkedin.com/in/rishabh-mishra-4b647b167/",
+    github: "https://github.com/rishabhborn2win",
+  },
+  {
+    id: 1,
+    title: "Siddharth Dubey",
+    position: "Back-end Developer",
+    img: require("../assests/sid.jpg"),
+    instagram: "https://www.instagram.com/its_sid_007/",
+    linkedin: "https://www.linkedin.com/in/siddharth-dubey-54b0ba1a9/",
+    github: "https://github.com/cr7sid",
+  },
+];

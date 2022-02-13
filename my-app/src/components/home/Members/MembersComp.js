@@ -17,7 +17,7 @@ export const MemberContainer = styled.div`
   }
 
   @media screen and (max-width: 580px) {
-    height: 1700px;
+    height: 1900px;
   }
 `;
 export const MemberWrapper = styled.div`

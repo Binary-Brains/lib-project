@@ -9,6 +9,7 @@ import {
   Column2,
   TextWrapper,
   TopLine,
+  Heading,
   ImgWrap,
   Img,
 } from "./FeatureComp";
@@ -20,10 +21,10 @@ const dta = {
 function Features() {
   return (
     <>
-      <FeatureContainer lightBg={dta.lightBg} id="features">
+      <FeatureContainer lightBg={dta.lightBg}>
         <FeatureWrapper>
           <FeatureRow>
-            <Column1>
+            <Column1 id="features">
               <ImgWrap>
                 <Img src={features} alt="Feature" />
               </ImgWrap>
