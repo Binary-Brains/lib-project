@@ -1,4 +1,4 @@
-import { envUrl } from "../../utils/envUrl";
+import  envUrl  from "../../utils/envUrl";
 import setAuthToken from "../../utils/setAuthToken";
 import { setAlert } from "../alert";
 

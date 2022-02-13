@@ -25,7 +25,7 @@ import {
 } from "../../constants/admin/library";
 import axios from "axios";
 import { setAlert } from "../alert";
-import { envUrl } from "../../utils/envUrl";
+import  envUrl  from "../../utils/envUrl";
 
 export const createLibrary = (details) => async (dispatch) => {
   dispatch({ type: CREATE_LIBRARY_REQUEST });

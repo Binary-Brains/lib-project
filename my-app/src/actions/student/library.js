@@ -18,7 +18,7 @@ import {
   SEND_REQUEST_FAILED,
   SEND_REQUEST_STARTED,
 } from "../../constants/student/library";
-import { envUrl } from "../../utils/envUrl";
+import  envUrl  from "../../utils/envUrl";
 import { setAlert } from "../alert";
 
 export const loadLibraries = () => async (dispatch) => {
