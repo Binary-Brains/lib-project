@@ -53,7 +53,7 @@ function SettingDrawer({ userRegister }) {
   const [dob, setDob] = useState(
     moment( userRegister && userRegister.studentInfo && userRegister.studentInfo.student_dob).format("DD-MM-YYYY")
   );
-  const [region, setRegion] = useState( userRegister && userRegister.studentInfo && userRegister.studentInfo.student_region);
+  const [region, setRegion] = useState( userRegister && userRegister.studentInfo && userRegister.studentInfo.student_city);
 
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);

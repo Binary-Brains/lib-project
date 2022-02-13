@@ -33,7 +33,7 @@ export const AdminSignup = (details) => async (dispatch) => {
       });
       dispatch(
         setAlert(
-          `Hi!,${res.data.data.admin_name} an Email has been sent with a verification link!`,
+          `Hi!,${res.data.data.admin_name} an Email has been sent with a verification link! ( Please check your spam! )`,
           "success"
         )
       );
