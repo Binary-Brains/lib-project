@@ -58,12 +58,13 @@
 }
 @media screen and (max-width: 480px) {
   .homeSidebarMenu {
+    margin-right: 30px;
     grid-template-rows: repeat(6, 60px);
   }
 }
 @media screen and (max-width: 400px) {
   .homeSidebarMenu {
-    margin-right: 85px;
+    margin-right: 40px;
     grid-template-rows: repeat(6, 60px);
   }
 }

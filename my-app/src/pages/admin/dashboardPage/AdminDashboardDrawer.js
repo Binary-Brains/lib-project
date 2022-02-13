@@ -41,6 +41,14 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     alignItems: "center",
     textDecoration: "underline",
+    ["@media (max-width:650px)"]: {
+      flexDirection: "column",
+    },
+  },
+  adminDashSubTitle: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 const blue = {
@@ -334,7 +342,7 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
       }
     );
 
-  let stockCounter = {}
+  let stockCounter = {};
   let availableStockCounter = {};
   let reservedStockCounter = {};
   let issuedStockCounter = {};
@@ -344,7 +352,8 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
     libraryInfo.books &&
     libraryInfo.books.map(({ book_name, book_status, _id }, index) => {
       if (book_status === 1)
-        availableStockCounter[book_name] = (Number(availableStockCounter[book_name]) || 0) + 1;
+        availableStockCounter[book_name] =
+          (Number(availableStockCounter[book_name]) || 0) + 1;
       if (book_status === 2)
         issuedStockCounter[book_name] =
           (Number(issuedStockCounter[book_name]) || 0) + 1;
@@ -356,7 +365,12 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
     });
 
   for (const key in stockCounter) {
-    let temp = { id: i++, book_name: key, book_stock: availableStockCounter[key], book_stock_total: stockCounter[key]  };
+    let temp = {
+      id: i++,
+      book_name: key,
+      book_stock: availableStockCounter[key],
+      book_stock_total: stockCounter[key],
+    };
     addedBookRows.push(temp);
   }
   console.log(Object.values(stockCounter));
@@ -364,82 +378,92 @@ function AdminDashboardDrawer({ libraryRegister, adminRegister }) {
   return (
     <Box sx={{ display: "flex" }}>
       <AdminNavbar />
-      {libraryRegister && libraryRegister.loading ? <CircularIndeterminate/> : (<Box component="main" sx={{ flexGrow: 1, p: 3 }} mt={10}>
-        <Typography variant="h3" className={classes.adminDashTitle}>
-          Welcome&nbsp;<span>{libraryInfo && libraryInfo.library_name}</span>
-        </Typography>
-        <br></br>
-        <Typography variant="h6" >
-          Issued:&nbsp;
-          <span>{books && books.filter((b) => b.book_status === 2).length}</span>{" "}
-          Reserved:&nbsp;
-          <span>{books && books.filter((b) => b.book_status === 3).length}</span>{" "}
-         Available:&nbsp;
-          <span>{books && books.filter((b) => b.book_status === 1).length}</span>{" "}
+      {libraryRegister && libraryRegister.loading ? (
+        <CircularIndeterminate />
+      ) : (
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }} mt={10}>
+          <Typography variant="h3" className={classes.adminDashTitle}>
+            Welcome&nbsp;<span>{libraryInfo && libraryInfo.library_name}</span>
           </Typography>
-        <br></br>
-        <TabsUnstyled defaultValue={0}>
-          <TabsList
-            sx={{
-              backgroundColor: "inherit",
-              // eslint-disable-next-line
-              ["@media (max-width:800px)"]: {
-                flexDirection: "column",
-              },
-            }}
-          >
-            {adminDashCards.map((item) => {
-              return (
-                <Tab
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "#ffffff",
-                    },
-                  }}
-                >
-                  <Grid item xs={12} sm={12} md={12}>
-                    <Card
-                      variant="outlined"
-                      sx={{ backgroundColor: "#E5E4E2" }}
-                      className={classes.individualCard}
-                    >
-                      <CardContent>
-                        <Typography variant="h3">
-                          <CountUp
-                            start={0}
-                            end={item.num}
-                            duration={1.5}
-                            separator=","
-                          ></CountUp>
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: 17, mt: 1.5, mb: 0 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {item.desc}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                </Tab>
-              );
-            })}
-          </TabsList>
-          <TabPanel value={0}>
-            <DashboardTable rows={rows} columns={columns} />
-          </TabPanel>
-          <TabPanel value={1}>
-            <DashboardTable
-              rows={registeredPageRow}
-              columns={registeredPageColumn}
-            />
-          </TabPanel>
-          <TabPanel value={2}>
-            <DashboardTable rows={addedBookRows} columns={addedBookColumns} />
-          </TabPanel>
-        </TabsUnstyled>
-      </Box>)}
+          <br></br>
+          <Typography variant="h6" className={classes.adminDashSubTitle}>
+            Issued:
+            <span>
+              {books && books.filter((b) => b.book_status === 2).length}
+            </span>{" "}
+            &nbsp; Reserved:
+            <span>
+              {books && books.filter((b) => b.book_status === 3).length}
+            </span>{" "}
+            &nbsp; Available:
+            <span>
+              {books && books.filter((b) => b.book_status === 1).length}
+            </span>{" "}
+          </Typography>
+          <br></br>
+          <TabsUnstyled defaultValue={0}>
+            <TabsList
+              sx={{
+                backgroundColor: "inherit",
+                // eslint-disable-next-line
+                ["@media (max-width:800px)"]: {
+                  flexDirection: "column",
+                },
+              }}
+            >
+              {adminDashCards.map((item) => {
+                return (
+                  <Tab
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#ffffff",
+                      },
+                    }}
+                  >
+                    <Grid item xs={12} sm={12} md={12}>
+                      <Card
+                        variant="outlined"
+                        sx={{ backgroundColor: "#E5E4E2" }}
+                        className={classes.individualCard}
+                      >
+                        <CardContent>
+                          <Typography variant="h3">
+                            <CountUp
+                              start={0}
+                              end={item.num}
+                              duration={1.5}
+                              separator=","
+                            ></CountUp>
+                          </Typography>
+                          <Typography
+                            sx={{ fontSize: 17, mt: 1.5, mb: 0 }}
+                            color="text.secondary"
+                            gutterBottom
+                          >
+                            {item.desc}
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  </Tab>
+                );
+              })}
+            </TabsList>
+            <TabPanel value={0}>
+              <DashboardTable rows={rows} columns={columns} />
+            </TabPanel>
+            <TabPanel value={1}>
+              <DashboardTable
+                rows={registeredPageRow}
+                columns={registeredPageColumn}
+              />
+            </TabPanel>
+            <TabPanel value={2}>
+              <DashboardTable rows={addedBookRows} columns={addedBookColumns} />
+            </TabPanel>
+          </TabsUnstyled>
+        </Box>
+      )}
     </Box>
   );
 }

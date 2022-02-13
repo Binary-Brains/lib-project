@@ -22,6 +22,7 @@ function VideoComp() {
               href="https://github.com/Binary-Brains/lib-project"
               target="_blank"
               className="homePageLink"
+              sx={{ textDecoration: "none", color: "#000" }}
             >
               <GitHubIcon />
               &nbsp; Github
